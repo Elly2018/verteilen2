@@ -10,7 +10,6 @@ type User struct {
 	password  string      // Hash result password
 	phone     *string     // Phone number
 	email     *string     // User email, For password reset or notification
-	gender    *string     // Private info
 	birthday  *time.Time  // Private info
 	roleGroup []RoleGroup // Permission group array
 }
