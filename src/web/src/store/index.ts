@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { createStore } from 'vuex'
 
 interface AppInfo {
@@ -6,6 +7,8 @@ interface AppInfo {
 }
 
 interface UserData {
+  uid: string
+  id: string
   username: string
   email: string
   phone: string
@@ -28,8 +31,14 @@ export default createStore<StoreInterface>({
   getters: {
   },
   mutations: {
-    set_userData(state, data:UserData | undefined){
-      state.userData = data
+    set_userData(state){
+      state.userToken = Cookies.get('userToken') ?? ''
+      const req = axios.get('/api/userdata')
+      req.then(res => {
+        state.userData = res.data
+      }).catch(err => {
+        console.error(err)
+      })
     },
     fetch_appinfo(state){
       const req = axios.get('/api/appinfo')
@@ -46,7 +55,7 @@ export default createStore<StoreInterface>({
     },
     fetch_appinfo(context){
       context.commit('fetch_appinfo')
-    }
+    },
   },
   modules: {
   }
