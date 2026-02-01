@@ -1,10 +1,19 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view/>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import store from './store';
+
+
+export default defineComponent({
+  mounted() {
+    store.dispatch('fetch_appinfo')
+  },
+})
+
+</script>
 
 <style lang="scss">
 #app {
