@@ -17,30 +17,31 @@ func main() {
 
 	go func() {
 		if err := socket_server.Serve(); err != nil {
-			log.Fatalf("socketio listen error: %s\n", err)
+			log.Fatalf("socketio listen error server: %s\n", err)
 		}
 	}()
 	go func() {
 		if err := socket_proxy.Serve(); err != nil {
-			log.Fatalf("socketio listen error: %s\n", err)
+			log.Fatalf("socketio listen error proxy: %s\n", err)
 		}
 	}()
 	go func() {
 		if err := socket_node.Serve(); err != nil {
-			log.Fatalf("socketio listen error: %s\n", err)
+			log.Fatalf("socketio listen error node: %s\n", err)
 		}
 	}()
 	defer socket_server.Close()
 	defer socket_proxy.Close()
 	defer socket_node.Close()
 
-	router.GET("/socket/server/", gin.WrapH(socket_server))
-	router.POST("/socket/server/", gin.WrapH(socket_server))
-	router.GET("/socket/proxy/", gin.WrapH(socket_proxy))
-	router.POST("/socket/proxy/", gin.WrapH(socket_proxy))
-	router.GET("/socket/node/", gin.WrapH(socket_node))
-	router.POST("/socket/node/", gin.WrapH(socket_node))
-	router.Static("/", "static")
+	router.GET("/socket/server", gin.WrapH(socket_server))
+	router.POST("/socket/server", gin.WrapH(socket_server))
+	router.GET("/socket/proxy", gin.WrapH(socket_proxy))
+	router.POST("/socket/proxy", gin.WrapH(socket_proxy))
+	router.GET("/socket/node", gin.WrapH(socket_node))
+	router.POST("/socket/node", gin.WrapH(socket_node))
+	register_api(router)
+	router.Static("/view", "static")
 
 	if err := router.Run(":8000"); err != nil {
 		log.Fatal("failed run app: ", err)
