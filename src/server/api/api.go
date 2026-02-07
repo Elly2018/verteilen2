@@ -7,22 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Register_api(router *gin.Engine) {
+type VAPI struct {
+}
+
+func (v VAPI) Register_api(router *gin.Engine) {
 	api := router.Group("/api")
+	var vadmin admin.VADMIN
+	vadmin.Register_api_admin(api)
 
-	admin.Rregister_api_admin(api)
-
-	api.GET("isinit", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": true,
+	api.GET("isinit", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"status": vadmin.IsAppRegistered(),
 		})
 	})
 
-	api.POST("init", func(c *gin.Context) {
-		c.String(http.StatusOK, "YES")
-	})
-
-	api.POST("login", func(c *gin.Context) {
-		c.String(http.StatusOK, "YES")
+	api.POST("login", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "YES")
 	})
 }

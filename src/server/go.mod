@@ -2,13 +2,25 @@ module verteilen2_server
 
 go 1.24.2
 
-require github.com/gin-gonic/gin v1.11.0
+require (
+	firebase.google.com/go v3.13.0+incompatible
+	github.com/gin-gonic/gin v1.11.0
+	google.golang.org/api v0.1.0
+)
 
 require (
+	cloud.google.com/go v0.36.0 // indirect
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
+	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
+	github.com/googleapis/gax-go/v2 v2.0.3 // indirect
 	github.com/googollee/go-engine.io v1.4.2 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
+	go.opencensus.io v0.18.0 // indirect
+	golang.org/x/oauth2 v0.0.0-20181203162652-d668ce993890 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
+	google.golang.org/genproto v0.0.0-20190201180003-4b09977fb922 // indirect
+	google.golang.org/grpc v1.17.0 // indirect
 )
 
 require (

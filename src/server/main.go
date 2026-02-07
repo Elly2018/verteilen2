@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"verteilen2_server/api"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,11 @@ import (
 
 func main() {
 	router := gin.New()
+	var vapi api.VAPI
+	port, exists := os.LookupEnv("PORT")
+	if !exists {
+		port = "8080"
+	}
 
 	socket_server := get_server()
 	socket_proxy := get_proxy()
@@ -42,10 +48,9 @@ func main() {
 	router.GET("/socket/node", gin.WrapH(socket_node))
 	router.POST("/socket/node", gin.WrapH(socket_node))
 	router.Static("/view", "static")
+	vapi.Register_api(router)
 
-	api.Register_api(router)
-
-	if err := router.Run(":8000"); err != nil {
+	if err := router.Run(":" + port); err != nil {
 		log.Fatal("failed run app: ", err)
 	}
 }

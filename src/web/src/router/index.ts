@@ -2,12 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import StartupVuew from '../views/StartupVuew.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import SetupView from '../views/SetupView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'startup',
     component: StartupVuew
+  },
+  {
+    path: '/setup',
+    name: 'setup',
+    component: SetupView
   },
   {
     path: '/login',

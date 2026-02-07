@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div>
+
+    </div>
 </template>
 
 <script lang="ts">
@@ -10,7 +12,6 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'HomeView',
     mounted() {
-        
         axios.get(`${window.location.origin}/api/isinit`).then(res => {
             if(res.status == 200){
                 const data = res.data
@@ -21,9 +22,10 @@ export default defineComponent({
                     }
                 }
             }
-            router.push("/startup")
+            router.push("/setup")
         }).catch(err => {
             console.error(err)
+            router.push("/setup")
         })
     },
 });
