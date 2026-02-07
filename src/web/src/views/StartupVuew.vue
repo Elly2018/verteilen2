@@ -4,12 +4,27 @@
 
 <script lang="ts">
 import router from '@/router';
+import axios from 'axios';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'HomeView',
     mounted() {
-        router.push("/login")
+        
+        axios.get(`${window.location.origin}/api/isinit`).then(res => {
+            if(res.status == 200){
+                const data = res.data
+                if(Object.keys(data).includes("status")){
+                    if(data.status){
+                        router.push("/login")
+                        return
+                    }
+                }
+            }
+            router.push("/startup")
+        }).catch(err => {
+            console.error(err)
+        })
     },
 });
 

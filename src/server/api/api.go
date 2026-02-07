@@ -13,7 +13,9 @@ func Register_api(router *gin.Engine) {
 	admin.Rregister_api_admin(api)
 
 	api.GET("isinit", func(c *gin.Context) {
-		c.String(http.StatusOK, "YES")
+		c.JSON(http.StatusOK, gin.H{
+			"status": true,
+		})
 	})
 
 	api.POST("init", func(c *gin.Context) {
