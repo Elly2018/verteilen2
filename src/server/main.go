@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"verteilen2_server/api"
 
 	"github.com/gin-gonic/gin"
 
@@ -40,8 +41,9 @@ func main() {
 	router.POST("/socket/proxy", gin.WrapH(socket_proxy))
 	router.GET("/socket/node", gin.WrapH(socket_node))
 	router.POST("/socket/node", gin.WrapH(socket_node))
-	register_api(router)
 	router.Static("/view", "static")
+
+	api.Register_api(router)
 
 	if err := router.Run(":8000"); err != nil {
 		log.Fatal("failed run app: ", err)

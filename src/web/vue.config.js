@@ -4,6 +4,9 @@ const Components = require('unplugin-vue-components/webpack');
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
 
 module.exports = defineConfig({
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/web/' // Production path prefix
+    : '/',
   transpileDependencies: true,
   configureWebpack: {
     plugins: [
