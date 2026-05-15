@@ -46,6 +46,18 @@ bool handle_help(argh::parser& cmdl){
     return false;
 }
 
+bool handle_master(argh::parser& cmdl){
+
+}
+
+bool handle_client(argh::parser& cmdl){
+    
+}
+
+bool handle_proxy(argh::parser& cmdl){
+    
+}
+
 int main(int argc, char* argv[])
 {
     argh::parser cmdl;
