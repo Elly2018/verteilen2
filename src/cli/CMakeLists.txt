@@ -8,3 +8,5 @@ file(GLOB_RECURSE CLI_SOURCE CONFIGURE_DEPENDS
 add_executable(cli
     ${CLI_SOURCE}
 )
+
+target_include_directories(cli PRIVATE "${CMAKE_SOURCE_DIR}/lib/argh")
