@@ -22,31 +22,17 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_ENUM_TASK_TYPE_H
-#define COMMON_STRUCT_ENUM_TASK_TYPE_H
+#ifndef COMMON_STRUCT_DATA_CRON_H
+#define COMMON_STRUCT_DATA_CRON_H
+#include "../data_field.h"
 
 namespace verteilen2 {
 
-    /**
-     * The task type will affect how the task getting process
-     */
-    enum class Task_type {
-        /**
-         * One node, run once
-         */
-        Single = 0,
-        /**
-         * All nodes, run once
-         */
-        Setup = 1,
-        /**
-         * All nodes, run N times
-         */
-        Cluster = 1,
-        /**
-         * All nodes, run N times, with N2 cores
-         */
-        Cluster_Multicore = 2,
+    struct Cron_data {
+        char uuid[36];
+        char name[64];
+        char description[128];
+        Data_field project;
     };
     
 }
