@@ -22,31 +22,23 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_TASK_H
-#define COMMON_STRUCT_DATA_TASK_H
-#include <vector>
-#include "../vconst.h"
-#include "../data_field.h"
-#include "../task_config.h"
-#include "../enum/task_type.h"
+#ifndef COMMON_STRUCT_ENUM_JOB_TYPE_H
+#define COMMON_STRUCT_ENUM_JOB_TYPE_H
 
 namespace verteilen2 {
 
-    struct Job_data;
+    enum class Job_type {
+        Path_exists = 0,
 
-    struct Task_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char description[DESCRIPTION_LENGTH];
-        Task_type type;
-        char cluster_field_key[NAME_LENGTH];
-        char multicore_field_key[NAME_LENGTH];
-        Data_field jobs[ELEMENT_LENGTH];
+        Path_copy = 1000,
+        Path_move = 1001,
+        Path_delete = 1002,
+        File_write = 1003,
+
+        Angel_script = 2000,
+        Lua_script = 2001,
     };
-
-    int32_t task_data_get_job_count(Task_data task);
-    int32_t task_data_get_job_count(Task_data task, std::vector<Job_data>& jobs);
-
+    
 }
 
 #endif

@@ -21,32 +21,31 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_STRUCT_DATA_TASK_H
-#define COMMON_STRUCT_DATA_TASK_H
-#include <vector>
-#include "../vconst.h"
-#include "../data_field.h"
-#include "../task_config.h"
-#include "../enum/task_type.h"
+#include "task.h"
+#include <unordered_map>
+#include "job.h"
 
 namespace verteilen2 {
 
-    struct Job_data;
-
-    struct Task_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char description[DESCRIPTION_LENGTH];
-        Task_type type;
-        char cluster_field_key[NAME_LENGTH];
-        char multicore_field_key[NAME_LENGTH];
-        Data_field jobs[ELEMENT_LENGTH];
-    };
-
-    int32_t task_data_get_job_count(Task_data task);
-    int32_t task_data_get_job_count(Task_data task, std::vector<Job_data>& jobs);
-
+    int32_t task_data_get_job_count(Task_data task) {
+        int32_t c = 0;
+        for(int32_t i = 0; i < ELEMENT_LENGTH; i++){
+            if (!task.jobs[i].vaild) continue;
+            c++;
+        }
+        return c;
+    }
+    int32_t task_data_get_job_count(Task_data task, std::vector<Job_data>& jobs) {
+        int32_t c = 0;
+        std::unordered_map<std::string, bool> exists;
+        for(int32_t i = 0; i < jobs.size(); i++){
+            exists.insert({ std::string(jobs.at(i).uuid), true });
+        }
+        for(int32_t i = 0; i < ELEMENT_LENGTH; i++){
+            if (!task.jobs[i].vaild) continue;
+            if(exists.count(std::string(task.jobs[i].uuid)) == 0) continue;
+            c++;
+        }
+        return c;
+    }
 }
-
-#endif
