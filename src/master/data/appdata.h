@@ -24,11 +24,16 @@
 #pragma once
 #ifndef MASTER_DATA_APPDATA_H
 #define MASTER_DATA_APPDATA_H
+#include <vector>
+#include <verteilen2/data/all.h>
 
 namespace verteilen2::master {
 
     struct App_data {
-        
+        std::vector<Project_data> projects;
+        std::vector<Task_data> tasks;
+        std::vector<Job_data> jobs;
+        std::vector<Vault_data> vaults;
     };
 
 }

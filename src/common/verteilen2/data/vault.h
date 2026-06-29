@@ -21,10 +21,32 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "data/appdata.h"
+#pragma once
+#ifndef COMMON_STRUCT_DATA_VAULT_H
+#define COMMON_STRUCT_DATA_VAULT_H
+#include <unordered_map>
+#include <string>
+#include "../vconst.h"
 
-using namespace verteilen2::master;
+namespace verteilen2 {
 
-int main(){
-    App_data data = App_data();
+    union Vault_element {
+        int32_t d_int32;
+        int64_t d_int64;
+        float d_float;
+        double d_double;
+        std::string* d_text;
+    };
+
+    struct Vault_data {
+        char uuid[UUID_LENGTH];
+        char name[NAME_LENGTH];
+        /**
+         * The key character length limit should be 64
+         */
+        std::unordered_map<std::string, Vault_element> datas;
+    };
+
 }
+
+#endif
