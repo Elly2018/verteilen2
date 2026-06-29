@@ -24,12 +24,29 @@
 #pragma once
 #ifndef COMMON_STRUCT_DATA_VAULT_H
 #define COMMON_STRUCT_DATA_VAULT_H
+#include <unordered_map>
+#include <string>
+#include "../vconst.h"
 
 namespace verteilen2 {
-    struct Vault_data {
-        char uuid[36];
-        char name[64];
+
+    union Vault_element {
+        int32_t d_int32;
+        int64_t d_int64;
+        float d_float;
+        double d_double;
+        std::string d_text;
     };
+
+    struct Vault_data {
+        char uuid[UUID_LENGTH];
+        char name[NAME_LENGTH];
+        /**
+         * The key character length limit should be 64
+         */
+        std::unordered_map<std::string, Vault_element> datas;
+    };
+
 }
 
 #endif

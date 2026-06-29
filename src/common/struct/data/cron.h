@@ -24,14 +24,15 @@
 #pragma once
 #ifndef COMMON_STRUCT_DATA_CRON_H
 #define COMMON_STRUCT_DATA_CRON_H
+#include "../vconst.h"
 #include "../data_field.h"
 
 namespace verteilen2 {
 
     struct Cron_data {
-        char uuid[36];
-        char name[64];
-        char description[128];
+        char uuid[UUID_LENGTH];
+        char name[NAME_LENGTH];
+        char description[DESCRIPTION_LENGTH];
         Data_field project;
     };
     
