@@ -9,5 +9,9 @@ add_executable(master
     ${MASTER_SOURCE}
 )
 
-target_include_directories(master PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../common")
-target_link_libraries(master PRIVATE common)
+target_include_directories(master PRIVATE 
+    "${CMAKE_SOURCE_DIR}/src/common"
+    "${CMAKE_SOURCE_DIR}/lib/crow/include"
+)
+
+target_link_libraries(master PRIVATE common Crow::Crow)

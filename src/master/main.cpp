@@ -22,9 +22,21 @@
     SOFTWARE.
  */
 #include "data/appdata.h"
+#include <crow.h>
 
 using namespace verteilen2::master;
 
+void web(){
+    crow::SimpleApp app;
+
+    CROW_ROUTE(app, "/")([](){
+        return "Hello world";
+    });
+
+    app.port(18080).multithreaded().run();
+}
+
 int main(){
     App_data data = App_data();
+    web();
 }
