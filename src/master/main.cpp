@@ -21,7 +21,6 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <crow.h>
 #include "data/appdata.h"
 #include "api/all.h"
 
@@ -29,10 +28,8 @@ using namespace verteilen2::master;
 
 void web(){
     crow::SimpleApp app;
-
     register_static_route(app);
-
-    app.port(18080).multithreaded().run();
+    app.bindaddr("127.0.0.1").port(18080).multithreaded().run();
 }
 
 int main(){

@@ -24,10 +24,8 @@
 #pragma once
 #ifndef MASTER_API_STATIC_H
 #define MASTER_API_STATIC_H
-
-namespace crow {
-    class SimpleApp;
-}
+#include "../config.h"
+#include <crow.h>
 
 void register_static_route(crow::SimpleApp& app);
 

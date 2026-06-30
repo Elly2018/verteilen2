@@ -22,19 +22,15 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_VCONST_H
-#define COMMON_STRUCT_VCONST_H
-#include <cinttypes>
+#ifndef COMMON_STRUCT_ENUM_PROFILE_TYPE_H
+#define COMMON_STRUCT_ENUM_PROFILE_TYPE_H
 
 namespace verteilen2 {
 
-    constexpr int32_t UUID_LENGTH = 36;
-    constexpr int32_t NAME_LENGTH = 64;
-    constexpr int32_t EMAIL_LENGTH = 64;
-    constexpr int32_t PWD_HASH_LENGTH = 128;
-    constexpr int32_t DESCRIPTION_LENGTH = 256;
-    constexpr int32_t ELEMENT_LENGTH = 64;
-    constexpr int32_t JOB_FIELD_LENGTH = 128;
+    enum class Profile_type {
+        User = 0,
+        OP = 10,
+    };
     
 }
 

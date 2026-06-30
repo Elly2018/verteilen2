@@ -22,20 +22,16 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_VCONST_H
-#define COMMON_STRUCT_VCONST_H
-#include <cinttypes>
+#ifndef COMMON_STRUCT_DATA_OWNER_H
+#define COMMON_STRUCT_DATA_OWNER_H
 
 namespace verteilen2 {
 
-    constexpr int32_t UUID_LENGTH = 36;
-    constexpr int32_t NAME_LENGTH = 64;
-    constexpr int32_t EMAIL_LENGTH = 64;
-    constexpr int32_t PWD_HASH_LENGTH = 128;
-    constexpr int32_t DESCRIPTION_LENGTH = 256;
-    constexpr int32_t ELEMENT_LENGTH = 64;
-    constexpr int32_t JOB_FIELD_LENGTH = 128;
-    
+    struct Data_owner {
+        char uuid[36];
+        char target[36];
+    };
+
 }
 
 #endif

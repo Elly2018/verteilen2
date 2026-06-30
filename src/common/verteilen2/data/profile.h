@@ -22,19 +22,21 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_VCONST_H
-#define COMMON_STRUCT_VCONST_H
+#ifndef COMMON_STRUCT_DATA_PROFILE_H
+#define COMMON_STRUCT_DATA_PROFILE_H
 #include <cinttypes>
+#include "../vconst.h"
+#include "../enum/profile_type.h"
 
 namespace verteilen2 {
 
-    constexpr int32_t UUID_LENGTH = 36;
-    constexpr int32_t NAME_LENGTH = 64;
-    constexpr int32_t EMAIL_LENGTH = 64;
-    constexpr int32_t PWD_HASH_LENGTH = 128;
-    constexpr int32_t DESCRIPTION_LENGTH = 256;
-    constexpr int32_t ELEMENT_LENGTH = 64;
-    constexpr int32_t JOB_FIELD_LENGTH = 128;
+    struct Profile_data {
+        char uuid[UUID_LENGTH];
+        char name[NAME_LENGTH];
+        char email[EMAIL_LENGTH];
+        char pwd_hash[PWD_HASH_LENGTH];
+        Profile_type type;
+    };
     
 }
 
