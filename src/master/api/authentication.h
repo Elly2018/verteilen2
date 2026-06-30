@@ -27,7 +27,11 @@
 #include "../config.h"
 #include <crow.h>
 
-void register_authentication_route(crow::SimpleApp& app);
+namespace verteilen2::master {
+
+    void register_authentication_route(crow::SimpleApp& app);
+
+}
 
 #endif
 

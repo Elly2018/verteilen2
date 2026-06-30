@@ -22,15 +22,7 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef MASTER_API_STATIC_H
-#define MASTER_API_STATIC_H
-#include "../config.h"
-#include <crow.h>
-
-namespace verteilen2::master {
-
-    void register_static_route(crow::SimpleApp& app);
-
-}
+#ifndef CLIENT_API_ALL_H
+#define CLIENT_API_ALL_H
 
 #endif

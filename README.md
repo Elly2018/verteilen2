@@ -7,4 +7,5 @@ A cluster management system
 ```bash
 sudo apt-get update
 sudo apt-get install libasio-dev
+sudo apt install protobuf-compiler
 ```
