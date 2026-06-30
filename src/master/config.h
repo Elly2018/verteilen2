@@ -22,20 +22,13 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_VCONST_H
-#define COMMON_STRUCT_VCONST_H
-#include <cinttypes>
+#ifndef MASTER_CONFIG_H
+#define MASTER_CONFIG_H
 
-namespace verteilen2 {
+// 1. Point the disk scanner to your sub-folder
+#define CROW_STATIC_DIRECTORY "static/master/"
 
-    constexpr int32_t UUID_LENGTH = 36;
-    constexpr int32_t NAME_LENGTH = 64;
-    constexpr int32_t EMAIL_LENGTH = 64;
-    constexpr int32_t PWD_HASH_LENGTH = 128;
-    constexpr int32_t DESCRIPTION_LENGTH = 256;
-    constexpr int32_t ELEMENT_LENGTH = 64;
-    constexpr int32_t JOB_FIELD_LENGTH = 128;
-    
-}
+// 2. Map how browsers request these assets
+#define CROW_STATIC_ENDPOINT "/<path>"
 
 #endif

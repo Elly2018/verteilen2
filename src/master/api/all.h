@@ -24,5 +24,7 @@
 #pragma once
 #ifndef MASTER_API_ALL_H
 #define MASTER_API_ALL_H
+#include "authentication.h"
+#include "session.h"
 #include "static.h"
 #endif

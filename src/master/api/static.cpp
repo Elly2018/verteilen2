@@ -27,7 +27,7 @@
 void register_static_route(crow::SimpleApp& app) {
     CROW_ROUTE(app, "/")
     ([](const crow::request&, crow::response& res) {
-        res.set_static_file_info("index.html");
+        res.set_static_file_info("static/master/index.html");
         res.end();
     });
 }

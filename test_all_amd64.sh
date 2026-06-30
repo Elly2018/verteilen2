@@ -1,9 +1,4 @@
 #!/bin/bash
 
-mkdir build
-cd build
-
-cmake ..
-
-cmake --build . -j 8
+source build_all_amd64.sh
 ctest --output-on-failure
