@@ -22,3 +22,12 @@
     SOFTWARE.
  */
 #pragma once
+#pragma once
+#ifndef MASTER_API_SESSION_H
+#define MASTER_API_SESSION_H
+#include "../config.h"
+#include <crow.h>
+
+void register_session_route(crow::SimpleApp& app);
+
+#endif
