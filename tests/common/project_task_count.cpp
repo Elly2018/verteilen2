@@ -25,7 +25,7 @@
 #include <verteilen2/data/project.h>
 
 int main() {
-    verteilen2::Project_data project;
+    verteilen2::Project_data project = verteilen2::Project_data();
 
     int32_t c = verteilen2::project_data_get_task_count(project);
     if(c != 0){
@@ -36,7 +36,7 @@ int main() {
     project.tasks[0].vaild = true;
     project.tasks[1].vaild = true;
 
-    int32_t c = verteilen2::project_data_get_task_count(project);
+    c = verteilen2::project_data_get_task_count(project);
     if(c != 2){
         std::cerr << "[Common] The project should have 2 tasks count, getting: " << c << "\n";
         return 1;
@@ -46,7 +46,7 @@ int main() {
         project.tasks[i].vaild = true;
     }
 
-    int32_t c = verteilen2::project_data_get_task_count(project);
+    c = verteilen2::project_data_get_task_count(project);
     if(c != verteilen2::ELEMENT_LENGTH){
         std::cerr << "[Common] The project should have " << verteilen2::ELEMENT_LENGTH << " tasks count, getting: " << c << "\n";
         return 1;
