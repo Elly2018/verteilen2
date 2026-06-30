@@ -22,3 +22,12 @@
     SOFTWARE.
  */
 #pragma once
+#ifndef MASTER_API_AUTHENTICATION_H
+#define MASTER_API_AUTHENTICATION_H
+#include "../config.h"
+#include <crow.h>
+
+void register_authentication_route(crow::SimpleApp& app);
+
+#endif
+
