@@ -24,6 +24,7 @@
 #include "data/appdata.h"
 #include "api/all.h"
 
+using namespace verteilen2;
 using namespace verteilen2::master;
 
 void web(){

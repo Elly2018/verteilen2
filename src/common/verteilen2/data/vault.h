@@ -31,6 +31,7 @@
 namespace verteilen2 {
 
     union Vault_element {
+        bool d_boolean;
         int32_t d_int32;
         int64_t d_int64;
         float d_float;

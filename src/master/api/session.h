@@ -28,6 +28,10 @@
 #include "../config.h"
 #include <crow.h>
 
-void register_session_route(crow::SimpleApp& app);
+namespace verteilen2::master {
+
+    void register_session_route(crow::SimpleApp& app);
+
+}
 
 #endif
