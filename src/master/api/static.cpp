@@ -21,21 +21,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
+#include "static.h"
 #include <crow.h>
-#include "data/appdata.h"
-#include "api/all.h"
 
-using namespace verteilen2::master;
-
-void web(){
-    crow::SimpleApp app;
-
-    register_static_route(app);
-
-    app.port(18080).multithreaded().run();
-}
-
-int main(){
-    App_data data = App_data();
-    web();
+void register_static_route(crow::SimpleApp& app) {
+    CROW_ROUTE(app, "/")
+    ([](const crow::request&, crow::response& res) {
+        res.set_static_file_info("index.html");
+        res.end();
+    });
 }

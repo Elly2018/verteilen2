@@ -5,13 +5,16 @@ file(GLOB_RECURSE MASTER_SOURCE CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/master/*.cpp"
 )
 
-add_executable(master
-    ${MASTER_SOURCE}
-)
-
-target_include_directories(master PRIVATE 
+include_directories(
     "${CMAKE_SOURCE_DIR}/src/common"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
 )
 
-target_link_libraries(master PRIVATE common Crow::Crow)
+link_libraries(
+    common 
+    Crow::Crow
+)
+
+add_executable(master
+    ${MASTER_SOURCE}
+)
