@@ -33,7 +33,7 @@ namespace verteilen2::client {
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("/template/homepage.html");
+            auto template_page = crow::mustache::load("template/homepage.html");
 
             return template_page.render(ctx);
         });
@@ -46,7 +46,7 @@ namespace verteilen2::client {
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("/template/viewer.html");
+            auto template_page = crow::mustache::load("template/viewer.html");
 
             return template_page.render(ctx);
         });
@@ -59,7 +59,7 @@ namespace verteilen2::client {
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("/template/terminal.html");
+            auto template_page = crow::mustache::load("template/terminal.html");
 
             return template_page.render(ctx);
         });
@@ -72,7 +72,7 @@ namespace verteilen2::client {
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("/template/setting.html");
+            auto template_page = crow::mustache::load("template/setting.html");
 
             return template_page.render(ctx);
         });
@@ -85,7 +85,7 @@ namespace verteilen2::client {
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("/template/log.html");
+            auto template_page = crow::mustache::load("template/log.html");
 
             return template_page.render(ctx);
         });

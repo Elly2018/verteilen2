@@ -25,4 +25,5 @@
 #ifndef CLIENT_API_ALL_H
 #define CLIENT_API_ALL_H
 #include "static.h"
+#include "template.h"
 #endif
