@@ -71,6 +71,4 @@ vcpkg_installed/
 Testing/
 .cache/
 
-package/master/
-package/server/
-package/client/
+package/verteilen-2-*
