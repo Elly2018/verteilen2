@@ -17,6 +17,6 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/lib/crow")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/cli")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/client")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/master")
-add_subdirectory("${CMAKE_SOURCE_DIR}/src/proxy")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/server")
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/tests")

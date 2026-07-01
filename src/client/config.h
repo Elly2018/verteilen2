@@ -22,18 +22,13 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_PATH_H
-#define COMMON_PATH_H
-#include <filesystem>
-#include "enum/app_type.h"
+#ifndef CLIENT_CONFIG_H
+#define CLIENT_CONFIG_H
 
-namespace fs = std::filesystem;
+// 1. Point the disk scanner to your sub-folder
+#define CROW_STATIC_DIRECTORY "/static/client/"
 
-namespace verteilen2 {
-
-    fs::path path_get_home();
-    fs::path path_get_workpath(const App_type type);
-
-}
+// 2. Map how browsers request these assets
+#define CROW_STATIC_ENDPOINT "/<path>"
 
 #endif
