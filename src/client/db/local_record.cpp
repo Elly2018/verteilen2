@@ -22,43 +22,16 @@
     SOFTWARE.
  */
 #include "local_record.h"
-#include <filesystem>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <verteilen2/path.h>
-#include "../data/appdata.h"
 
-namespace fs = std::filesystem;
+#include <SQLiteCpp/SQLiteCpp.h>
+#include "../data/appdata.h"
+#include "log/private.h"
 
 namespace verteilen2::client {
 
-    static void create_log_table(SQLite::Database& db) {
-        db.exec(R"SQL(
-            CREATE TABLE IF NOT EXISTS log (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                -- Automatically generates a valid RFC-4122 UUIDv4 string if not provided
-                job CHAR(36) NOT NULL DEFAULT (
-                    lower(hex(randomblob(4))) || '-' ||
-                    lower(hex(randomblob(2))) || '-4' ||
-                    substr(lower(hex(randomblob(2))), 2) || '-' ||
-                    substr('89ab', abs(random()) % 4 + 1, 1) || 
-                    substr(lower(hex(randomblob(2))), 2) || '-' ||
-                    lower(hex(randomblob(6)))
-                ),
-                title TEXT NOT NULL,
-                content TEXT,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        )SQL");
-    }
-
-    void init_database(App_data& data) {
-        fs::path t = path_get_workpath(App_type::Client);
-
-        t /= "record.db";
-
-        SQLite::Database db = SQLite::Database(t.string());
-
+    void init_database() {
+        SQLite::Database db = get_database();
         create_log_table(db);
+        insert_log_table("none", "Initialization", "Client has been activate.");
     }
-
 }
