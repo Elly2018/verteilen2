@@ -4,7 +4,7 @@ source build_all_amd64.sh
 
 cd ..
 
-version=$(< VERSION)
+version=$(< VERSION.txt)
 
 echo "Start packaging: $version"
 
