@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_ENUM_JOB_TYPE_H
-#define COMMON_STRUCT_ENUM_JOB_TYPE_H
+#ifndef COMMON_ENUM_JOB_TYPE_H
+#define COMMON_ENUM_JOB_TYPE_H
 
 namespace verteilen2 {
 

@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_CRON_H
-#define COMMON_STRUCT_DATA_CRON_H
+#ifndef COMMON_DATA_CRON_H
+#define COMMON_DATA_CRON_H
 #include "../vconst.h"
 #include "../data_field.h"
 

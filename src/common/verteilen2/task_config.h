@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_FIELD_H
-#define COMMON_STRUCT_FIELD_H
+#ifndef COMMON_TASK_CONFIG_H
+#define COMMON_TASK_CONFIG_H
 #include <cinttypes>
 
 namespace verteilen2 {

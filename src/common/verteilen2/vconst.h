@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_VCONST_H
-#define COMMON_STRUCT_VCONST_H
+#ifndef COMMON_VCONST_H
+#define COMMON_VCONST_H
 #include <cinttypes>
 
 namespace verteilen2 {

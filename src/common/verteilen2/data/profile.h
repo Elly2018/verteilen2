@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_PROFILE_H
-#define COMMON_STRUCT_DATA_PROFILE_H
+#ifndef COMMON_DATA_PROFILE_H
+#define COMMON_DATA_PROFILE_H
 #include <cinttypes>
 #include "../vconst.h"
 #include "../enum/profile_type.h"

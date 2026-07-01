@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_JOB_H
-#define COMMON_STRUCT_DATA_JOB_H
+#ifndef COMMON_DATA_JOB_H
+#define COMMON_DATA_JOB_H
 #include <unordered_map>
 #include <vector>
 #include <string>

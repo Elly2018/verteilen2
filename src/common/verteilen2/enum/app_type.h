@@ -22,16 +22,18 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_DATA_FIELD_H
-#define COMMON_DATA_FIELD_H
+#ifndef COMMON_ENUM_APP_TYPE_H
+#define COMMON_ENUM_APP_TYPE_H
 
 namespace verteilen2 {
 
-    struct Data_field {
-        char uuid[36];
-        bool vaild;
+    enum class App_type {
+        CLI = 0,
+        Master = 1,
+        Server = 2,
+        Client = 3,
     };
-
+    
 }
 
 #endif
