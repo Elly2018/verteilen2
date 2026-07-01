@@ -1,1 +1,29 @@
-<p>Testing for setting</p>
+<div class="hero bg-base-200">
+    <div class="hero-content text-center">
+        <div class="max-w-md">
+            <h1> Setting </h1>
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Server Address</legend>
+                <input id="server-address" type="text" class="input" placeholder="ws://127.0.0.1/ws/client"
+                    value="{{ current_server_address }}" />
+                <p class="label">The target server websocket address</p>
+            </fieldset>
+
+            <button class="btn btn-primary" hx-post="/api/connect_ws_server" hx-include="#server-address" hx-target="#setting-message">
+                Connect
+            </button>
+
+            <br />
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Maximum Execution</legend>
+                <input id="maximum-execution" type="number" class="input" placeholder="20"
+                    value="{{ current_maximum_execution }}" />
+                <p class="label">How many thread can this node spawn</p>
+            </fieldset>
+
+            <p id="setting-message" class="text-red-500"></p>
+        </div>
+    </div>
+</div>

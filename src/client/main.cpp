@@ -31,6 +31,7 @@ void web(){
     crow::SimpleApp app;
     register_static_route(app);
     register_template_route(app);
+    register_server_ws_route(app);
     app.bindaddr("127.0.0.1").port(18080).multithreaded().run();
 }
 
