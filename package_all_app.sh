@@ -4,7 +4,9 @@ source build_all_amd64.sh
 
 cd ..
 
-echo "Start packaging"
+version=$(< VERSION)
+
+echo "Start packaging: $version"
 
 mkdir -p package/verteilen-2-master
 mkdir -p package/verteilen-2-server
@@ -14,7 +16,7 @@ mkdir -p package/verteilen-2-client/DEBIAN
 mkdir -p package/verteilen-2-client/usr/bin
 mkdir -p package/verteilen-2-client/usr/share
 
-cp package/deb_client package/verteilen-2-client/DEBIAN/control
+sed "s|%VV%|$version|g" package/deb_client > package/verteilen-2-client/DEBIAN/control
 cp bin/client package/verteilen-2-client/usr/bin/verteilen-2-client
 cp -r bin/share/verteilen-2-client package/verteilen-2-client/usr/share/verteilen-2-client
 

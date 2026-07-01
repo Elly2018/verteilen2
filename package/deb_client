@@ -1,5 +1,5 @@
 Package: verteilen-2-client
-Version: 0.0.1
+Version: %VV%
 Section: shells
 Priority: optional
 Architecture: amd64

@@ -1,5 +1,5 @@
 Package: verteilen-2-server
-Version: 0.0.1
+Version: %VV%
 Section: shells
 Priority: optional
 Architecture: amd64
