@@ -24,11 +24,13 @@
 #pragma once
 #ifndef CLIENT_DATA_APPDATA_H
 #define CLIENT_DATA_APPDATA_H
+#include "../config.h"
+#include <crow.h>
 
 namespace verteilen2::client {
 
     struct App_data {
-        
+        crow::websocket::connection server_connection;
     };
 
 }
