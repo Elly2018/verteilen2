@@ -1,0 +1,7 @@
+Package: verteilen-2-server
+Version: 0.0.1
+Section: shells
+Priority: optional
+Architecture: amd64
+Maintainer: e87870823@gmail.com
+Description: Cluster server tools with web ui controller

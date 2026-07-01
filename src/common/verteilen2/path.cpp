@@ -74,7 +74,7 @@ namespace verteilen2 {
     }
 
     fs::path path_get_workpath(const App_type type) {
-        fs::path p = path_get_home() / "verteilen2";
+        fs::path p = path_get_home() / ".verteilen2";
         if(!fs::exists(p)) {
             fs::create_directories(p);
         }

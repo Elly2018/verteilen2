@@ -1,0 +1,7 @@
+Package: verteilen-2-client
+Version: 0.0.1
+Section: shells
+Priority: optional
+Architecture: amd64
+Maintainer: e87870823@gmail.com
+Description: Cluster node tools with web ui controller
