@@ -8,3 +8,6 @@ const PageType  = Object.freeze({
 let page = PageType.HOMEPAGE;
 
 
+function close_configuration() {
+    document.getElementById('config-dropdown').removeAttribute('open');
+}
