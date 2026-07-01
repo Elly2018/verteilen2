@@ -21,22 +21,16 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "proxy_ws.h"
+#pragma once
+#ifndef CLIENT_API_SERVER_WS_H
+#define CLIENT_API_SERVER_WS_H
+#include "../config.h"
+#include <crow.h>
 
-namespace verteilen2::master {
+namespace verteilen2::client {
 
-    void register_proxy_ws_route(crow::SimpleApp& app) {
-        CROW_WEBSOCKET_ROUTE(app, "/ws/proxy")
-        .onopen([&](crow::websocket::connection& conn){
-            
-        })
-        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-        
-        })
-        .onmessage([&](crow::websocket::connection& /*conn*/, const std::string& data, bool is_binary){
-
-        });
-    }
+    void register_server_ws_route(crow::SimpleApp& app);
 
 }
 
+#endif

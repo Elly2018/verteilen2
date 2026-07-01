@@ -21,17 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef MASTER_API_AUTHENTICATION_H
-#define MASTER_API_AUTHENTICATION_H
-#include "../config.h"
-#include <crow.h>
+#include "server_ws.h"
 
 namespace verteilen2::master {
 
-    void register_proxy_ws_route(crow::SimpleApp& app);
+    void register_server_ws_route(crow::SimpleApp& app) {
+        CROW_WEBSOCKET_ROUTE(app, "/ws/server")
+        .onopen([&](crow::websocket::connection& conn){
+            
+        })
+        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+        
+        })
+        .onmessage([&](crow::websocket::connection& /*conn*/, const std::string& data, bool is_binary){
+
+        });
+    }
 
 }
-
-#endif
 

@@ -26,4 +26,5 @@
 #define CLIENT_API_ALL_H
 #include "static.h"
 #include "template.h"
+#include "server_ws.h"
 #endif

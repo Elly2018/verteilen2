@@ -21,17 +21,16 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef MASTER_API_NODE_WS_H
-#define MASTER_API_NODE_WS_H
-#include "../config.h"
-#include <crow.h>
+#include "server_ws.h"
 
-namespace verteilen2::master {
+namespace verteilen2::client {
 
-    void register_node_ws_route(crow::SimpleApp& app);
+    void register_server_ws_route(crow::SimpleApp& app) {
+        CROW_ROUTE(app, "/api/connect_ws_server")
+        .methods(crow::HTTPMethod::POST)
+        ([](const crow::request& req) {
+            return crow::response(200, "YES");
+        });
+    }
 
 }
-
-#endif
-

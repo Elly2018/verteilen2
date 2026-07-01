@@ -26,12 +26,20 @@
 
 namespace verteilen2::client {
 
+    static void template_setting(crow::mustache::context& ctx) {
+        ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
+        ctx["current_maximum_execution"] = 20;
+
+    }
+
     static void register_template(crow::SimpleApp& app) {
         CROW_ROUTE(app, "/template/<path>")
         ([](const std::string& path) {
             crow::mustache::context ctx;
             
-            ctx["title"] = "Testing Title";
+            if(path == "setting") {
+                template_setting(ctx);
+            }
 
             auto template_page = crow::mustache::load("template/" + path + ".html");
 
