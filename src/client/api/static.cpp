@@ -44,7 +44,6 @@ namespace verteilen2::client {
         crow::mustache::set_global_base("static/client");
 
         register_index(app);
-
     }
 
 }

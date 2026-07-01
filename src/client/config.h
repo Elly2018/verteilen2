@@ -26,7 +26,7 @@
 #define CLIENT_CONFIG_H
 
 // 1. Point the disk scanner to your sub-folder
-#define CROW_STATIC_DIRECTORY "/static/client/"
+#define CROW_STATIC_DIRECTORY "static/client/"
 
 // 2. Map how browsers request these assets
 #define CROW_STATIC_ENDPOINT "/<path>"

@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="css/index.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <script src="/js/index.js"></script>
+    <script src="js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
         integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
         crossorigin="anonymous"></script>
@@ -28,7 +30,7 @@
                 <button class="btn btn-ghost text-xl"
                         hx-get="/template/homepage"
                         hx-target="#app-ctx"
-                        hx-swap="innherHTML">
+                        hx-swap="innerHTML">
                     daisyUI
                 </button>
             </div>
@@ -37,29 +39,31 @@
                     <li>
                         <button hx-get="/template/viewer"
                                 hx-target="#app-ctx"
-                                hx-swap="innherHTML">
+                                hx-swap="innerHTML">
                             Viewer
                         </button>
                     </li>
                     <li>
                         <button hx-get="/template/terminal"
                                 hx-target="#app-ctx"
-                                hx-swap="innherHTML">
+                                hx-swap="innerHTML">
                             Terminal
                         </button>
                     </li>
                     <li>
-                        <details>
+                        <details id="config-dropdown">
                             <summary>Configuration</summary>
                             <ul class="p-2 bg-base-100 w-40 z-1">
                                 <li><button hx-get="/template/setting"
                                         hx-target="#app-ctx"
-                                        hx-swap="innherHTML">
+                                        hx-swap="innerHTML"
+                                        hx-on:click="close_configuration()">
                                     Setting
                                 </button></li>
                                 <li><button hx-get="/template/log"
                                         hx-target="#app-ctx"
-                                        hx-swap="innherHTML">
+                                        hx-swap="innerHTML"
+                                        hx-on:click="close_configuration()">
                                     Log
                                 </button></li>
                             </ul>
@@ -87,8 +91,9 @@
         </div>
     </div>
 
-    <div id="app-ctx">
-
+    <div id="app-ctx" hx-get="/template/homepage" 
+        hx-trigger="load" 
+        hx-swap="innerHTML">
     </div>
 </body>
 
