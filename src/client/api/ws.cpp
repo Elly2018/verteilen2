@@ -21,22 +21,26 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "server_ws.h"
+#include "ws.h"
 
 namespace verteilen2::client {
 
-    static void register_connect_request(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/api/connect_ws_server")
-        .methods(crow::HTTPMethod::POST)
-        ([&app](const crow::request& req) {
-
-            return crow::response(200, "YES");
+    static void register_realtime_handle_request(crow::SimpleApp& app) {
+        CROW_WEBSOCKET_ROUTE(app, "/ws")
+        .onopen([&](crow::websocket::connection& conn){
+            
+        })
+        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+            
+        })
+        .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
+            
         });
     }
 
-    void register_server_ws_route(crow::SimpleApp& app) {
+    void register_ws_route(crow::SimpleApp& app) {
         
-        register_connect_request(app);
+        register_realtime_handle_request(app);
 
     }
 

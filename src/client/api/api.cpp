@@ -21,11 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_API_ALL_H
-#define CLIENT_API_ALL_H
 #include "api.h"
-#include "static.h"
-#include "template.h"
-#include "ws.h"
-#endif
+
+namespace verteilen2::client {
+
+    static void register_connect_request(crow::SimpleApp& app) {
+        CROW_ROUTE(app, "/api/connect_ws_server")
+        .methods(crow::HTTPMethod::POST)
+        ([&app](const crow::request& req) {
+            return crow::response(200, "YES");
+        });
+    }
+
+    void register_connect_server_ws_route(crow::SimpleApp& app) {
+        
+        register_connect_request(app);
+
+    }
+
+}

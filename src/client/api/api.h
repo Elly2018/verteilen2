@@ -22,14 +22,14 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_API_SERVER_WS_H
-#define CLIENT_API_SERVER_WS_H
+#ifndef CLIENT_API_API_H
+#define CLIENT_API_API_H
 #include "../config.h"
 #include <crow.h>
 
 namespace verteilen2::client {
 
-    void register_server_ws_route(crow::SimpleApp& app);
+    void register_connect_server_ws_route(crow::SimpleApp& app);
 
 }
 
