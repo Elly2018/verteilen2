@@ -21,19 +21,30 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_PATH_H
-#define COMMON_PATH_H
-#include <filesystem>
-#include "enum/app_type.h"
+#include "static.h"
+#include <crow.h>
 
-namespace fs = std::filesystem;
+namespace verteilen2::client {
 
-namespace verteilen2 {
+    static void register_index(crow::SimpleApp& app) {
+        CROW_ROUTE(app, "/")
+        ([]() {
+            crow::mustache::context ctx;
+            
+            ctx["title"] = "Testing Title";
 
-    fs::path path_get_home();
-    fs::path path_get_workpath(const App_type type);
+            auto template_page = crow::mustache::load("index.html");
+
+            return template_page.render(ctx);
+        });
+    }
+
+    void register_static_route(crow::SimpleApp& app) {
+
+        crow::mustache::set_global_base("static/client");
+
+        register_index(app);
+
+    }
 
 }
-
-#endif

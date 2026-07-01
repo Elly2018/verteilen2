@@ -22,17 +22,14 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_PATH_H
-#define COMMON_PATH_H
-#include <filesystem>
-#include "enum/app_type.h"
+#ifndef CLIENT_API_TEMPLATE_H
+#define CLIENT_API_TEMPLATE_H
+#include "../config.h"
+#include <crow.h>
 
-namespace fs = std::filesystem;
+namespace verteilen2::client {
 
-namespace verteilen2 {
-
-    fs::path path_get_home();
-    fs::path path_get_workpath(const App_type type);
+    void register_template_route(crow::SimpleApp& app);
 
 }
 

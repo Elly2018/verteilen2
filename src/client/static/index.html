@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
+        integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div id="app-nav" class="max-lg:collapse bg-base-200 lg:mb-48 shadow-sm w-full rounded-md">
+        <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
+        <label for="navbar-1-toggle" class="fixed inset-0 hidden max-lg:peer-checked:block"></label>
+        <div class="collapse-title navbar">
+            <div class="navbar-start">
+                <label for="navbar-1-toggle" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </label>
+                <button class="btn btn-ghost text-xl"
+                        hx-get="/template/homepage"
+                        hx-target="#app-ctx"
+                        hx-swap="innherHTML">
+                    daisyUI
+                </button>
+            </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                    <li>
+                        <button hx-get="/template/viewer"
+                                hx-target="#app-ctx"
+                                hx-swap="innherHTML">
+                            Viewer
+                        </button>
+                    </li>
+                    <li>
+                        <button hx-get="/template/terminal"
+                                hx-target="#app-ctx"
+                                hx-swap="innherHTML">
+                            Terminal
+                        </button>
+                    </li>
+                    <li>
+                        <details>
+                            <summary>Configuration</summary>
+                            <ul class="p-2 bg-base-100 w-40 z-1">
+                                <li><button hx-get="/template/setting"
+                                        hx-target="#app-ctx"
+                                        hx-swap="innherHTML">
+                                    Setting
+                                </button></li>
+                                <li><button hx-get="/template/log"
+                                        hx-target="#app-ctx"
+                                        hx-swap="innherHTML">
+                                    Log
+                                </button></li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-end">
+                <input type="text" placeholder="Search" class="input input-bordered w-64 lg:w-auto" />
+            </div>
+        </div>
+
+        <div class="collapse-content lg:hidden z-1">
+            <ul class="menu">
+                <li><button>Item 1</button></li>
+                <li>
+                    <button>Parent</button>
+                    <ul>
+                        <li><button>Submenu 1</button></li>
+                        <li><button>Submenu 2</button></li>
+                    </ul>
+                </li>
+                <li><button>Item 3</button></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="app-ctx">
+
+    </div>
+</body>
+
+</html>
