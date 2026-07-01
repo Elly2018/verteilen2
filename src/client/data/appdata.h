@@ -30,7 +30,9 @@
 namespace verteilen2::client {
 
     struct App_data {
-        crow::websocket::connection server_connection;
+        char server_address[128];
+        bool server_alive;
+        int32_t connection_retry;
     };
 
 }
