@@ -9,12 +9,17 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/src/common"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"
+    "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
 )
 
 link_libraries(
     common 
     Crow::Crow
     mdns_cpp::mdns_cpp
+    SQLiteCpp
+    sqlite3
+    pthread
+    dl
 )
 
 add_executable(client

@@ -16,6 +16,7 @@ option(MDNS_CPP_BUILD_EXAMPLE "Build example executables" OFF)
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/common")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/crow")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/mdns")
+add_subdirectory("${CMAKE_SOURCE_DIR}/lib/sqlite")
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/cli")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/client")

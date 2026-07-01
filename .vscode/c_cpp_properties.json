@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/lib/crow/include",
-                "${workspaceFolder}/lib/mdns/include"
+                "${workspaceFolder}/lib/mdns/include",
+                "${workspaceFolder}/lib/sqlite/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
