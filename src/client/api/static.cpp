@@ -41,8 +41,6 @@ namespace verteilen2::client {
 
     void register_static_route(crow::SimpleApp& app) {
 
-        crow::mustache::set_global_base("static/client");
-
         register_index(app);
     }
 

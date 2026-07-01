@@ -30,6 +30,7 @@ using namespace verteilen2::client;
 
 void web(){
     crow::SimpleApp app;
+    crow::mustache::set_global_base(CROW_STATIC_DIRECTORY);
     register_static_route(app);
     register_template_route(app);
     register_server_ws_route(app);
