@@ -26,66 +26,14 @@
 
 namespace verteilen2::client {
 
-    static void register_homepage(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/template/homepage")
-        ([]() {
+    static void register_template(crow::SimpleApp& app) {
+        CROW_ROUTE(app, "/template/<path>")
+        ([](const std::string& path) {
             crow::mustache::context ctx;
             
             ctx["title"] = "Testing Title";
 
-            auto template_page = crow::mustache::load("template/homepage.html");
-
-            return template_page.render(ctx);
-        });
-    }
-
-    static void register_viewer(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/template/viewer")
-        ([]() {
-            crow::mustache::context ctx;
-            
-            ctx["title"] = "Testing Title";
-
-            auto template_page = crow::mustache::load("template/viewer.html");
-
-            return template_page.render(ctx);
-        });
-    }
-
-    static void register_terminal(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/template/terminal")
-        ([]() {
-            crow::mustache::context ctx;
-            
-            ctx["title"] = "Testing Title";
-
-            auto template_page = crow::mustache::load("template/terminal.html");
-
-            return template_page.render(ctx);
-        });
-    }
-
-    static void register_setting(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/template/setting")
-        ([]() {
-            crow::mustache::context ctx;
-            
-            ctx["title"] = "Testing Title";
-
-            auto template_page = crow::mustache::load("template/setting.html");
-
-            return template_page.render(ctx);
-        });
-    }
-
-    static void register_log(crow::SimpleApp& app) {
-        CROW_ROUTE(app, "/template/log")
-        ([]() {
-            crow::mustache::context ctx;
-            
-            ctx["title"] = "Testing Title";
-
-            auto template_page = crow::mustache::load("template/log.html");
+            auto template_page = crow::mustache::load("template/" + path + ".html");
 
             return template_page.render(ctx);
         });
@@ -95,11 +43,7 @@ namespace verteilen2::client {
 
         crow::mustache::set_global_base("static/client");
 
-        register_homepage(app);
-        register_viewer(app);
-        register_terminal(app);
-        register_setting(app);
-        register_log(app);
+        register_template(app);
 
     }
 
