@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_PROJECT_H
-#define COMMON_STRUCT_DATA_PROJECT_H
+#ifndef COMMON_DATA_PROJECT_H
+#define COMMON_DATA_PROJECT_H
 #include <cinttypes>
 #include <vector>
 #include "../vconst.h"

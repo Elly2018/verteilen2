@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_VAULT_H
-#define COMMON_STRUCT_DATA_VAULT_H
+#ifndef COMMON_DATA_VAULT_H
+#define COMMON_DATA_VAULT_H
 #include <unordered_map>
 #include <string>
 #include "../vconst.h"

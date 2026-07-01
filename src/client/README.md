@@ -2,3 +2,8 @@
 
 Compute agent for the verteilen application
 
+## Features
+
+- [ ] WebUI
+
+## Screenshots

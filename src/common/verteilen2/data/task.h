@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_TASK_H
-#define COMMON_STRUCT_DATA_TASK_H
+#ifndef COMMON_DATA_TASK_H
+#define COMMON_DATA_TASK_H
 #include <vector>
 #include "../vconst.h"
 #include "../data_field.h"

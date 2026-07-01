@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_STRUCT_DATA_ALL_H
-#define COMMON_STRUCT_DATA_ALL_H
+#ifndef COMMON_DATA_ALL_H
+#define COMMON_DATA_ALL_H
 #include "cron.h"
 #include "job.h"
 #include "project.h"

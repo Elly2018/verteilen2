@@ -22,15 +22,17 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_DATA_FIELD_H
-#define COMMON_DATA_FIELD_H
+#ifndef COMMON_PATH_H
+#define COMMON_PATH_H
+#include <filesystem>
+#include "../enum/app_type.h"
+
+namespace fs = std::filesystem;
 
 namespace verteilen2 {
 
-    struct Data_field {
-        char uuid[36];
-        bool vaild;
-    };
+    fs::path path_get_home();
+    fs::path path_get_workpath(const App_type type);
 
 }
 
