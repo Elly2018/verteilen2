@@ -21,13 +21,16 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "static.h"
-#include <crow.h>
+#pragma once
+#ifndef SERVER_DATA_APPDATA_H
+#define SERVER_DATA_APPDATA_H
 
-namespace verteilen2::master {
+namespace verteilen2::server {
 
-    void register_static_route(crow::SimpleApp& app) {
-        app.static_file("/", "static/master");
-    }
+    struct App_data {
+        
+    };
 
 }
+
+#endif

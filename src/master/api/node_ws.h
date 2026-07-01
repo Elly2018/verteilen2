@@ -21,13 +21,17 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "static.h"
+#pragma once
+#ifndef MASTER_API_AUTHENTICATION_H
+#define MASTER_API_AUTHENTICATION_H
+#include "../config.h"
 #include <crow.h>
 
 namespace verteilen2::master {
 
-    void register_static_route(crow::SimpleApp& app) {
-        app.static_file("/", "static/master");
-    }
+    void register_node_ws_route(crow::SimpleApp& app);
 
 }
+
+#endif
+

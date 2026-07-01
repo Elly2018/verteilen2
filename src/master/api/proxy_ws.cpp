@@ -21,13 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "static.h"
-#include <crow.h>
+#include "proxy_ws.h"
 
 namespace verteilen2::master {
 
-    void register_static_route(crow::SimpleApp& app) {
-        app.static_file("/", "static/master");
+    void register_proxy_ws_route(crow::SimpleApp& app) {
+        CROW_WEBSOCKET_ROUTE(app, "/ws/proxy")
+        .onopen([&](crow::websocket::connection& conn){
+            
+        })
+        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+        
+        })
+        .onmessage([&](crow::websocket::connection& /*conn*/, const std::string& data, bool is_binary){
+
+        });
     }
 
 }
+

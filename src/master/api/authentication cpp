@@ -21,16 +21,19 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef PROXY_DATA_APPDATA_H
-#define PROXY_DATA_APPDATA_H
+#include "authentication.h"
 
-namespace verteilen2::proxy {
+namespace verteilen2::master {
 
-    struct App_data {
+    void register_authentication_route(crow::SimpleApp& app) {
+
+        CROW_ROUTE(app, "/api/authentication")
+        ([](const crow::request& req, crow::response& res) {
+            res.set_static_file_info("static/master/index.html");
+            res.end();
+        });
         
-    };
+    }
 
 }
 
-#endif

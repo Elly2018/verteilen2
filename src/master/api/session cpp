@@ -21,13 +21,21 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "static.h"
-#include <crow.h>
+#include "session.h"
 
 namespace verteilen2::master {
 
-    void register_static_route(crow::SimpleApp& app) {
-        app.static_file("/", "static/master");
+    void register_session_route(crow::SimpleApp& app) {
+
+        CROW_ROUTE(app, "/api/session")
+        ([](const crow::request& req, crow::response& res) {
+            if(req.method == crow::HTTPMethod::Get) {
+
+            }
+            res.set_static_file_info("static/master/index.html");
+            res.end();
+        });
+
     }
 
 }
