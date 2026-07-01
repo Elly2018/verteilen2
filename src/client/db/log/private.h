@@ -22,21 +22,16 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_LOCAL_RECORD_H
-#define CLIENT_DB_LOCAL_RECORD_H
-#include <cinttypes>
-#include <string>
+#ifndef CLIENT_DB_LOG_PRIVATE_H
+#define CLIENT_DB_LOG_PRIVATE_H
+#include <SQLiteCpp/SQLiteCpp.h>
 
 namespace verteilen2::client {
 
-    void init_database();
-
-    void create_log_table();
-    void insert_log_table(const char job[36], const std::string title, const std::string content);
-    void drop_log_table();
-    void get_latest_log_table(const int32_t amount);
-    void get_latest_log_table(const std::string last_timestamp);
-    void get_history_log_table(const int32_t amount, const std::string top_timestamp);
+    SQLite::Database get_database();
+    void create_log_table(SQLite::Database& db);
+    void drop_log_table(SQLite::Database& db);
+    void insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
 }
 
 #endif

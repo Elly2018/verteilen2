@@ -21,9 +21,10 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
+#include <mdns_cpp/mdns.hpp>
+#include "db/local_record.h"
 #include "data/appdata.h"
 #include "api/all.h"
-#include <mdns_cpp/mdns.hpp>
 
 using namespace verteilen2;
 using namespace verteilen2::client;
@@ -39,6 +40,7 @@ void web(){
 
 int main(){
     App_data data = App_data();
+    init_database();
 
     mdns_cpp::mDNS mdns;
     mdns.setServiceHostname("AirForce1");
