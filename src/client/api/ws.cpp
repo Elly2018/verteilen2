@@ -32,7 +32,11 @@ using json = nlohmann::json;
 namespace verteilen2::client {
     static std::unordered_map<crow::websocket::connection*, std::string> ws_clients;
 
-    static void register_realtime_handle_request(WebServer& app) {
+    static void apply_client_update(App_data& app_data, crow::websocket::connection& conn) {
+        json update_package = json::object();
+    }
+
+    static void register_realtime_handle_request(App_data& app_data, WebServer& app) {
         CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
             spdlog::info("[web] websocket connection successfully established.");
@@ -48,12 +52,14 @@ namespace verteilen2::client {
             if(jdata["key"].is_string()){
                 ws_clients.insert({ &conn, jdata["key"].get<std::string>() });
             }
+
+            apply_client_update(app_data, conn);
         });
     }
 
-    void register_ws_route(WebServer& app) {
+    void register_ws_route(App_data& app_data) {
         
-        register_realtime_handle_request(app);
+        register_realtime_handle_request(app_data, app_data.app);
 
     }
 

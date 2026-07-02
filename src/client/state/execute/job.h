@@ -25,6 +25,7 @@
 #ifndef CLIENT_STATE_EXECUTE_JOB_H
 #define CLIENT_STATE_EXECUTE_JOB_H
 #include <cinttypes>
+#include <array>
 #include <string>
 #include "../../data/appdata.h"
 #include <verteilen2/proto_gen/execute_job.pb-c.h>
@@ -33,6 +34,9 @@ namespace verteilen2::client {
 
     bool execute_job_run(App_data& app_data, Verteilen2__ExecuteJob* job);
     int32_t execute_worker_idle(App_data& app_data);
+    int32_t execute_total_idle(App_data& app_data);
+    int32_t execute_total_running(App_data& app_data);
+    std::array<bool, 60> execute_total_running_array(App_data& app_data);
 }
 
 #endif

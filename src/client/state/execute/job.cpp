@@ -67,4 +67,32 @@ namespace verteilen2::client {
         return -1;
     }
 
+    int32_t execute_total_idle(App_data& app_data) {
+        int32_t c;
+        for(int32_t i = 0; i < 60; i++){
+            if(app_data.workers[i].state.load() != ThreadState::Running){
+                c++;
+            }
+        }
+        return c;
+    }
+
+    int32_t execute_total_running(App_data& app_data) {
+        int32_t c;
+        for(int32_t i = 0; i < 60; i++){
+            if(app_data.workers[i].state.load() == ThreadState::Running){
+                c++;
+            }
+        }
+        return c;
+    }
+
+    std::array<bool, 60> execute_total_running_array(App_data& app_data) {
+        std::array<bool, 60> a;
+        for(int32_t i = 0; i < 60; i++){
+            a[i] = app_data.workers[i].state.load() == ThreadState::Running;
+        }
+        return a;
+    }
+
 }
