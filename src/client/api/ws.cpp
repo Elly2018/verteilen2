@@ -23,24 +23,31 @@
  */
 #include "ws.h"
 #include <spdlog/spdlog.h>
+#include <unordered_map>
 #include <nlohmann/json.hpp>
 #include "../db/local_record.h"
 
 using json = nlohmann::json;
 
 namespace verteilen2::client {
+    static std::unordered_map<crow::websocket::connection*, std::string> ws_clients;
 
     static void register_realtime_handle_request(WebServer& app) {
         CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
             spdlog::info("[web] websocket connection successfully established.");
-            
+            ws_clients.insert({ &conn, "" });
         })
         .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
             spdlog::info("[web] websocket connection successfully closed.");
+            ws_clients.erase(&conn);
         })
-        .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
+        .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
             if(!json::accept(data) || is_binary) return;
+            json jdata = json::parse(data);
+            if(jdata["key"].is_string()){
+                ws_clients.insert({ &conn, jdata["key"].get<std::string>() });
+            }
         });
     }
 
