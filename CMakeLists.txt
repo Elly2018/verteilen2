@@ -10,6 +10,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin/bin)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(PROTOBUF_C REQUIRED IMPORTED_TARGET libprotobuf-c)
+
 enable_testing()
 
 option(MDNS_CPP_BUILD_EXAMPLE "Build example executables" OFF)
@@ -19,6 +22,7 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/lib/mdns")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/sqlite")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/spdlog")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/libhv")
+add_subdirectory("${CMAKE_SOURCE_DIR}/lib/uuid")
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/common")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/cli")

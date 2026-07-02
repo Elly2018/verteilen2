@@ -8,11 +8,13 @@ file(GLOB_RECURSE CLIENT_SOURCE CONFIGURE_DEPENDS
 include_directories(
     "${CMAKE_SOURCE_DIR}/src/common"
     "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
+    "${CMAKE_SOURCE_DIR}/lib/json/include"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
+    "${CMAKE_SOURCE_DIR}/lib/uuid/include"
 )
 
 link_libraries(
@@ -25,7 +27,8 @@ link_libraries(
     dl
     spdlog
     hv
-    ${PROTOBUF_C_LIBRARIES}
+    stduuid
+    PkgConfig::PROTOBUF_C
 )
 
 add_executable(client

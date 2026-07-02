@@ -37,3 +37,12 @@ ws.onmessage = (event) => {
 ws.onerror = (ev) => {
     console.error("[web] websocket connection error ocurred: ", ev);
 }
+
+setInterval(() => {
+    const value = cookieStore.get('key');
+    if(value != undefined && ws.readyState == WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+            key: value
+        }))
+    }
+}, 1000);

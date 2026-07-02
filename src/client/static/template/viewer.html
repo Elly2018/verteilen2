@@ -1,19 +1,24 @@
 <div id="viewer-content">
     <button id="viewer-content-button" class="btn btn-active btn-primary"
-            hx-delete="/template/viewer"
+            hx-get="/template/viewer-clear"
             hx-target="#app-ctx"
-            hx-trigger="clear-viewer"
             hx-swap="innerHTML">
         Clear
     </button>
     {{#updating}}
-    <button class="btn btn-active btn-error">
+    <button class="btn btn-active btn-error"
+            hx-get="/template/viewer-stop-update"
+            hx-target="#app-ctx"
+            hx-swap="innerHTML">
         Stop-Update
     </button>
     {{/updating}}
 
     {{^updating}}
-    <button class="btn btn-active btn-infp">
+    <button class="btn btn-active btn-infp"
+            hx-get="/template/viewer-start-update"
+            hx-target="#app-ctx"
+            hx-swap="innerHTML">
         Start-Update
     </button>
     {{/updating}}

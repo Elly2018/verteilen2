@@ -23,6 +23,7 @@
  */
 #include "template.h"
 #include <spdlog/spdlog.h>
+#include <uuid.h>
 #include <nlohmann/json.hpp>
 #include "../config.h"
 #include "../db/local_record.h"
@@ -31,6 +32,20 @@
 using json = nlohmann::json;
 
 namespace verteilen2::client {
+
+    static std::string generate_uuid(){
+        std::random_device rd;
+        std::array<unsigned int, 8> seed_data;
+        std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
+        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
+        std::mt19937 generator(seq);
+        
+        uuids::uuid_random_generator gen(&generator);
+        uuids::uuid id = gen();
+        std::string uuid_str = uuids::to_string(id);
+
+        return uuid_str;
+    }
 
     static crow::mustache::context json_to_mustache(const nlohmann::json& j) {
         crow::mustache::context ctx;
@@ -69,34 +84,49 @@ namespace verteilen2::client {
         ctx["current_maximum_execution"] = 20;
     }
 
-    static void template_viewer(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
-        
-        Session::context& session_ctx = app.get_context<Session>(req);
+    static void template_viewer(WebServer& app, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
 
         json res = json::object();
         get_latest_log_table(Init_log_amount, res);
 
         crow::mustache::context log_rows = json_to_mustache(res);
 
+        session_ctx.set("rows", std::move(log_rows["data"]));
         ctx["log_rows"] = std::move(log_rows["data"]);
+        ctx["updating"] = session_ctx.contains("update") && session_ctx.get<bool>("update");
     }
 
     static void register_template(WebServer& app) {
         CROW_ROUTE(app, "/template/<path>")
+        .methods(crow::HTTPMethod::GET)
         ([&app](const crow::request& req, const std::string& path) {
             crow::mustache::context ctx;
+            std::string filename = path;
+            Session::context& session_ctx = app.get_context<Session>(req);
+            crow::CookieParser::context& cookie_ctx = app.get_context<crow::CookieParser>(req);
+
+            if(cookie_ctx.get_cookie("key").empty()){
+                cookie_ctx.set_cookie("key", generate_uuid()).path("/").httponly();
+            }
             
-            if(path == "setting") {
+            if(path.starts_with("setting")) {
                 template_setting(app, req, ctx);
             }
-            else if(path == "viewer") {
-                if(req.method == crow::HTTPMethod::DELETE) {
+            else if(path.starts_with("viewer")) {
+                if(path == "viewer-clear") {
                     drop_log_table();
                 }
-                template_viewer(app, req, ctx);
+                else if (path == "viewer-start-update") {
+                    session_ctx.set<bool>("update", true);
+                }
+                else if (path == "viewer-stop-update") {
+                    session_ctx.set<bool>("update", false);
+                }
+                filename = "viewer";
+                template_viewer(app, req, ctx, session_ctx);
             }
 
-            auto template_page = crow::mustache::load("template/" + path + ".html");
+            auto template_page = crow::mustache::load("template/" + filename + ".html");
 
             return template_page.render(ctx);
         });
