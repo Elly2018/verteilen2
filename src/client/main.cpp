@@ -22,6 +22,7 @@
     SOFTWARE.
  */
 #include <mdns_cpp/mdns.hpp>
+#include <spdlog/spdlog.h>
 #include "db/local_record.h"
 #include "data/appdata.h"
 #include "api/all.h"
@@ -29,7 +30,20 @@
 using namespace verteilen2;
 using namespace verteilen2::client;
 
-void web(){
+static void db_run(){
+    spdlog::info("Initializing database...");
+    init_database();
+}
+
+static void mDNS_run(){
+    spdlog::info("Initializing mDNS service...");
+    mdns_cpp::mDNS mdns;
+    mdns.setServiceHostname("verteilen-2-client:");
+    mdns.startService();
+}
+
+static void web_run(){
+    spdlog::info("Initializing web service...");
     crow::SimpleApp app;
     crow::mustache::set_global_base(CROW_STATIC_DIRECTORY);
     register_static_route(app);
@@ -41,11 +55,7 @@ void web(){
 
 int main(){
     App_data data = App_data();
-    init_database();
-
-    mdns_cpp::mDNS mdns;
-    mdns.setServiceHostname("AirForce1");
-    mdns.startService();
-
-    web();
+    db_run();
+    mDNS_run();
+    web_run();
 }
