@@ -24,6 +24,8 @@
 #pragma once
 #ifndef CLIENT_DATA_APPDATA_H
 #define CLIENT_DATA_APPDATA_H
+#include <cstdint>
+#include <boost/beast.hpp>
 #include "../config.h"
 #include <crow.h>
 
@@ -33,6 +35,7 @@ namespace verteilen2::client {
         char server_address[128];
         bool server_alive;
         int32_t connection_retry;
+        boost::beast::websocket::stream<boost::beast::tcp_stream> ws_stream;
     };
 
 }

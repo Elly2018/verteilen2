@@ -29,6 +29,18 @@ namespace verteilen2::client {
         CROW_ROUTE(app, "/api/connect_ws_server")
         .methods(crow::HTTPMethod::POST)
         ([&app](const crow::request& req) {
+            crow::json::rvalue json_data = crow::json::load(req.body);
+
+            if (!json_data) {
+                return crow::response(400, "Invalid JSON payload");
+            }
+
+            if (!json_data.has("server-address")) {
+                return crow::response(400, "Missing required key: server-address");
+            }
+
+            const auto& server_address = json_data["server-address"];
+
             return crow::response(200, "YES");
         });
     }
