@@ -35,7 +35,7 @@ namespace verteilen2::client {
         char server_address[128];
         bool server_alive;
         int32_t connection_retry;
-        hv::WebSocketClient* ws_client;
+        hv::WebSocketClient ws_client;
     };
 
 }
