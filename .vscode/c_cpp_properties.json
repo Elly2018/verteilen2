@@ -6,7 +6,10 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/lib/crow/include",
                 "${workspaceFolder}/lib/mdns/include",
-                "${workspaceFolder}/lib/sqlite/include"
+                "${workspaceFolder}/lib/sqlite/include",
+                "${workspaceFolder}/lib/spdlog/include",
+                "${workspaceFolder}/lib/asio/include",
+                "${workspaceFolder}/lib/beast/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
