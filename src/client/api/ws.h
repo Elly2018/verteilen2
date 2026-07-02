@@ -25,12 +25,11 @@
 #ifndef CLIENT_API_WS_H
 #define CLIENT_API_WS_H
 #include <cinttypes>
-#include <crow.h>
 #include "../config.h"
 
 namespace verteilen2::client {
     
-    void register_ws_route(crow::SimpleApp& app);
+    void register_ws_route(WebServer& app);
 
 }
 

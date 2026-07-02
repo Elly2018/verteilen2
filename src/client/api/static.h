@@ -24,12 +24,11 @@
 #pragma once
 #ifndef CLIENT_API_STATIC_H
 #define CLIENT_API_STATIC_H
-#include <crow.h>
 #include "../config.h"
 
 namespace verteilen2::client {
 
-    void register_static_route(crow::SimpleApp& app);
+    void register_static_route(WebServer& app);
 
 }
 

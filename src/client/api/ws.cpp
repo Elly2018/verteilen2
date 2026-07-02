@@ -30,7 +30,7 @@ using json = nlohmann::json;
 
 namespace verteilen2::client {
 
-    static void register_realtime_handle_request(crow::SimpleApp& app) {
+    static void register_realtime_handle_request(WebServer& app) {
         CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
             spdlog::info("[web] websocket connection successfully established.");
@@ -44,7 +44,7 @@ namespace verteilen2::client {
         });
     }
 
-    void register_ws_route(crow::SimpleApp& app) {
+    void register_ws_route(WebServer& app) {
         
         register_realtime_handle_request(app);
 

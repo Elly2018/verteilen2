@@ -31,7 +31,7 @@
 
 namespace verteilen2::client {
 
-    static void register_index(crow::SimpleApp& app) {
+    static void register_index(WebServer& app) {
         CROW_ROUTE(app, "/")
         .methods(crow::HTTPMethod::GET)
         ([]() {
@@ -45,7 +45,7 @@ namespace verteilen2::client {
         });
     }
 
-    static void register_resource(crow::SimpleApp& app) {
+    static void register_resource(WebServer& app) {
         CROW_ROUTE(app, "/css/<path>")
         .methods(crow::HTTPMethod::GET)
         ([](const std::string& path) {
@@ -113,7 +113,7 @@ namespace verteilen2::client {
         });
     }
 
-    void register_static_route(crow::SimpleApp& app) {
+    void register_static_route(WebServer& app) {
 
         register_index(app);
         register_resource(app);
