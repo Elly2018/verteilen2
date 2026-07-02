@@ -26,11 +26,9 @@
 #define CLIENT_CONFIG_H
 
 // 1. Point the disk scanner to your sub-folder
-#undef CROW_STATIC_DIRECTORY 
-#define CROW_STATIC_DIRECTORY "../share/verteilen-2-client/"
+#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-client/"
 
 // 2. Map how browsers request these assets
-#undef CROW_STATIC_ENDPOINT 
-#define CROW_STATIC_ENDPOINT "/<path>"
+#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
 
 #endif

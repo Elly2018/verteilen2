@@ -63,8 +63,8 @@ static void web_run(){
     crow::logger::setHandler(&custom_bridge);
     
     spdlog::info("Initializing web service...");
+    crow::mustache::set_global_base(VERTEILEN2_STATIC_DIRECTORY);
     crow::SimpleApp app;
-    crow::mustache::set_global_base(CROW_STATIC_DIRECTORY);
     register_static_route(app);
     register_template_route(app);
     register_connect_server_ws_route(app);

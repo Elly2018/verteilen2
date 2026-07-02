@@ -24,8 +24,8 @@
 #pragma once
 #ifndef CLIENT_API_STATIC_H
 #define CLIENT_API_STATIC_H
-#include "../config.h"
 #include <crow.h>
+#include "../config.h"
 
 namespace verteilen2::client {
 

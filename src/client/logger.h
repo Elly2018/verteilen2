@@ -25,6 +25,7 @@
 #ifndef CLIENT_LOGGER_H
 #define CLIENT_LOGGER_H
 #include <crow.h>
+#include "config.h"
 #include <spdlog/spdlog.h>
 
 class CrowSpdlogBridge : public crow::ILogHandler {

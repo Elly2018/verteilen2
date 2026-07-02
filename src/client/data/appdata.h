@@ -28,8 +28,8 @@
 #include <cstdint>
 #include <hv/WebSocketClient.h>
 #include <hv/WebSocketServer.h>
-#include "../config.h"
 #include <crow.h>
+#include "../config.h"
 #include "worker.h"
 
 namespace verteilen2::client {

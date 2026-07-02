@@ -24,10 +24,13 @@
 #pragma once
 #ifndef CLIENT_API_WS_H
 #define CLIENT_API_WS_H
-#include "../config.h"
+#include <cinttypes>
 #include <crow.h>
+#include "../config.h"
 
 namespace verteilen2::client {
+
+    constexpr int32_t Init_log_amount = 30;
 
     void register_ws_route(crow::SimpleApp& app);
 

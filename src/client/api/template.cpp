@@ -23,6 +23,7 @@
  */
 #include "template.h"
 #include <crow.h>
+#include "../config.h"
 
 namespace verteilen2::client {
 

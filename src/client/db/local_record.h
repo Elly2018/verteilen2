@@ -26,15 +26,18 @@
 #define CLIENT_DB_LOCAL_RECORD_H
 #include <cinttypes>
 #include <string>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace verteilen2::client {
 
     void init_database();
 
-    void create_log_table();
-    void insert_log_table(const char job[36], const std::string title, const std::string content);
-    void drop_log_table();
-    void get_latest_log_table(const int32_t amount);
+    int32_t create_log_table();
+    int32_t insert_log_table(const char job[36], const std::string title, const std::string content);
+    int32_t drop_log_table();
+    int32_t get_latest_log_table(const int32_t amount, json& result);
     void get_latest_log_table(const std::string last_timestamp);
     void get_history_log_table(const int32_t amount, const std::string top_timestamp);
 }
