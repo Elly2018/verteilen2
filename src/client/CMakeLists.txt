@@ -11,12 +11,10 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
-    "${CMAKE_SOURCE_DIR}/lib/asio/include"
-    "${CMAKE_SOURCE_DIR}/lib/beast/include"
+    "${CMAKE_SOURCE_DIR}/lib/libhv/include"
 )
 
 link_libraries(
-    Threads::Threads
     common 
     Crow::Crow
     mdns_cpp::mdns_cpp
@@ -25,15 +23,9 @@ link_libraries(
     pthread
     dl
     spdlog
-    local_boost
-    local_asio
-    local_beast
+    hv
 )
 
 add_executable(client
     ${CLIENT_SOURCE}
 )
-
-if(WIN32)
-    target_link_libraries(client PRIVATE ws2_32 mswsock)
-endif()
