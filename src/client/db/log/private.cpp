@@ -74,7 +74,7 @@ namespace verteilen2::client {
     }
 
     int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, updated_at FROM log ORDER BY updated_at DESC LIMIT ? ;");
+        SQLite::Statement query(db, "SELECT id, job, title, content, updated_at FROM log ORDER BY updated_at LIMIT ? ;");
         query.bind(1, amount);
 
         result["data"] = json::array();
