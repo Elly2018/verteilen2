@@ -58,7 +58,7 @@ namespace verteilen2::client {
                 return;
             }
 
-            analysis(*raw_msg);
+            analysis(app_data, *raw_msg);
             verteilen2__raw_data__free_unpacked(raw_msg, NULL);
         };  
         app_data.ws_client.onclose = [&app_data]() {

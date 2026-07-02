@@ -25,10 +25,9 @@
 #ifndef CLIENT_STATE_COMMUNICATION_H
 #define CLIENT_STATE_COMMUNICATION_H
 #include <string>
+#include "../data/appdata.h"
 
 namespace verteilen2::client {
-
-    struct App_data;
 
     void create_websocket_server(App_data& app_data);
     void create_websocket_connection(App_data& app_data, const std::string address);
