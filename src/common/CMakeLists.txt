@@ -6,21 +6,13 @@ file(GLOB_RECURSE COMMON_SOURCE CONFIGURE_DEPENDS
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/lib/asio/include"
-    "${CMAKE_SOURCE_DIR}/lib/beast/include"
+    "${CMAKE_SOURCE_DIR}/lib/libhv/include"
 )
 
 link_libraries(
-    Threads::Threads
-    local_boost
-    local_asio
-    local_beast
+    hv
 )
 
 add_library(common
     ${COMMON_SOURCE}
 )
-
-if(WIN32)
-    target_link_libraries(common PRIVATE ws2_32 mswsock)
-endif()

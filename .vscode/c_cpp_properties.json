@@ -8,9 +8,7 @@
                 "${workspaceFolder}/lib/mdns/include",
                 "${workspaceFolder}/lib/sqlite/include",
                 "${workspaceFolder}/lib/spdlog/include",
-                "${workspaceFolder}/lib/asio/include",
-                "${workspaceFolder}/lib/beast/include",
-                "${workspaceFolder}/lib/boost/include"
+                "${workspaceFolder}/lib/libhv/include"
             ],
             "defines": [
                 "BOOST_ERROR_CODE_HEADER_ONLY",
