@@ -84,7 +84,7 @@ namespace verteilen2::client {
         ctx["current_maximum_execution"] = 20;
     }
 
-    static void template_viewer(WebServer& app, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
+    static void template_log(WebServer& app, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
 
         json res = json::object();
         get_latest_log_table(Init_log_amount, res);
@@ -112,18 +112,18 @@ namespace verteilen2::client {
             if(path.starts_with("setting")) {
                 template_setting(app, req, ctx);
             }
-            else if(path.starts_with("viewer")) {
-                if(path == "viewer-clear") {
+            else if(path.starts_with("log")) {
+                if(path == "log-clear") {
                     drop_log_table();
                 }
-                else if (path == "viewer-start-update") {
+                else if (path == "log-start-update") {
                     session_ctx.set<bool>("update", true);
                 }
-                else if (path == "viewer-stop-update") {
+                else if (path == "log-stop-update") {
                     session_ctx.set<bool>("update", false);
                 }
-                filename = "viewer";
-                template_viewer(app, req, ctx, session_ctx);
+                filename = "log";
+                template_log(app, req, ctx, session_ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + filename + ".html");
