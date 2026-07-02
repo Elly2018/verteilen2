@@ -21,33 +21,26 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "ws.h"
-#include <spdlog/spdlog.h>
+#pragma once
+#ifndef CLIENT_STATE_SESSION_H
+#define CLIENT_STATE_SESSION_H
+#include <string>
 #include <nlohmann/json.hpp>
-#include "../db/local_record.h"
 
 using json = nlohmann::json;
 
 namespace verteilen2::client {
 
-    static void register_realtime_handle_request(crow::SimpleApp& app) {
-        CROW_WEBSOCKET_ROUTE(app, "/ws")
-        .onopen([&](crow::websocket::connection& conn){
-            spdlog::info("[web] websocket connection successfully established.");
-            
-        })
-        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-            spdlog::info("[web] websocket connection successfully closed.");
-        })
-        .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
-            if(!json::accept(data) || is_binary) return;
-        });
-    }
+    struct Session {
+        json rows;
+        bool updating;
+    };
 
-    void register_ws_route(crow::SimpleApp& app) {
-        
-        register_realtime_handle_request(app);
-
-    }
+    void session_set(const std::string, Session& sesson);
+    bool session_get(const std::string, Session& sesson);
+    void session_init(const std::string);
+    void session_delete(const std::string);
 
 }
+
+#endif

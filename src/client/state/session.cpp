@@ -21,33 +21,40 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "ws.h"
-#include <spdlog/spdlog.h>
-#include <nlohmann/json.hpp>
-#include "../db/local_record.h"
-
-using json = nlohmann::json;
+#include "session.h"
+#include <string>
+#include <unordered_map>
 
 namespace verteilen2::client {
 
-    static void register_realtime_handle_request(crow::SimpleApp& app) {
-        CROW_WEBSOCKET_ROUTE(app, "/ws")
-        .onopen([&](crow::websocket::connection& conn){
-            spdlog::info("[web] websocket connection successfully established.");
-            
-        })
-        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-            spdlog::info("[web] websocket connection successfully closed.");
-        })
-        .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
-            if(!json::accept(data) || is_binary) return;
-        });
+    static std::unordered_map<std::string, Session> sessions;
+
+    void session_set(const std::string conn, Session& sesson) {
+        if(sessions.count(conn) > 0){
+            sessions.erase(conn);
+        }
+        sessions.insert({conn, Session()});
     }
 
-    void register_ws_route(crow::SimpleApp& app) {
-        
-        register_realtime_handle_request(app);
+    bool session_get(const std::string conn, Session& sesson) {
+        if(sessions.count(conn) > 0){
+            sesson = sessions.at(conn);
+            return true;
+        }
+        return false;
+    }
 
+    void session_init(const std::string conn) {
+        if(sessions.count(conn) > 0){
+            sessions.erase(conn);
+        }
+        sessions.insert({conn, Session()});
+    }
+
+    void session_delete(const std::string conn) {
+        if(sessions.count(conn) > 0){
+            sessions.erase(conn);
+        }
     }
 
 }

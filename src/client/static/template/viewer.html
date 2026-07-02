@@ -1,5 +1,9 @@
 <div id="viewer-content">
-    <button class="btn btn-active btn-primary">
+    <button id="viewer-content-button" class="btn btn-active btn-primary"
+            hx-delete="/template/viewer"
+            hx-target="#app-ctx"
+            hx-trigger="clear-viewer"
+            hx-swap="innerHTML">
         Clear
     </button>
     {{#updating}}
