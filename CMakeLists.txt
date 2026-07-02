@@ -15,13 +15,11 @@ add_compile_definitions(BOOST_SYSTEM_NO_LIB)
 
 find_package(Threads REQUIRED)
 
-# 1. Define Asio header path
 add_library(local_asio INTERFACE)
 target_include_directories(local_asio INTERFACE 
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/asio/include
 )
 
-# 2. Define Beast header path
 add_library(local_beast INTERFACE)
 target_include_directories(local_beast INTERFACE 
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/beast/include
