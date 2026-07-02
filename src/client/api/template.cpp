@@ -91,7 +91,7 @@ namespace verteilen2::client {
 
         crow::mustache::context log_rows = json_to_mustache(res);
 
-        session_ctx.set("rows", std::move(log_rows["data"]));
+        session_ctx.set("rows", log_rows["data"].dump());
         ctx["log_rows"] = std::move(log_rows["data"]);
         ctx["updating"] = session_ctx.contains("update") && session_ctx.get<bool>("update");
     }

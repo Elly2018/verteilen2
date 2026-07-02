@@ -54,7 +54,7 @@ namespace verteilen2::client {
         if(id == -1) return false;
         Verteilen2__ExecuteJob buffer = Verteilen2__ExecuteJob(*job);
         app_data.workers[id].state = ThreadState::Running;
-        app_data.workers[id].worker = std::thread(running_job, app_data, id, buffer);
+        app_data.workers[id].worker = std::thread(running_job, std::ref(app_data), id, buffer);
         return true;
     }
 
