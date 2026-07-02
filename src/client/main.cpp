@@ -34,7 +34,8 @@ void web(){
     crow::mustache::set_global_base(CROW_STATIC_DIRECTORY);
     register_static_route(app);
     register_template_route(app);
-    register_server_ws_route(app);
+    register_connect_server_ws_route(app);
+    register_ws_route(app);
     app.bindaddr("127.0.0.1").port(18080).multithreaded().run();
 }
 
