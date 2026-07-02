@@ -25,11 +25,11 @@
 #ifndef CLIENT_API_WS_H
 #define CLIENT_API_WS_H
 #include <cinttypes>
-#include "../config.h"
+#include "../data/appdata.h"
 
 namespace verteilen2::client {
     
-    void register_ws_route(WebServer& app);
+    void register_ws_route(App_data& app_data);
 
 }
 

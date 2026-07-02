@@ -28,13 +28,13 @@
 #include <cstdint>
 #include <hv/WebSocketClient.h>
 #include <hv/WebSocketServer.h>
-#include <crow.h>
 #include "../config.h"
 #include "worker.h"
 
 namespace verteilen2::client {
 
     struct App_data {
+        WebServer app;
         std::string server_address;
         bool server_alive;
         hv::WebSocketClient ws_client;

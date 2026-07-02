@@ -58,23 +58,22 @@ static void mDNS_run(){
     });
 }
 
-static void web_run(){
+static void web_run(App_data& app_data){
     static CrowSpdlogBridge custom_bridge;
     crow::logger::setHandler(&custom_bridge);
     
     spdlog::info("Initializing web service...");
     crow::mustache::set_global_base(VERTEILEN2_STATIC_DIRECTORY);
-    WebServer app;
-    register_static_route(app);
-    register_template_route(app);
-    register_connect_server_ws_route(app);
-    register_ws_route(app);
-    app.bindaddr("127.0.0.1").port(8080).multithreaded().run();
+    register_static_route(app_data.app);
+    register_template_route(app_data.app);
+    register_connect_server_ws_route(app_data.app);
+    register_ws_route(app_data);
+    app_data.app.bindaddr("127.0.0.1").port(8080).multithreaded().run();
 }
 
 int main(){
-    App_data data = App_data();
+    App_data app_data = App_data();
     db_run();
     mDNS_run();
-    web_run();
+    web_run(app_data);
 }
