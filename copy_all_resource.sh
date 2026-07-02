@@ -1,8 +1,6 @@
 #!/bin/bash
 
-if [ "$(basename "$PWD")" != "build" ]; then
-    cd build
-fi  
+cd build
 
 echo "Trying to copy all static resources"
 

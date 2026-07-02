@@ -1,8 +1,6 @@
 #!/bin/bash
 
-source build_all_amd64.sh
-
-cd ..
+bash build_all_amd64.sh
 
 version=$(< VERSION.txt)
 
