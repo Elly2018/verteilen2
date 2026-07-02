@@ -1,6 +1,20 @@
 <div id="viewer-content">
+    <button class="btn btn-active btn-primary">
+        Clear
+    </button>
+    {{#updating}}
+    <button class="btn btn-active btn-error">
+        Stop-Update
+    </button>
+    {{/updating}}
+
+    {{^updating}}
+    <button class="btn btn-active btn-infp">
+        Start-Update
+    </button>
+    {{/updating}}
+
     <table class="table">
-        <!-- head -->
         <thead>
             <tr>
                 <th>ID</th>
