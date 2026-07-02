@@ -24,15 +24,15 @@
 #pragma once
 #ifndef CLIENT_STATE_EXECUTE_JOB_H
 #define CLIENT_STATE_EXECUTE_JOB_H
+#include <cinttypes>
 #include <string>
+#include "../../data/appdata.h"
+#include <verteilen2/proto_gen/execute_job.pb-c.h>
 
 namespace verteilen2::client {
 
-    struct App_data;
-
-    void create_websocket_server(App_data& app_data);
-    void create_websocket_connection(App_data& app_data, const std::string address);
-
+    bool execute_job_run(App_data& app_data, Verteilen2__ExecuteJob* job);
+    int32_t execute_worker_idle(App_data& app_data);
 }
 
 #endif

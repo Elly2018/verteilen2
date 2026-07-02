@@ -22,9 +22,10 @@
     SOFTWARE.
  */
 #include "analyzer.h"
-#include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2/proto_gen/debug_log.pb-c.h>
+#include <verteilen2/proto_gen/execute_job.pb-c.h>
 #include "../db/local_record.h"
+#include "execute/job.h"
 
 namespace verteilen2::client {
 
@@ -32,12 +33,15 @@ namespace verteilen2::client {
         insert_log_table(raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
     }
 
-    void analysis(Verteilen2__RawData& raw_msg) {
+    void analysis(App_data& app_data, Verteilen2__RawData& raw_msg) {
         switch(raw_msg.type) {
             default:
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__UNKNOWN:
                 break;
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
+                Verteilen2__ExecuteJob* executejob = verteilen2__execute_job__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
+                execute_job_run(app_data, executejob);
+                verteilen2__execute_job__free_unpacked(executejob, NULL);
                 break;
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__DEBUG_LOG:
                 Verteilen2__DebugLog* debuglog = verteilen2__debug_log__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
