@@ -27,6 +27,7 @@
 #include <nlohmann/json.hpp>
 #include "../config.h"
 #include "../db/local_record.h"
+#include "../state/analyzer.h"
 
 using json = nlohmann::json;
 
@@ -64,12 +65,12 @@ namespace verteilen2::client {
         return ctx;
     }
 
-    static void template_setting(crow::mustache::context& ctx) {
+    static void template_setting(const crow::request& req, crow::mustache::context& ctx) {
         ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
         ctx["current_maximum_execution"] = 20;
     }
 
-    static void template_viewer(crow::mustache::context& ctx) {
+    static void template_viewer(const crow::request& req, crow::mustache::context& ctx) {
 
         json res = json::object();
         get_latest_log_table(Init_log_amount, res);
@@ -81,14 +82,17 @@ namespace verteilen2::client {
 
     static void register_template(crow::SimpleApp& app) {
         CROW_ROUTE(app, "/template/<path>")
-        ([](const std::string& path) {
+        ([](const crow::request& req, const std::string& path) {
             crow::mustache::context ctx;
             
             if(path == "setting") {
-                template_setting(ctx);
+                template_setting(req, ctx);
             }
             else if(path == "viewer") {
-                template_viewer(ctx);
+                if(req.method == crow::HTTPMethod::DELETE) {
+                    drop_log_table();
+                }
+                template_viewer(req, ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + path + ".html");

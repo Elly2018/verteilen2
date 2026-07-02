@@ -4,14 +4,14 @@
 <head>
     <title>{{ title }}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="css/index.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
         integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="js/index.js"></script>
 </head>
 
 <body>
@@ -28,8 +28,10 @@
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
                     <li>
-                        <button hx-get="/template/viewer"
+                        <button id="viewer-content-button"
+                                hx-get="/template/viewer"
                                 hx-target="#app-ctx"
+                                hx-trigger="refresh-viewer"
                                 hx-swap="innerHTML">
                             Viewer
                         </button>
