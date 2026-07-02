@@ -22,13 +22,40 @@
     SOFTWARE.
  */
 #include <mdns_cpp/mdns.hpp>
+#include <mdns_cpp/logger.hpp>
 #include <spdlog/spdlog.h>
+#include <verteilen2/network.h>
 #include "db/local_record.h"
 #include "data/appdata.h"
 #include "api/all.h"
 
 using namespace verteilen2;
 using namespace verteilen2::client;
+
+class CrowSpdlogBridge : public crow::ILogHandler {
+public:
+    void log(const std::string& message, crow::LogLevel level) override {
+        // Map Crow's LogLevels to spdlog formats
+        // Note: Crow's incoming message string does not end with a newline \n
+        switch (level) {
+            case crow::LogLevel::Debug:
+                spdlog::debug("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Info:
+                spdlog::info("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Warning:
+                spdlog::warn("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Error:
+                spdlog::error("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Critical:
+                spdlog::critical("[Crow] {}", message);
+                break;
+        }
+    }
+};
 
 static void db_run(){
     spdlog::info("Initializing database...");
@@ -37,12 +64,28 @@ static void db_run(){
 
 static void mDNS_run(){
     spdlog::info("Initializing mDNS service...");
+    std::vector<std::string> ipv4s = network_get_all_ipv4();
+    std::string v = "verteilen-2-client:";
+    for(const auto& ip : ipv4s){
+        v += ip;
+        v += ",";
+    }
+    if(v.size() > 0) {
+        v.pop_back();
+    }
+    spdlog::info("Define mDNS message: {}", v);
     mdns_cpp::mDNS mdns;
-    mdns.setServiceHostname("verteilen-2-client:");
+    mdns.setServiceHostname(v);
     mdns.startService();
+    mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
+        spdlog::info("mDNS: {}", msg);
+    });
 }
 
 static void web_run(){
+    static CrowSpdlogBridge custom_bridge;
+    crow::logger::setHandler(&custom_bridge);
+    
     spdlog::info("Initializing web service...");
     crow::SimpleApp app;
     crow::mustache::set_global_base(CROW_STATIC_DIRECTORY);
@@ -50,7 +93,7 @@ static void web_run(){
     register_template_route(app);
     register_connect_server_ws_route(app);
     register_ws_route(app);
-    app.bindaddr("127.0.0.1").port(18080).multithreaded().run();
+    app.bindaddr("127.0.0.1").port(8080).multithreaded().run();
 }
 
 int main(){

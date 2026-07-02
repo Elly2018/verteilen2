@@ -23,57 +23,147 @@
  */
 #include "network.h"
 #include <iostream>
-#include <boost/asio.hpp>
-#include <boost/asio/io_context.hpp>
 
-namespace net = boost::asio;
+#if defined(_WIN32)
+    #include <winsock2.h>
+    #include <iphlpapi.h>
+    #pragma comment(lib, "iphlpapi.lib")
+    #pragma comment(lib, "ws2_32.lib")
+#else
+    #include <sys/types.h>
+    #include <ifaddrs.h>
+    #include <netinet/in.h>
+    #include <arpa/inet.h>
+#endif
 
 namespace verteilen2 {
 
     std::vector<std::string> network_get_all_ipv4() {
-        std::vector<std::string> a = std::vector<std::string>();
-        try {
-            net::io_context io_ctx;
-            net::ip::tcp::resolver resolver(io_ctx);
+        std::vector<std::string> ips;
+#if !defined(_WIN32)
+        // --- Linux / macOS Implementation (getifaddrs) ---
+        struct ifaddrs* ifAddrStruct = nullptr;
+        struct ifaddrs* ifa = nullptr;
 
-            std::string hostname = boost::asio::ip::host_name();
-            net::ip::basic_resolver_results<net::ip::tcp> results = resolver.resolve(hostname, "");
-            for (const auto& entry : results) {
-            auto addr = entry.endpoint().address();
-                if (addr.is_loopback()) continue; // Skip 127.0.0.1
-
-                if (addr.is_v4()) {
-                    a.push_back(addr.to_string());
-                }
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "IP Query Error: " << e.what() << std::endl;
+        if (getifaddrs(&ifAddrStruct) == -1) {
+            std::cerr << "Failed to get network interfaces\n";
+            return ips;
         }
 
-        return a;
+        for (ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next) {
+            // Check if it is a valid IPv4 address structure
+            if (!ifa->ifa_addr || ifa->ifa_addr->sa_family != AF_INET) {
+                continue;
+            }
+
+            // Get the raw IPv4 string pointer
+            void* tmpAddrPtr = &((struct sockaddr_in*)ifa->ifa_addr)->sin_addr;
+            char addressBuffer[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+            
+            std::string ip_str(addressBuffer);
+            
+            // Optional: Skip loopback interface if you don't want 127.0.0.1
+            if (ip_str == "127.0.0.1") continue; 
+
+            ips.push_back(ip_str);
+        }
+
+        if (ifAddrStruct != nullptr) {
+            freeifaddrs(ifAddrStruct);
+        }
+
+#else
+        // --- Windows Implementation (GetAdaptersAddresses) ---
+        ULONG bufLen = 15000;
+        PIP_ADAPTER_ADDRESSES adapters = (IP_ADAPTER_ADDRESSES*)malloc(bufLen);
+
+        if (GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, NULL, adapters, &bufLen) == NO_ERROR) {
+            for (PIP_ADAPTER_ADDRESSES curr = adapters; curr != NULL; curr = curr->Next) {
+                // Skip down/inactive interfaces
+                if (curr->OperStatus != IfOperStatusUp) continue;
+
+                for (PIP_ADAPTER_UNICAST_ADDRESS unicast = curr->FirstUnicastAddress; unicast != NULL; unicast = unicast->Next) {
+                    sockaddr_in* sockaddr = (sockaddr_in*)unicast->Address.lpSockaddr;
+                    char buf[INET_ADDRSTRLEN];
+                    getnameinfo((struct sockaddr*)sockaddr, sizeof(sockaddr_in), buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
+                    
+                    std::string ip_str(buf);
+                    if (ip_str == "127.0.0.1") continue;
+
+                    ips.push_back(ip_str);
+                }
+            }
+        }
+        free(adapters);
+#endif
+
+        return ips;
     }
 
     std::vector<std::string> network_get_all_ipv6() {
-        std::vector<std::string> a = std::vector<std::string>();
-        try {
-            net::io_context io_ctx;
-            net::ip::tcp::resolver resolver(io_ctx);
+        std::vector<std::string> ips;
 
-            std::string hostname = boost::asio::ip::host_name();
-            net::ip::basic_resolver_results<net::ip::tcp> results = resolver.resolve(hostname, "");
-            for (const auto& entry : results) {
-            auto addr = entry.endpoint().address();
-                if (addr.is_loopback()) continue; // Skip 127.0.0.1
+#if !defined(_WIN32)
+        // --- Linux / macOS Implementation ---
+        struct ifaddrs* ifAddrStruct = nullptr;
+        struct ifaddrs* ifa = nullptr;
 
-                if (addr.is_v6()) {
-                    a.push_back(addr.to_string());
-                }
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "IP Query Error: " << e.what() << std::endl;
+        if (getifaddrs(&ifAddrStruct) == -1) {
+            std::cerr << "Failed to get network interfaces\n";
+            return ips;
         }
 
-        return a;
+        for (ifa = ifAddrStruct; ifa != nullptr; ifa = ifa->ifa_next) {
+            // Look strictly for IPv6 address structures (AF_INET6)
+            if (!ifa->ifa_addr || ifa->ifa_addr->sa_family != AF_INET6) {
+                continue;
+            }
+
+            void* tmpAddrPtr = &((struct sockaddr_in6*)ifa->ifa_addr)->sin6_addr;
+            char addressBuffer[INET6_ADDRSTRLEN];
+            inet_ntop(AF_INET6, tmpAddrPtr, addressBuffer, INET6_ADDRSTRLEN);
+            
+            std::string ip_str(addressBuffer);
+            
+            // Optional Filters:
+            if (ip_str == "::1") continue; // Skip loopback
+            // if (ip_str.rfind("fe80", 0) == 0) continue; // Uncomment to skip link-local addresses
+
+            ips.push_back(ip_str);
+        }
+
+        if (ifAddrStruct != nullptr) {
+            freeifaddrs(ifAddrStruct);
+        }
+
+#else
+        // --- Windows Implementation ---
+        ULONG bufLen = 15000;
+        PIP_ADAPTER_ADDRESSES adapters = (IP_ADAPTER_ADDRESSES*)malloc(bufLen);
+
+        // Request AF_INET6 specifically here
+        if (GetAdaptersAddresses(AF_INET6, GAA_FLAG_INCLUDE_PREFIX, NULL, adapters, &bufLen) == NO_ERROR) {
+            for (PIP_ADAPTER_ADDRESSES curr = adapters; curr != NULL; curr = curr->Next) {
+                if (curr->OperStatus != IfOperStatusUp) continue;
+
+                for (PIP_ADAPTER_UNICAST_ADDRESS unicast = curr->FirstUnicastAddress; unicast != NULL; unicast = unicast->Next) {
+                    sockaddr_in6* sockaddr = (sockaddr_in6*)unicast->Address.lpSockaddr;
+                    char buf[INET6_ADDRSTRLEN];
+                    getnameinfo((struct sockaddr*)sockaddr, sizeof(sockaddr_in6), buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
+                    
+                    std::string ip_str(buf);
+                    
+                    if (ip_str == "::1") continue; // Skip loopback
+                    
+                    ips.push_back(ip_str);
+                }
+            }
+        }
+        free(adapters);
+#endif
+
+        return ips;
     }
 
 }
