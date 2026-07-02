@@ -26,10 +26,10 @@
 #endif
 
 #ifndef CROW_STATIC_DIRECTORY
-#define CROW_STATIC_DIRECTORY "static/"
+    #define CROW_STATIC_DIRECTORY "static/"
 #endif
 #ifndef CROW_STATIC_ENDPOINT
-#define CROW_STATIC_ENDPOINT "/static/<path>"
+    #define CROW_STATIC_ENDPOINT "/static/<path>"
 #endif
 
 // compiler flags

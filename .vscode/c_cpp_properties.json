@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/src/common",
                 "${workspaceFolder}/lib/crow/include",
                 "${workspaceFolder}/lib/mdns/include",
                 "${workspaceFolder}/lib/sqlite/include",

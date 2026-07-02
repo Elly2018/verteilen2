@@ -1,16 +1,14 @@
 include_directories("${CMAKE_SOURCE_DIR}/src/common")
 
-file(GLOB_RECURSE COMMON_SOURCE CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/common/*.h"
-    "${CMAKE_SOURCE_DIR}/src/common/*.hpp"
-    "${CMAKE_SOURCE_DIR}/src/common/*.c"
-    "${CMAKE_SOURCE_DIR}/src/common/*.cpp"
-)
+add_executable(project_task_count_with_args project_task_count_with_args.cpp)
+add_executable(project_task_count project_task_count.cpp)
+add_executable(task_job_count_with_args task_job_count_with_args.cpp)
+add_executable(task_job_count task_job_count.cpp)
 
-add_executable(project_task_count_with_args ${COMMON_SOURCE} project_task_count_with_args.cpp)
-add_executable(project_task_count ${COMMON_SOURCE} project_task_count.cpp)
-add_executable(task_job_count_with_args ${COMMON_SOURCE} task_job_count_with_args.cpp)
-add_executable(task_job_count ${COMMON_SOURCE} task_job_count.cpp)
+target_link_libraries(project_task_count_with_args PRIVATE common)
+target_link_libraries(project_task_count PRIVATE common)
+target_link_libraries(task_job_count_with_args PRIVATE common)
+target_link_libraries(task_job_count PRIVATE common)
 
 set_target_properties(project_task_count_with_args PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tests")
 set_target_properties(project_task_count PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tests")

@@ -6,13 +6,16 @@ file(GLOB_RECURSE COMMON_SOURCE CONFIGURE_DEPENDS
 )
 
 include_directories(
+    "${CMAKE_SOURCE_DIR}/src/common"
+    "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
 )
 
-link_libraries(
-    hv
+add_library(common STATIC
+    ${COMMON_SOURCE}
 )
 
-add_library(common
-    ${COMMON_SOURCE}
+target_link_libraries(common PUBLIC
+    hv
+    ${PROTOBUF_C_LIBRARIES}
 )

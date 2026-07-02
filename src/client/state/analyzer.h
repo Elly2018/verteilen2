@@ -22,15 +22,16 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_CONFIG_H
-#define CLIENT_CONFIG_H
+#ifndef CLIENT_STATE_ANALYZER_H
+#define CLIENT_STATE_ANALYZER_H
+#include <string>
 
-// 1. Point the disk scanner to your sub-folder
-#undef CROW_STATIC_DIRECTORY 
-#define CROW_STATIC_DIRECTORY "../share/verteilen-2-client/"
+struct Verteilen2__RawData;
 
-// 2. Map how browsers request these assets
-#undef CROW_STATIC_ENDPOINT 
-#define CROW_STATIC_ENDPOINT "/<path>"
+namespace verteilen2::client {
+
+    void analysis(Verteilen2__RawData& raw_msg);
+
+}
 
 #endif

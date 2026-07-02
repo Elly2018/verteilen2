@@ -22,15 +22,34 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_CONFIG_H
-#define CLIENT_CONFIG_H
+#ifndef CLIENT_LOGGER_H
+#define CLIENT_LOGGER_H
+#include <crow.h>
+#include <spdlog/spdlog.h>
 
-// 1. Point the disk scanner to your sub-folder
-#undef CROW_STATIC_DIRECTORY 
-#define CROW_STATIC_DIRECTORY "../share/verteilen-2-client/"
-
-// 2. Map how browsers request these assets
-#undef CROW_STATIC_ENDPOINT 
-#define CROW_STATIC_ENDPOINT "/<path>"
+class CrowSpdlogBridge : public crow::ILogHandler {
+public:
+    void log(const std::string& message, crow::LogLevel level) override {
+        // Map Crow's LogLevels to spdlog formats
+        // Note: Crow's incoming message string does not end with a newline \n
+        switch (level) {
+            case crow::LogLevel::Debug:
+                spdlog::debug("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Info:
+                spdlog::info("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Warning:
+                spdlog::warn("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Error:
+                spdlog::error("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Critical:
+                spdlog::critical("[Crow] {}", message);
+                break;
+        }
+    }
+};
 
 #endif
