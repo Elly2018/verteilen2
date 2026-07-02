@@ -31,19 +31,25 @@ namespace fs = std::filesystem;
 
 namespace verteilen2::client {
     
-    void insert_log_table(const char job[36], const std::string title, const std::string content) {
+    int32_t create_log_table() {
         SQLite::Database db = get_database();
-        insert_log_table(db, job, title, content);
+        return create_log_table(db);
     }
 
-    void drop_log_table() {
+    int32_t insert_log_table(const char job[36], const std::string title, const std::string content) {
+        SQLite::Database db = get_database();
+        return insert_log_table(db, job, title, content);
+    }
+
+    int32_t drop_log_table() {
         SQLite::Database db = get_database();
         drop_log_table(db);
-        create_log_table(db);
+        return create_log_table(db);
     }
 
-    void get_latest_log_table(const int32_t amount) {
-
+    int32_t get_latest_log_table(const int32_t amount, json& result) {
+        SQLite::Database db = get_database();
+        return get_latest_log_table(db, amount, result);
     }
 
     void get_latest_log_table(const std::string last_timestamp) {

@@ -39,8 +39,8 @@ namespace verteilen2::client {
         return db;
     }
 
-    void create_log_table(SQLite::Database& db) {
-        db.exec(R"SQL(
+    int32_t create_log_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 -- Automatically generates a valid RFC-4122 UUIDv4 string if not provided
@@ -59,17 +59,44 @@ namespace verteilen2::client {
         )SQL");
     }
 
-    void drop_log_table(SQLite::Database& db) {
-        db.exec(R"SQL(
+    int32_t drop_log_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
             DROP TABLE IF EXISTS log;
         )SQL");
     }
 
-    void insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content) {
+    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content) {
         SQLite::Statement query(db, "INSERT INTO log (job, title, content) VALUES(?, ?, ?);");
         query.bind(1, job);
         query.bind(2, title);
         query.bind(3, content);
-        query.exec();
+        return query.exec();
+    }
+
+    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, updated_at FROM log ORDER BY updated_at DESC LIMIT ? ;");
+        query.bind(1, amount);
+
+        result["data"] = json::array();
+
+        while(query.executeStep()) {
+            json buff = json::object();
+
+            int32_t id = query.getColumn(0).getInt();
+            std::string job = query.getColumn(1).getText();
+            std::string title = query.getColumn(2).getText();
+            std::string content = query.getColumn(3).getText();
+            std::string updated_at = query.getColumn(4).getText();
+
+            buff["id"] = id;
+            buff["job"] = job;
+            buff["title"] = title;
+            buff["content"] = content;
+            buff["updated_at"] = updated_at;
+
+            result["data"].push_back(buff);
+        }
+
+        return result["data"].size();
     }
 }

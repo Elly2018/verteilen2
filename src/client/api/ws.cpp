@@ -22,19 +22,28 @@
     SOFTWARE.
  */
 #include "ws.h"
+#include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
+#include "../db/local_record.h"
+
+using json = nlohmann::json;
 
 namespace verteilen2::client {
 
     static void register_realtime_handle_request(crow::SimpleApp& app) {
         CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
-            
+            spdlog::info("[web] websocket connection successfully established.");
+            json res = json::object();
+            res["type"] = "init_log";
+            get_latest_log_table(Init_log_amount, res);
+            conn.send_text(res.dump());
         })
         .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-            
+            spdlog::info("[web] websocket connection successfully closed.");
         })
         .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
-            
+            if(!json::accept(data) || is_binary) return;
         });
     }
 

@@ -24,14 +24,19 @@
 #pragma once
 #ifndef CLIENT_DB_LOG_PRIVATE_H
 #define CLIENT_DB_LOG_PRIVATE_H
+#include <cinttypes>
 #include <SQLiteCpp/SQLiteCpp.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace verteilen2::client {
 
     SQLite::Database get_database();
-    void create_log_table(SQLite::Database& db);
-    void drop_log_table(SQLite::Database& db);
-    void insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
+    int32_t create_log_table(SQLite::Database& db);
+    int32_t drop_log_table(SQLite::Database& db);
+    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
+    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result);
 }
 
 #endif

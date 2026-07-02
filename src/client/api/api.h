@@ -24,13 +24,13 @@
 #pragma once
 #ifndef CLIENT_API_API_H
 #define CLIENT_API_API_H
-#include "../config.h"
 #include <crow.h>
+#include "../config.h"
 
 namespace verteilen2::client {
 
     void register_connect_server_ws_route(crow::SimpleApp& app);
-
+    
 }
 
 #endif
