@@ -24,14 +24,13 @@
 #pragma once
 #ifndef CLIENT_API_TEMPLATE_H
 #define CLIENT_API_TEMPLATE_H
-#include <crow.h>
 #include "../config.h"
 
 namespace verteilen2::client {
 
     constexpr int32_t Init_log_amount = 30;
 
-    void register_template_route(crow::SimpleApp& app);
+    void register_template_route(WebServer& app);
 
 }
 

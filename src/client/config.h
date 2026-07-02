@@ -24,6 +24,13 @@
 #pragma once
 #ifndef CLIENT_CONFIG_H
 #define CLIENT_CONFIG_H
+#include <crow.h>
+#include <crow/middlewares/cookie_parser.h>
+#include <crow/middlewares/session.h>
+
+using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+
+typedef crow::App<crow::CookieParser, Session> WebServer;
 
 // 1. Point the disk scanner to your sub-folder
 #define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-client/"

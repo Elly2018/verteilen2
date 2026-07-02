@@ -22,7 +22,6 @@
     SOFTWARE.
  */
 #include "template.h"
-#include <crow.h>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
 #include "../config.h"
@@ -65,12 +64,14 @@ namespace verteilen2::client {
         return ctx;
     }
 
-    static void template_setting(const crow::request& req, crow::mustache::context& ctx) {
+    static void template_setting(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
         ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
         ctx["current_maximum_execution"] = 20;
     }
 
-    static void template_viewer(const crow::request& req, crow::mustache::context& ctx) {
+    static void template_viewer(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
+        
+        Session::context& session_ctx = app.get_context<Session>(req);
 
         json res = json::object();
         get_latest_log_table(Init_log_amount, res);
@@ -80,19 +81,19 @@ namespace verteilen2::client {
         ctx["log_rows"] = std::move(log_rows["data"]);
     }
 
-    static void register_template(crow::SimpleApp& app) {
+    static void register_template(WebServer& app) {
         CROW_ROUTE(app, "/template/<path>")
-        ([](const crow::request& req, const std::string& path) {
+        ([&app](const crow::request& req, const std::string& path) {
             crow::mustache::context ctx;
             
             if(path == "setting") {
-                template_setting(req, ctx);
+                template_setting(app, req, ctx);
             }
             else if(path == "viewer") {
                 if(req.method == crow::HTTPMethod::DELETE) {
                     drop_log_table();
                 }
-                template_viewer(req, ctx);
+                template_viewer(app, req, ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + path + ".html");
@@ -101,7 +102,7 @@ namespace verteilen2::client {
         });
     }
 
-    void register_template_route(crow::SimpleApp& app) {
+    void register_template_route(WebServer& app) {
 
         register_template(app);
 

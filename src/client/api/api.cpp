@@ -25,7 +25,7 @@
 
 namespace verteilen2::client {
 
-    static void register_connect_request(crow::SimpleApp& app) {
+    static void register_connect_request(WebServer& app) {
         CROW_ROUTE(app, "/api/connect_ws_server")
         .methods(crow::HTTPMethod::POST)
         ([&app](const crow::request& req) {
@@ -45,7 +45,7 @@ namespace verteilen2::client {
         });
     }
 
-    void register_connect_server_ws_route(crow::SimpleApp& app) {
+    void register_connect_server_ws_route(WebServer& app) {
         
         register_connect_request(app);
 
