@@ -1,9 +1,11 @@
 #!/bin/bash
 
-source setup_all_amd64.sh
+bash setup_all_amd64.sh
+
+cd build
 
 cmake --build . -j 8
 
 cd ..
 
-source copy_all_resource.sh
+bash copy_all_resource.sh
