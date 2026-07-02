@@ -1,5 +1,8 @@
 syntax = "proto3";
 
+package verteilen2;
+
+// MsgType: DEBUG_LOG
 message ExecuteJob {
     string id = 1;
     string name = 2;

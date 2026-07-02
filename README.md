@@ -32,4 +32,5 @@ Since the communication are using protobuf with websocket. we're require the pro
 sudo apt-get update
 sudo apt-get install libasio-dev
 sudo apt install protobuf-compiler
+sudo apt-get install protobuf-c-compiler libprotobuf-c-dev
 ```

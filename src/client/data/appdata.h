@@ -24,20 +24,22 @@
 #pragma once
 #ifndef CLIENT_DATA_APPDATA_H
 #define CLIENT_DATA_APPDATA_H
+#include <string>
 #include <cstdint>
 #include <hv/WebSocketClient.h>
 #include <hv/WebSocketServer.h>
 #include "../config.h"
 #include <crow.h>
+#include "worker.h"
 
 namespace verteilen2::client {
 
     struct App_data {
-        char server_address[128];
+        std::string server_address;
         bool server_alive;
-        int32_t connection_retry;
         hv::WebSocketClient ws_client;
         hv::WebSocketServer ws_server;
+        Worker workers[60];
     };
 
 }

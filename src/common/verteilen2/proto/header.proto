@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum MsgType {
+    UNKNOWN = 0;
+    DEBUG_LOG = 1;
+    EXECUTE_JOB = 2;
+}
+
+message RawData {
+    MsgType type = 1;
+    bytes data = 2;
+}

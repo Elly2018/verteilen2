@@ -25,37 +25,13 @@
 #include <mdns_cpp/logger.hpp>
 #include <spdlog/spdlog.h>
 #include <verteilen2/network.h>
+#include "logger.h"
 #include "db/local_record.h"
 #include "data/appdata.h"
 #include "api/all.h"
 
 using namespace verteilen2;
 using namespace verteilen2::client;
-
-class CrowSpdlogBridge : public crow::ILogHandler {
-public:
-    void log(const std::string& message, crow::LogLevel level) override {
-        // Map Crow's LogLevels to spdlog formats
-        // Note: Crow's incoming message string does not end with a newline \n
-        switch (level) {
-            case crow::LogLevel::Debug:
-                spdlog::debug("[Crow] {}", message);
-                break;
-            case crow::LogLevel::Info:
-                spdlog::info("[Crow] {}", message);
-                break;
-            case crow::LogLevel::Warning:
-                spdlog::warn("[Crow] {}", message);
-                break;
-            case crow::LogLevel::Error:
-                spdlog::error("[Crow] {}", message);
-                break;
-            case crow::LogLevel::Critical:
-                spdlog::critical("[Crow] {}", message);
-                break;
-        }
-    }
-};
 
 static void db_run(){
     spdlog::info("Initializing database...");

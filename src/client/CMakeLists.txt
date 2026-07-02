@@ -7,6 +7,7 @@ file(GLOB_RECURSE CLIENT_SOURCE CONFIGURE_DEPENDS
 
 include_directories(
     "${CMAKE_SOURCE_DIR}/src/common"
+    "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
@@ -24,6 +25,7 @@ link_libraries(
     dl
     spdlog
     hv
+    ${PROTOBUF_C_LIBRARIES}
 )
 
 add_executable(client

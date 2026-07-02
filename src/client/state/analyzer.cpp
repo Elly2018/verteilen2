@@ -21,16 +21,30 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_CONFIG_H
-#define CLIENT_CONFIG_H
+#include "analyzer.h"
+#include <verteilen2/proto_gen/header.pb-c.h>
+#include <verteilen2/proto_gen/debug_log.pb-c.h>
+#include "../db/local_record.h"
 
-// 1. Point the disk scanner to your sub-folder
-#undef CROW_STATIC_DIRECTORY 
-#define CROW_STATIC_DIRECTORY "../share/verteilen-2-client/"
+namespace verteilen2::client {
 
-// 2. Map how browsers request these assets
-#undef CROW_STATIC_ENDPOINT 
-#define CROW_STATIC_ENDPOINT "/<path>"
+    static void print_log(Verteilen2__DebugLog& raw_debuglog) {
+        insert_log_table(raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
+    }
 
-#endif
+    void analysis(Verteilen2__RawData& raw_msg) {
+        switch(raw_msg.type) {
+            default:
+            case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__UNKNOWN:
+                break;
+            case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
+                break;
+            case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__DEBUG_LOG:
+                Verteilen2__DebugLog* debuglog = verteilen2__debug_log__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
+                print_log(*debuglog);
+                verteilen2__debug_log__free_unpacked(debuglog, NULL);
+                break;
+        }
+    }
+
+}

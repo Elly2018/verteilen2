@@ -22,15 +22,26 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_CONFIG_H
-#define CLIENT_CONFIG_H
+#ifndef CLIENT_DATA_WORKER_H
+#define CLIENT_DATA_WORKER_H
+#include <string>
+#include <cstdint>
+#include <thread>
+#include <atomic>
 
-// 1. Point the disk scanner to your sub-folder
-#undef CROW_STATIC_DIRECTORY 
-#define CROW_STATIC_DIRECTORY "../share/verteilen-2-client/"
+namespace verteilen2::client {
 
-// 2. Map how browsers request these assets
-#undef CROW_STATIC_ENDPOINT 
-#define CROW_STATIC_ENDPOINT "/<path>"
+    enum class ThreadState {
+        Empty,
+        Idle,
+        Running
+    };
+
+    struct Worker {
+        std::thread worker;
+        std::atomic<ThreadState> state;
+    };
+
+}
 
 #endif
