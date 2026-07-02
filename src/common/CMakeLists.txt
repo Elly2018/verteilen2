@@ -12,6 +12,7 @@ include_directories(
 
 link_libraries(
     Threads::Threads
+    local_boost
     local_asio
     local_beast
 )

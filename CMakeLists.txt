@@ -15,6 +15,11 @@ add_compile_definitions(BOOST_SYSTEM_NO_LIB)
 
 find_package(Threads REQUIRED)
 
+add_library(local_boost INTERFACE)
+target_include_directories(local_boost INTERFACE 
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/boost/include
+)
+
 add_library(local_asio INTERFACE)
 target_include_directories(local_asio INTERFACE 
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/asio/include

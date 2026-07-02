@@ -25,6 +25,7 @@ link_libraries(
     pthread
     dl
     spdlog
+    local_boost
     local_asio
     local_beast
 )
