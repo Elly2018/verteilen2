@@ -13,13 +13,13 @@ function close_configuration() {
 
 const ws = new WebSocket("ws://" + window.location.host + "/ws");
 
-ws.onopen((ev) => {
+ws.onopen = (ev) => {
 
-})
+}
 
-ws.onclose(ev => {
+ws.onclose = (ev) => {
     
-})
+}
 
 ws.onmessage = (event) => {
     try {
@@ -33,6 +33,6 @@ ws.onmessage = (event) => {
     }
 }
 
-ws.onerror((ev) => {
-
-})
+ws.onerror = (ev) => {
+    
+}
