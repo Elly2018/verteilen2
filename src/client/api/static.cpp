@@ -89,6 +89,28 @@ namespace verteilen2::client {
             res.code = 200;
             return res;
         });
+
+        CROW_ROUTE(app, "/favicon.ico")
+        .methods(crow::HTTPMethod::GET)
+        ([]() {
+            crow::response res;
+            std::filesystem::path current_cwd = std::filesystem::current_path();
+            std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "favicon.ico";
+            std::string p = _p.lexically_normal().string();
+            std::ifstream file(p, std::ios::binary);
+            if (!file.is_open()) {
+                res.code = 404;
+                return res;
+            }
+
+            std::stringstream buffer;
+            buffer << file.rdbuf();
+            
+            res.set_header("Content-Type", "image/x-icon");
+            res.body = buffer.str();
+            res.code = 200;
+            return res;
+        });
     }
 
     void register_static_route(crow::SimpleApp& app) {

@@ -34,10 +34,6 @@ namespace verteilen2::client {
         CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
             spdlog::info("[web] websocket connection successfully established.");
-            json res = json::object();
-            res["type"] = "init_log";
-            get_latest_log_table(Init_log_amount, res);
-            conn.send_text(res.dump());
         })
         .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
             spdlog::info("[web] websocket connection successfully closed.");

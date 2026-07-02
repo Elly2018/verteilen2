@@ -29,9 +29,7 @@
 #include "../config.h"
 
 namespace verteilen2::client {
-
-    constexpr int32_t Init_log_amount = 30;
-
+    
     void register_ws_route(crow::SimpleApp& app);
 
 }

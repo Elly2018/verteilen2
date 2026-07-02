@@ -23,14 +23,60 @@
  */
 #include "template.h"
 #include <crow.h>
+#include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
 #include "../config.h"
+#include "../db/local_record.h"
+
+using json = nlohmann::json;
 
 namespace verteilen2::client {
+
+    static crow::mustache::context json_to_mustache(const nlohmann::json& j) {
+        crow::mustache::context ctx;
+
+        if (j.is_object()) {
+            for (auto& [key, value] : j.items()) {
+                if (value.is_object() || value.is_array()) {
+                    ctx[key] = json_to_mustache(value);
+                } else if (value.is_string()) {
+                    ctx[key] = value.get<std::string>();
+                } else if (value.is_number_integer()) {
+                    ctx[key] = value.get<int64_t>();
+                } else if (value.is_number_float()) {
+                    ctx[key] = value.get<double>();
+                } else if (value.is_boolean()) {
+                    ctx[key] = value.get<bool>();
+                } else if (value.is_null()) {
+                    ctx[key] = ""; // Mustache handles empty strings nicely
+                }
+            }
+        } else if (j.is_array()) {
+            // Create an array context tree for loop blocks
+            std::vector<crow::mustache::context> vec;
+            for (const auto& element : j) {
+                vec.push_back(json_to_mustache(element));
+            }
+            // Assign the sequence matrix back
+            ctx = std::move(vec);
+        }
+
+        return ctx;
+    }
 
     static void template_setting(crow::mustache::context& ctx) {
         ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
         ctx["current_maximum_execution"] = 20;
+    }
 
+    static void template_viewer(crow::mustache::context& ctx) {
+
+        json res = json::object();
+        get_latest_log_table(Init_log_amount, res);
+
+        crow::mustache::context log_rows = json_to_mustache(res);
+
+        ctx["log_rows"] = std::move(log_rows["data"]);
     }
 
     static void register_template(crow::SimpleApp& app) {
@@ -40,6 +86,9 @@ namespace verteilen2::client {
             
             if(path == "setting") {
                 template_setting(ctx);
+            }
+            else if(path == "viewer") {
+                template_viewer(ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + path + ".html");
