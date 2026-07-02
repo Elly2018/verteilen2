@@ -26,6 +26,7 @@
 #define CLIENT_DATA_APPDATA_H
 #include <cstdint>
 #include <hv/WebSocketClient.h>
+#include <hv/WebSocketServer.h>
 #include "../config.h"
 #include <crow.h>
 
@@ -36,6 +37,7 @@ namespace verteilen2::client {
         bool server_alive;
         int32_t connection_retry;
         hv::WebSocketClient ws_client;
+        hv::WebSocketServer ws_server;
     };
 
 }
