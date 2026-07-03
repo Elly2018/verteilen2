@@ -24,11 +24,13 @@
 #pragma once
 #ifndef SERVER_DATA_APPDATA_H
 #define SERVER_DATA_APPDATA_H
+#include "../config.h"
+#include "worker.h"
 
 namespace verteilen2::server {
 
     struct App_data {
-        
+        WebServer app;
     };
 
 }

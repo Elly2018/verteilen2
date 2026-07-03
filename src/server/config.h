@@ -22,22 +22,20 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#define CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#include <cinttypes>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#ifndef SERVER_CONFIG_H
+#define SERVER_CONFIG_H
+#include <crow.h>
+#include <crow/middlewares/cookie_parser.h>
+#include <crow/middlewares/session.h>
 
-using json = nlohmann::json;
+using Session = crow::SessionMiddleware<crow::InMemoryStore>;
 
-namespace verteilen2::client {
+typedef crow::App<crow::CookieParser, Session> WebServer;
 
-    int32_t create_job_detail_table(SQLite::Database& db);
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content);
-    int32_t drop_job_detail_table(SQLite::Database& db);
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result);
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp, json& result);
-    int32_t get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result);
-}
+// 1. Point the disk scanner to your sub-folder
+#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-client/"
+
+// 2. Map how browsers request these assets
+#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
 
 #endif

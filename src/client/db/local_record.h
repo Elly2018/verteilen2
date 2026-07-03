@@ -39,6 +39,7 @@ namespace verteilen2::client {
     int32_t create_log_table();
     int32_t insert_log_table(const char job[36], const std::string title, const std::string content);
     int32_t drop_log_table();
+    std::string get_latest_datetime_log_table();
     int32_t get_latest_log_table(const int32_t amount, json& result);
     int32_t get_latest_log_table(const std::string last_timestamp, json& result);
     int32_t get_history_log_table(const int32_t amount, const std::string top_timestamp, json& result);
@@ -46,6 +47,7 @@ namespace verteilen2::client {
     int32_t create_job_table();
     int32_t insert_job_detail_table(const char job[36], const std::string title, const std::string description);
     int32_t drop_job_table();
+    std::string get_latest_datetime_job_table();
     int32_t get_latest_job_table(const int32_t amount, json& result);
     int32_t get_latest_job_table(const std::string last_timestamp, json& result);
     int32_t get_history_job_table(const int32_t amount, const std::string top_timestamp, json& result);
@@ -53,6 +55,7 @@ namespace verteilen2::client {
     int32_t create_job_detail_table();
     int32_t insert_job_detail_table(const char job[36], const int32_t level, const std::string title, const std::string content);
     int32_t drop_job_detail_table();
+    std::string get_latest_datetime_job_detail_table();
     int32_t get_latest_job_detail_table(const char job[36], const int32_t amount, json& result);
     int32_t get_latest_job_detail_table(const char job[36], const std::string last_timestamp, json& result);
     int32_t get_history_job_detail_table(const char job[36], const int32_t amount, const std::string top_timestamp, json& result);

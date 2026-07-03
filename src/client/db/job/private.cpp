@@ -30,7 +30,7 @@ namespace verteilen2::client {
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS job (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                id CHAR(36) NOT NULL,
+                job_id CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
                 description TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
