@@ -32,7 +32,8 @@ namespace fs = std::filesystem;
 namespace verteilen2::client {
     
     int32_t create_job_detail_table() {
-
+        SQLite::Database db = get_database();
+        return create_job_detail_table(db);
     }
 
     int32_t insert_job_detail_table(const char job[36], const int32_t level, const std::string title, const std::string content) {
@@ -47,11 +48,11 @@ namespace verteilen2::client {
 
     }
 
-    void get_latest_job_detail_table(const char job[36], const std::string last_timestamp) {
+    int32_t get_latest_job_detail_table(const char job[36], const std::string last_timestamp, json& result) {
 
     }
 
-    void get_history_job_detail_table(const char job[36], const int32_t amount, const std::string top_timestamp) {
+    int32_t get_history_job_detail_table(const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
 
     }
 

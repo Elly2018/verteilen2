@@ -52,11 +52,11 @@ namespace verteilen2::client {
         return get_latest_log_table(db, amount, result);
     }
 
-    void get_latest_log_table(const std::string last_timestamp) {
+    int32_t get_latest_log_table(const std::string last_timestamp, json& result) {
 
     }
 
-    void get_history_log_table(const int32_t amount, const std::string top_timestamp) {
+    int32_t get_history_log_table(const int32_t amount, const std::string top_timestamp, json& result) {
 
     }
 }
