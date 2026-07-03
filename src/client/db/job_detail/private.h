@@ -32,11 +32,12 @@ using json = nlohmann::json;
 
 namespace verteilen2::client {
 
-    int32_t create_log_table(SQLite::Database& db);
-    int32_t drop_log_table(SQLite::Database& db);
-    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
-    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result);
-    
+    int32_t create_job_detail_table(SQLite::Database& db);
+    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content);
+    int32_t drop_job_detail_table(SQLite::Database& db);
+    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result);
+    void get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp);
+    void get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp);
 }
 
 #endif

@@ -22,22 +22,9 @@
     SOFTWARE.
  */
 #include "private.h"
-#include <filesystem>
 #include <verteilen2/path.h>
 
-namespace fs = std::filesystem;
-
 namespace verteilen2::client {
-
-    SQLite::Database get_database() {
-        fs::path t = path_get_workpath(App_type::Client);
-
-        t /= "record.db";
-
-        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-
-        return db;
-    }
 
     int32_t create_log_table(SQLite::Database& db) {
         return db.exec(R"SQL(
@@ -54,7 +41,7 @@ namespace verteilen2::client {
                 ),
                 title TEXT NOT NULL,
                 content TEXT,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         )SQL");
     }

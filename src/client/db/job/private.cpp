@@ -21,22 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_DB_LOG_PRIVATE_H
-#define CLIENT_DB_LOG_PRIVATE_H
-#include <cinttypes>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
-
-using json = nlohmann::json;
+#include "private.h"
+#include <verteilen2/path.h>
 
 namespace verteilen2::client {
 
-    int32_t create_log_table(SQLite::Database& db);
-    int32_t drop_log_table(SQLite::Database& db);
-    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
-    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result);
-    
-}
+    int32_t create_job_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
+            CREATE TABLE IF NOT EXISTS job (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                job CHAR(36) NOT NULL,
+                title TEXT NOT NULL,
+                description TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        )SQL");
+    }
 
-#endif
+}
