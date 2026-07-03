@@ -22,12 +22,26 @@
     SOFTWARE.
  */
 #include "local_record.h"
-
+#include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
+#include <verteilen2/path.h>
 #include "../data/appdata.h"
 #include "log/private.h"
 
+namespace fs = std::filesystem;
+
 namespace verteilen2::client {
+
+    SQLite::Database get_database() {
+        
+        fs::path t = path_get_workpath(App_type::Client);
+
+        t /= "record.db";
+
+        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+
+        return db;
+    }
 
     void init_database() {
         SQLite::Database db = get_database();

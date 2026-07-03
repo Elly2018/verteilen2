@@ -21,22 +21,38 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_DB_LOG_PRIVATE_H
-#define CLIENT_DB_LOG_PRIVATE_H
-#include <cinttypes>
+#include "../local_record.h"
+#include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#include <verteilen2/path.h>
+#include "private.h"
 
-using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 namespace verteilen2::client {
-
-    int32_t create_log_table(SQLite::Database& db);
-    int32_t drop_log_table(SQLite::Database& db);
-    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
-    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result);
     
-}
+    int32_t create_job_detail_table() {
 
-#endif
+    }
+
+    int32_t insert_job_detail_table(const char job[36], const int32_t level, const std::string title, const std::string content) {
+
+    }
+
+    int32_t drop_job_detail_table() {
+
+    }
+
+    int32_t get_latest_job_detail_table(const char job[36], const int32_t amount, json& result) {
+
+    }
+
+    void get_latest_job_detail_table(const char job[36], const std::string last_timestamp) {
+
+    }
+
+    void get_history_job_detail_table(const char job[36], const int32_t amount, const std::string top_timestamp) {
+
+    }
+
+}
