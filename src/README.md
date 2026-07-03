@@ -1,6 +1,6 @@
 # Verteilen 2 Applications
 
-If you go deeper more than one folder level, you will get development details.\
+If you go one more level deeper, you will get development details.\
 Anyway, here is some summary for the applications here.
 
 ## Common
