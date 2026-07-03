@@ -1,22 +1,22 @@
 # Verteilen 2 Applications
 
 If you go one more level deeper, you will get development details.\
-Anyway, here is some summary for the applications here.
+Anyway, here are summaries for applications here.
 
 ## Common
 
-A library which share with every other applications. It has some often use functions and data structure.\
+A library which share with other applications. It has some often use functions and data structure.\
 The proto-buf definition is in here as well.
 
 ## CLI
 
 The entry point for user.\
-User could just install this, and use command to automatically downlaod other application and deploy.
+User could just install this, and use command to automatically downlaod other application and deploy them.
 
 ## Client
 
 The calculation agent. It provide web ui as well.\
-And it has its own sqlite database in the home/.verteilen2/client.\
+And it has its own SQLite database in the home/.verteilen2/client.\
 Mainly storage some logs and job execute detail informations.
 
 This agent can perform execute scripts, copy files, or detect files exist, etc...\
@@ -30,7 +30,7 @@ Which you can change it by command arguments
 
 The brain of the cluster. It manages the state of it's calculation agent. \
 And stores project, tasks, jobs definitions in here.\
-It has sqlite database as well, and it's even bigger.\
+It has SQLite database as well, and it's even bigger.\
 The storage even contains files. for user-define script, of course.
 
 You could just use server application and client application. \
