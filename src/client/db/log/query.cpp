@@ -47,6 +47,10 @@ namespace verteilen2::client {
         return create_log_table(db);
     }
 
+    std::string get_latest_datetime_log_table() {
+        SQLite::Database db = get_database();
+    }
+
     int32_t get_latest_log_table(const int32_t amount, json& result) {
         SQLite::Database db = get_database();
         return get_latest_log_table(db, amount, result);

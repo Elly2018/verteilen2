@@ -46,12 +46,6 @@ namespace verteilen2::client {
         )SQL");
     }
 
-    int32_t drop_log_table(SQLite::Database& db) {
-        return db.exec(R"SQL(
-            DROP TABLE IF EXISTS log;
-        )SQL");
-    }
-
     int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content) {
         SQLite::Statement query(db, "INSERT INTO log (job, title, content) VALUES(?, ?, ?);");
         query.bind(1, job);
@@ -60,10 +54,30 @@ namespace verteilen2::client {
         return query.exec();
     }
 
+    int32_t drop_log_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
+            DROP TABLE IF EXISTS log;
+        )SQL");
+    }
+
+    std::string get_latest_datetime_log_table(SQLite::Database& db) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
+
+        if (query.executeStep()) {
+            SQLite::Column col = query.getColumn(0);
+            if (!col.isNull()) {
+                return col.getText();
+            }
+        }
+
+        return "1970-01-01 00:00:00";
+    }
+
     int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, updated_at FROM log ORDER BY updated_at LIMIT ? ;");
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
         query.bind(1, amount);
 
+        result.clear();
         result["data"] = json::array();
 
         while(query.executeStep()) {
@@ -73,17 +87,70 @@ namespace verteilen2::client {
             std::string job = query.getColumn(1).getText();
             std::string title = query.getColumn(2).getText();
             std::string content = query.getColumn(3).getText();
-            std::string updated_at = query.getColumn(4).getText();
+            std::string created_at = query.getColumn(4).getText();
 
             buff["id"] = id;
             buff["job"] = job;
             buff["title"] = title;
             buff["content"] = content;
-            buff["updated_at"] = updated_at;
+            buff["created_at"] = created_at;
 
             result["data"].push_back(buff);
         }
 
         return result["data"].size();
     }
+
+    int32_t get_latest_log_table(SQLite::Database& db, const std::string last_timestamp, json& result) {
+
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at WHERE created_at > ?;");
+        query.bind(1, last_timestamp);
+
+        while(query.executeStep()) {
+            json buff = json::object();
+
+            int32_t id = query.getColumn(0).getInt();
+            std::string job = query.getColumn(1).getText();
+            std::string title = query.getColumn(2).getText();
+            std::string content = query.getColumn(3).getText();
+            std::string created_at = query.getColumn(4).getText();
+
+            buff["id"] = id;
+            buff["job"] = job;
+            buff["title"] = title;
+            buff["content"] = content;
+            buff["created_at"] = created_at;
+
+            result["data"].push_back(buff);
+        }
+
+        return result["data"].size();
+    }
+
+    int32_t get_history_log_table(SQLite::Database& db, const int32_t amount, const std::string top_timestamp, json& result) {
+
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at DESC WHERE created_at < ?;");
+        query.bind(1, top_timestamp);
+
+        while(query.executeStep()) {
+            json buff = json::object();
+
+            int32_t id = query.getColumn(0).getInt();
+            std::string job = query.getColumn(1).getText();
+            std::string title = query.getColumn(2).getText();
+            std::string content = query.getColumn(3).getText();
+            std::string created_at = query.getColumn(4).getText();
+
+            buff["id"] = id;
+            buff["job"] = job;
+            buff["title"] = title;
+            buff["content"] = content;
+            buff["created_at"] = created_at;
+
+            result["data"].insert(result["data"].begin(), buff);
+        }
+
+        return result["data"].size();
+    }
+
 }

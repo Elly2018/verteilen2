@@ -22,22 +22,35 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#define CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#include <cinttypes>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#ifndef SERVER_LOGGER_H
+#define SERVER_LOGGER_H
+#include <crow.h>
+#include "config.h"
+#include <spdlog/spdlog.h>
 
-using json = nlohmann::json;
-
-namespace verteilen2::client {
-
-    int32_t create_job_detail_table(SQLite::Database& db);
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content);
-    int32_t drop_job_detail_table(SQLite::Database& db);
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result);
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp, json& result);
-    int32_t get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result);
-}
+class CrowSpdlogBridge : public crow::ILogHandler {
+public:
+    void log(const std::string& message, crow::LogLevel level) override {
+        // Map Crow's LogLevels to spdlog formats
+        // Note: Crow's incoming message string does not end with a newline \n
+        switch (level) {
+            case crow::LogLevel::Debug:
+                spdlog::debug("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Info:
+                spdlog::info("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Warning:
+                spdlog::warn("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Error:
+                spdlog::error("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Critical:
+                spdlog::critical("[Crow] {}", message);
+                break;
+        }
+    }
+};
 
 #endif

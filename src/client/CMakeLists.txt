@@ -8,6 +8,7 @@ file(GLOB_RECURSE CLIENT_SOURCE CONFIGURE_DEPENDS
 include_directories(
     "${CMAKE_SOURCE_DIR}/src/common"
     "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
+    "${CMAKE_SOURCE_DIR}/lib/argh"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"

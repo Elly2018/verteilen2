@@ -27,6 +27,7 @@
 namespace verteilen2::client {
 
     int32_t create_job_detail_table(SQLite::Database& db) {
+        db.exec("PRAGMA foreign_keys = ON;");
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS job_detail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,7 +36,7 @@ namespace verteilen2::client {
                 content TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-                FOREIGN KEY (job) REFERENCES job(id)
+                FOREIGN KEY (job) REFERENCES job(job_id)
                     ON DELETE CASCADE
                     ON UPDATE CASCADE
             );
