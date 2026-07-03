@@ -1,12 +1,11 @@
 file(GLOB_RECURSE COMMON_SOURCE CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/common/*.h"
-    "${CMAKE_SOURCE_DIR}/src/common/*.hpp"
-    "${CMAKE_SOURCE_DIR}/src/common/*.c"
-    "${CMAKE_SOURCE_DIR}/src/common/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/common/src/*.c"
+    "${CMAKE_SOURCE_DIR}/src/common/src/*.cpp"
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/common"
+    "${CMAKE_SOURCE_DIR}/src/common/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
 )

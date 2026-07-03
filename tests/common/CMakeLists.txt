@@ -1,4 +1,7 @@
-include_directories("${CMAKE_SOURCE_DIR}/src/common")
+include_directories(
+    "${CMAKE_SOURCE_DIR}/src/common/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
+)
 
 add_executable(project_task_count_with_args project_task_count_with_args.cpp)
 add_executable(project_task_count project_task_count.cpp)

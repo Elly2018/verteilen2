@@ -1,13 +1,12 @@
 file(GLOB_RECURSE SERVER_SOURCE CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/server/*.h"
-    "${CMAKE_SOURCE_DIR}/src/server/*.hpp"
-    "${CMAKE_SOURCE_DIR}/src/server/*.c"
-    "${CMAKE_SOURCE_DIR}/src/server/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/server/src/*.c"
+    "${CMAKE_SOURCE_DIR}/src/server/src/*.cpp"
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/common"
-    "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
+    "${CMAKE_SOURCE_DIR}/src/server/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/argh"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"

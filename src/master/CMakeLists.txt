@@ -6,7 +6,7 @@ file(GLOB_RECURSE MASTER_SOURCE CONFIGURE_DEPENDS
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/common"
+    "${CMAKE_SOURCE_DIR}/src/common/include"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
 )
 
