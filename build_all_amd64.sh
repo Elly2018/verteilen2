@@ -2,11 +2,11 @@
 
 bash setup_all_amd64.sh
 
-cd src/common/verteilen2
+cd src/common
 
 bash proto_gen.sh
 
-cd ../../../
+cd ../../
 
 cd build
 

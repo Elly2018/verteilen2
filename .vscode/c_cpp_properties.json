@@ -4,7 +4,11 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/common",
+                "${workspaceFolder}/src/common/include",
+                "${workspaceFolder}/src/client/include",
+                "${workspaceFolder}/src/server/include",
+                "${workspaceFolder}/src/master/include",
+                "${workspaceFolder}/src/common/include/verteilen2/proto_gen",
                 "${workspaceFolder}/lib/crow/include",
                 "${workspaceFolder}/lib/mdns/include",
                 "${workspaceFolder}/lib/sqlite/include",
