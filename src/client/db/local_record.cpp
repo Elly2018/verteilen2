@@ -27,6 +27,8 @@
 #include <verteilen2/path.h>
 #include "../data/appdata.h"
 #include "log/private.h"
+#include "job/private.h"
+#include "job_detail/private.h"
 
 namespace fs = std::filesystem;
 
@@ -46,6 +48,8 @@ namespace verteilen2::client {
     void init_database() {
         SQLite::Database db = get_database();
         create_log_table(db);
+        create_job_table(db);
+        create_job_detail_table(db);
         insert_log_table("none", "Initialization", "Client has been activate.");
     }
 }

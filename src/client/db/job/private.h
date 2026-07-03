@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_LOG_PRIVATE_H
-#define CLIENT_DB_LOG_PRIVATE_H
+#ifndef CLIENT_DB_JOB_PRIVATE_H
+#define CLIENT_DB_JOB_PRIVATE_H
 #include <cinttypes>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>

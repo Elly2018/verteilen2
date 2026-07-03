@@ -21,23 +21,31 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#define CLIENT_DB_JOB_DETAIL_PRIVATE_H
-#include <cinttypes>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
-
-using json = nlohmann::json;
+#include "private.h"
+#include <verteilen2/path.h>
 
 namespace verteilen2::client {
 
-    int32_t create_job_detail_table(SQLite::Database& db);
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content);
-    int32_t drop_job_detail_table(SQLite::Database& db);
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result);
-    void get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp);
-    void get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp);
-}
+    int32_t create_job_detail_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
+            CREATE TABLE IF NOT EXISTS job_detail (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                job CHAR(36) NOT NULL,
+                title TEXT NOT NULL,
+                content TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-#endif
+                FOREIGN KEY (job) REFERENCES job(id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE
+            );
+        )SQL");
+    }
+
+    int32_t drop_job_detail_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
+            DROP TABLE IF EXISTS job_detail;
+        )SQL");
+    }
+
+}

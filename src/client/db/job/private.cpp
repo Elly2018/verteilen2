@@ -30,12 +30,17 @@ namespace verteilen2::client {
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS job (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                job CHAR(36) NOT NULL,
+                id CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
                 description TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
+        )SQL");
+    }
+
+    int32_t drop_job_table(SQLite::Database& db) {
+        return db.exec(R"SQL(
+            DROP TABLE IF EXISTS job;
         )SQL");
     }
 
