@@ -23,27 +23,27 @@
  */
 #include <verteilen2/data/task.h>
 #include <unordered_map>
-#include <verteilen2/data/job.h>
+#include <string>
 
 namespace verteilen2 {
 
-    int32_t task_data_get_job_count(Task_data task) {
+    int32_t task_data_get_job_count(Verteilen2__Task& task) {
         int32_t c = 0;
-        for(int32_t i = 0; i < ELEMENT_LENGTH; i++){
-            if (!task.jobs[i].vaild) continue;
+        for(int32_t i = 0; i < task.n_jobs; i++){
+            if (!task.jobs[i]->vaild) continue;
             c++;
         }
         return c;
     }
-    int32_t task_data_get_job_count(Task_data task, std::vector<Job_data>& jobs) {
+    int32_t task_data_get_job_count(Verteilen2__Task& task, std::vector<Verteilen2__Job>& jobs) {
         int32_t c = 0;
         std::unordered_map<std::string, bool> exists;
         for(int32_t i = 0; i < jobs.size(); i++){
             exists.insert({ std::string(jobs.at(i).uuid), true });
         }
-        for(int32_t i = 0; i < ELEMENT_LENGTH; i++){
-            if (!task.jobs[i].vaild) continue;
-            if(exists.count(std::string(task.jobs[i].uuid)) == 0) continue;
+        for(int32_t i = 0; i < task.n_jobs; i++){
+            if (!task.jobs[i]->vaild) continue;
+            if(exists.count(std::string(task.jobs[i]->uuid)) == 0) continue;
             c++;
         }
         return c;

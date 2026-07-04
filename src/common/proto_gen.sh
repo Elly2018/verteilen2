@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo Proto files generate start.
+
 mkdir -p proto_gen
 mkdir -p include/verteilen2/proto_gen
 mkdir -p src/verteilen2/proto_gen

@@ -30,10 +30,10 @@
 namespace verteilen2::master {
 
     struct App_data {
-        std::vector<Project_data> projects;
-        std::vector<Task_data> tasks;
-        std::vector<Job_data> jobs;
-        std::vector<Vault_data> vaults;
+        std::vector<Verteilen2__Project*> projects;
+        std::vector<Verteilen2__Task*> tasks;
+        std::vector<Verteilen2__Job*> jobs;
+        std::vector<Verteilen2__Vault*> vaults;
     };
 
 }

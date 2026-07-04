@@ -27,6 +27,12 @@
 
 namespace verteilen2 {
 
+    /**
+     * @brief Container for uuid owner
+     * 
+     * A simple container structure for uuid enable/disable
+     * 
+     */
     struct Data_field {
         char uuid[36];
         bool vaild;

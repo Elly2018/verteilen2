@@ -31,7 +31,29 @@ namespace fs = std::filesystem;
 
 namespace verteilen2 {
 
+    /**
+     * @brief Get Home Path 
+     * 
+     * A cross-platform way to get {home}
+     * 
+     */
     fs::path path_get_home();
+    /**
+     * @brief Get Home Path 
+     * 
+     * A cross-platform way to get {home}/.verteilen2/{type}
+     * 
+     * The type:
+     * 
+     * - CLI = "cli"
+     * *
+     * - Master = "master"
+     * *
+     * - Server = "server"
+     * *
+     * - Client = "client"
+     * 
+     */
     fs::path path_get_workpath(const App_type type);
 
 }

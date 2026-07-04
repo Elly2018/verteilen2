@@ -29,7 +29,17 @@
 
 namespace verteilen2 {
 
+    /**
+     * @brief Get All Network Interface IPV4
+     * 
+     * @return All ipv4 string
+     */
     std::vector<std::string> network_get_all_ipv4();
+    /**
+     * @brief Get All Network Interface IPV6
+     * 
+     * @return All ipv6 string
+     */
     std::vector<std::string> network_get_all_ipv6();
 
 }

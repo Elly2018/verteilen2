@@ -29,6 +29,7 @@
 #include <verteilen2client/db/local_record.h>
 #include <verteilen2client/data/appdata.h>
 #include <verteilen2client/api/all.h>
+#include <verteilen2client/state/communication.h>
 
 using namespace verteilen2;
 using namespace verteilen2::client;
@@ -58,6 +59,10 @@ static void mDNS_run(App_data& app_data){
     });
 }
 
+static void websocket_run(App_data& app_data) {
+    create_websocket_server(app_data);
+}
+
 static void web_run(App_data& app_data){
     static CrowSpdlogBridge custom_bridge;
     crow::logger::setHandler(&custom_bridge);
@@ -75,5 +80,6 @@ int main(){
     App_data app_data = App_data();
     db_run(app_data);
     mDNS_run(app_data);
+    websocket_run(app_data);
     web_run(app_data);
 }

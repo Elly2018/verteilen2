@@ -25,30 +25,52 @@
 #include <verteilen2/data/project.h>
 
 int main() {
-    verteilen2::Project_data project = verteilen2::Project_data();
 
-    int32_t c = verteilen2::project_data_get_task_count(project);
-    if(c != 0){
-        std::cerr << "[Common] The init project should have 0 tasks count, getting: " << c << "\n";
-        return 1;
+    {
+        Verteilen2__Project project = Verteilen2__Project();
+
+        int32_t c = verteilen2::project_data_get_task_count(project);
+        if(c != 0){
+            std::cerr << "[Common] The init project should have 0 tasks count, getting: " << c << "\n";
+            return 1;
+        }
     }
 
-    project.tasks[0].vaild = true;
-    project.tasks[1].vaild = true;
+    {
+        Verteilen2__Project project = Verteilen2__Project();
 
-    c = verteilen2::project_data_get_task_count(project);
-    if(c != 2){
-        std::cerr << "[Common] The project should have 2 tasks count, getting: " << c << "\n";
-        return 1;
+        project.n_tasks = 2;
+        project.tasks = (Verteilen2__DataField **)malloc(project.n_tasks * sizeof(Verteilen2__DataField*));
+        project.tasks[0]->vaild = true;
+        project.tasks[1]->vaild = true;
+
+
+        int32_t c = verteilen2::project_data_get_task_count(project);
+        if(c != 2){
+            std::cerr << "[Common] The project should have 2 tasks count, getting: " << c << "\n";
+            return 1;
+        }
+
+        free(project.tasks);
     }
+    
 
-    for(int32_t i = 0; i < verteilen2::ELEMENT_LENGTH; i++){
-        project.tasks[i].vaild = true;
-    }
+    {
+        Verteilen2__Project project = Verteilen2__Project();
 
-    c = verteilen2::project_data_get_task_count(project);
-    if(c != verteilen2::ELEMENT_LENGTH){
-        std::cerr << "[Common] The project should have " << verteilen2::ELEMENT_LENGTH << " tasks count, getting: " << c << "\n";
-        return 1;
+        project.n_tasks = 60;
+        project.tasks = (Verteilen2__DataField **)malloc(project.n_tasks * sizeof(Verteilen2__DataField*));
+        for(int32_t i = 0; i < 60; i++){
+            project.tasks[i] = new Verteilen2__DataField();
+            project.tasks[i]->vaild = true;
+        }
+
+        int32_t c = verteilen2::project_data_get_task_count(project);
+        if(c != project.n_tasks){
+            std::cerr << "[Common] The project should have " << project.n_tasks << " tasks count, getting: " << c << "\n";
+            return 1;
+        }
+
+        free(project.tasks);
     }
 }

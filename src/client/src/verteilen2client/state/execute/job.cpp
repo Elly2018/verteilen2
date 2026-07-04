@@ -27,7 +27,7 @@
 
 namespace verteilen2::client {
 
-    static void running_job(App_data& app_data, int32_t id, Verteilen2__ExecuteJob job) {
+    static void running_job(App_data& app_data, int32_t id, Verteilen2__Job job) {
 
         switch (job.type) {
             default:
@@ -50,10 +50,10 @@ namespace verteilen2::client {
         app_data.workers[id].state = ThreadState::Idle;
     }
 
-    bool execute_job_run(App_data& app_data, Verteilen2__ExecuteJob* job) {
+    bool execute_job_run(App_data& app_data, Verteilen2__Job* job) {
         int32_t id = execute_worker_idle(app_data);
         if(id == -1) return false;
-        Verteilen2__ExecuteJob buffer = Verteilen2__ExecuteJob(*job);
+        Verteilen2__Job buffer = Verteilen2__Job(*job);
         app_data.workers[id].state = ThreadState::Running;
         app_data.workers[id].worker = std::thread(running_job, std::ref(app_data), id, buffer);
         return true;

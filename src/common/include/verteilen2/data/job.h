@@ -24,30 +24,10 @@
 #pragma once
 #ifndef COMMON_DATA_JOB_H
 #define COMMON_DATA_JOB_H
-#include <unordered_map>
-#include <vector>
-#include <string>
-#include "vault.h"
-#include "../vconst.h"
-#include "../enum/job_type.h"
+#include <verteilen2/proto_gen/job.pb-c.h>
 
 namespace verteilen2 {
 
-    struct Job_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        Job_type type;
-        std::string script;
-        /**
-         * The key character length limit should be 64
-         */
-        std::unordered_map<std::string, Vault_element> local_datas;
-        char inputs_0[JOB_FIELD_LENGTH];
-        char inputs_1[JOB_FIELD_LENGTH];
-        char inputs_2[JOB_FIELD_LENGTH];
-        char inputs_3[JOB_FIELD_LENGTH];
-        char inputs_4[JOB_FIELD_LENGTH];
-    };
 
 }
 

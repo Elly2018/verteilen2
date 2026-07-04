@@ -21,21 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_VCONST_H
-#define COMMON_VCONST_H
-#include <cinttypes>
+#include <verteilen2/data/job.h>
+#include <verteilen2/proto_gen/job.pb-c.h>
 
 namespace verteilen2 {
 
-    constexpr int32_t UUID_LENGTH = 36;
-    constexpr int32_t NAME_LENGTH = 64;
-    constexpr int32_t EMAIL_LENGTH = 64;
-    constexpr int32_t PWD_HASH_LENGTH = 128;
-    constexpr int32_t DESCRIPTION_LENGTH = 256;
-    constexpr int32_t ELEMENT_LENGTH = 64;
-    constexpr int32_t JOB_FIELD_LENGTH = 128;
-    
 }
-
-#endif

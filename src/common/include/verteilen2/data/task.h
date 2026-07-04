@@ -25,27 +25,13 @@
 #ifndef COMMON_DATA_TASK_H
 #define COMMON_DATA_TASK_H
 #include <vector>
-#include "../vconst.h"
-#include "../data_field.h"
-#include "../task_config.h"
-#include "../enum/task_type.h"
+#include <verteilen2/proto_gen/task.pb-c.h>
+#include <verteilen2/proto_gen/job.pb-c.h>
 
 namespace verteilen2 {
 
-    struct Job_data;
-
-    struct Task_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char description[DESCRIPTION_LENGTH];
-        Task_type type;
-        char cluster_field_key[NAME_LENGTH];
-        char multicore_field_key[NAME_LENGTH];
-        Data_field jobs[ELEMENT_LENGTH];
-    };
-
-    int32_t task_data_get_job_count(Task_data task);
-    int32_t task_data_get_job_count(Task_data task, std::vector<Job_data>& jobs);
+    int32_t task_data_get_job_count(Verteilen2__Task& task);
+    int32_t task_data_get_job_count(Verteilen2__Task& task, std::vector<Verteilen2__Job>& jobs);
 
 }
 

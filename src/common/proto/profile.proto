@@ -3,7 +3,7 @@ syntax = "proto3";
 package verteilen2;
 
 // MsgType: DEBUG_LOG
-message ExecuteJob {
+message Profile {
     string id = 1;
     string name = 2;
     int32 type = 3;

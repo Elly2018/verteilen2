@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package verteilen2;
+
+message DataField {
+    string uuid = 1;
+    bool vaild = 2;
+}

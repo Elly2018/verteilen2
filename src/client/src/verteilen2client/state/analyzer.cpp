@@ -24,7 +24,7 @@
 #include <verteilen2client/state/analyzer.h>
 #include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2/proto_gen/debug_log.pb-c.h>
-#include <verteilen2/proto_gen/execute_job.pb-c.h>
+#include <verteilen2/proto_gen/job.pb-c.h>
 #include <verteilen2client/db/local_record.h>
 #include <verteilen2client/state/execute/job.h>
 
@@ -43,9 +43,9 @@ namespace verteilen2::client {
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
                 {
-                    Verteilen2__ExecuteJob* executejob = verteilen2__execute_job__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
+                    Verteilen2__Job* executejob = verteilen2__job__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
                     execute_job_run(app_data, executejob);
-                    verteilen2__execute_job__free_unpacked(executejob, NULL);
+                    verteilen2__job__free_unpacked(executejob, NULL);
                     break;
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__DEBUG_LOG:

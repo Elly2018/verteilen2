@@ -24,28 +24,17 @@
 #pragma once
 #ifndef COMMON_DATA_PROJECT_H
 #define COMMON_DATA_PROJECT_H
-#include <cinttypes>
 #include <vector>
-#include "../vconst.h"
-#include "../data_field.h"
+#include <verteilen2/proto_gen/project.pb-c.h>
+#include <verteilen2/proto_gen/task.pb-c.h>
+#include <verteilen2/proto_gen/job.pb-c.h>
 
 namespace verteilen2 {
-
-    struct Task_data;
-    struct Job_data;
-
-    struct Project_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char description[DESCRIPTION_LENGTH];
-        Data_field vault;
-        Data_field tasks[ELEMENT_LENGTH];
-    };
     
-    int32_t project_data_get_task_count(Project_data& project);
-    int32_t project_data_get_task_count(Project_data& project, std::vector<Task_data>& tasks);
-    int32_t project_data_get_job_count(Project_data& project, std::vector<Task_data>& tasks);
-    int32_t project_data_get_job_count(Project_data& project, std::vector<Task_data>& tasks, std::vector<Job_data>& jobs);
+    int32_t project_data_get_task_count(Verteilen2__Project& project);
+    int32_t project_data_get_task_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks);
+    int32_t project_data_get_job_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks);
+    int32_t project_data_get_job_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks, std::vector<Verteilen2__Job>& jobs);
     
 }
 
