@@ -1,12 +1,12 @@
 # Verteilen 2 Client
 
-Compute agent for the verteilen application
+Compute agent for the verteilen application.
 
 ## Purposes
 
 ## Database
 
-There are three tables requires for this
+There are three tables requires for this.
 
 * log
 * job

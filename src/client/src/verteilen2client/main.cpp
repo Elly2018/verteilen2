@@ -33,12 +33,12 @@
 using namespace verteilen2;
 using namespace verteilen2::client;
 
-static void db_run(){
+static void db_run(App_data& app_data){
     spdlog::info("Initializing database...");
     init_database();
 }
 
-static void mDNS_run(){
+static void mDNS_run(App_data& app_data){
     spdlog::info("Initializing mDNS service...");
     std::vector<std::string> ipv4s = network_get_all_ipv4();
     std::string v = "verteilen-2-client:";
@@ -73,7 +73,7 @@ static void web_run(App_data& app_data){
 
 int main(){
     App_data app_data = App_data();
-    db_run();
-    mDNS_run();
+    db_run(app_data);
+    mDNS_run(app_data);
     web_run(app_data);
 }

@@ -21,9 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "task.h"
+#include <verteilen2/data/task.h>
 #include <unordered_map>
-#include "job.h"
+#include <verteilen2/data/job.h>
 
 namespace verteilen2 {
 

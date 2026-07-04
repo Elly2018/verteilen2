@@ -21,19 +21,10 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_STATE_EXECUTE_JOB_H
-#define CLIENT_STATE_EXECUTE_JOB_H
-#include <cinttypes>
-#include <array>
-#include <string>
-#include "../../data/appdata.h"
-#include <verteilen2/proto_gen/execute_job.pb-c.h>
+#include <verteilen2client/state/execute/service.h>
 
 namespace verteilen2::client {
 
-    bool execute_job_run(App_data& app_data, Verteilen2__ExecuteJob* job);
+
     
 }
-
-#endif

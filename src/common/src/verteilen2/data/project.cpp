@@ -21,9 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "project.h"
-#include "task.h"
-#include "job.h"
+#include <verteilen2/data/project.h>
+#include <verteilen2/data/task.h>
+#include <verteilen2/data/job.h>
 
 namespace verteilen2 {
     int32_t project_data_get_task_count(Project_data& project) {

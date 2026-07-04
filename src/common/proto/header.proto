@@ -6,6 +6,7 @@ enum MsgType {
     UNKNOWN = 0;
     DEBUG_LOG = 1;
     EXECUTE_JOB = 2;
+    DEPLOY_SERVICE = 3;
 }
 
 message RawData {
