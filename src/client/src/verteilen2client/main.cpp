@@ -60,6 +60,7 @@ static void mDNS_run(App_data& app_data){
 }
 
 static void websocket_run(App_data& app_data) {
+    spdlog::info("Initializing websocket service...");
     create_websocket_server(app_data);
 }
 
