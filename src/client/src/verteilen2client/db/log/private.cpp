@@ -122,8 +122,9 @@ namespace verteilen2::client {
 
     int32_t get_history_log_table(SQLite::Database& db, const int32_t amount, const std::string top_timestamp, json& result) {
 
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at DESC WHERE created_at < ?;");
-        query.bind(1, top_timestamp);
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log LIMIT ? ORDER BY created_at DESC WHERE created_at < ?;");
+        query.bind(1, amount);
+        query.bind(2, top_timestamp);
 
         while(query.executeStep()) {
             json buff = json::object();
