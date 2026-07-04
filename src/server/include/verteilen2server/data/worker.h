@@ -22,22 +22,24 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
+#ifndef SERVER_DATA_WORKER_H
+#define SERVER_DATA_WORKER_H
 #include <string>
 #include <cstdint>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
+#include <thread>
+#include <atomic>
 
-namespace verteilen2::client {
+namespace verteilen2::server {
 
-    struct App_data {
-        WebServer app;
-        hv::WebSocketClient ws_client;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
+    enum class ThreadState {
+        Empty,
+        Idle,
+        Running
+    };
+
+    struct Worker {
+        std::thread worker;
+        std::atomic<ThreadState> state;
     };
 
 }

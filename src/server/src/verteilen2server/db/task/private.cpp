@@ -22,24 +22,19 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
+#ifndef SERVER_DB_TASK_PRIVATE_H
+#define SERVER_DB_TASK_PRIVATE_H
+#include <cinttypes>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <nlohmann/json.hpp>
 
-namespace verteilen2::client {
+using json = nlohmann::json;
 
-    struct App_data {
-        WebServer app;
-        hv::WebSocketClient ws_client;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
-    };
+namespace verteilen2::server {
 
+    int32_t create_task_table(SQLite::Database& db);
+    int32_t drop_task_table(SQLite::Database& db);
+    
 }
 
 #endif

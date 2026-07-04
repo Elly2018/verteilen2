@@ -22,23 +22,16 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
+#ifndef SERVER_STATE_COMMUNICATION_H
+#define SERVER_STATE_COMMUNICATION_H
 #include <string>
-#include <cstdint>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
+#include "../data/appdata.h"
 
-namespace verteilen2::client {
+namespace verteilen2::server {
 
-    struct App_data {
-        WebServer app;
-        hv::WebSocketClient ws_client;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
-    };
+    void create_websocket_server(App_data& app_data);
+    void create_websocket_connection_master(App_data& app_data, const std::string address);
+    void create_websocket_connection_client(App_data& app_data, const std::string address);
 
 }
 
