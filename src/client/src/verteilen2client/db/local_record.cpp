@@ -35,13 +35,9 @@ namespace fs = std::filesystem;
 namespace verteilen2::client {
 
     SQLite::Database get_database() {
-        
         fs::path t = path_get_workpath(App_type::Client);
-
         t /= "record.db";
-
         SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-
         return db;
     }
 

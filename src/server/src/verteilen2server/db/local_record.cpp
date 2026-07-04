@@ -21,20 +21,39 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_DB_PROJECT_PRIVATE_H
-#define SERVER_DB_PROJECT_PRIVATE_H
-#include <cinttypes>
+#include <verteilen2server/db/local_record.h>
+#include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#include <verteilen2/path.h>
+#include <verteilen2server/db/log/private.h>
+#include <verteilen2server/db/job/private.h>
+#include <verteilen2server/db/task/private.h>
+#include <verteilen2server/db/project/private.h>
+#include <verteilen2server/db/project_vault/private.h>
+#include <verteilen2server/db/vault/private.h>
+#include <verteilen2server/db/node/private.h>
 
-using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 namespace verteilen2::server {
 
-    int32_t create_project_table(SQLite::Database& db);
-    int32_t drop_project_table(SQLite::Database& db);
-    
-}
+    SQLite::Database get_database() {
+        fs::path t = path_get_workpath(App_type::Server);
+        t /= "record.db";
+        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+        return db;
+    }
 
-#endif
+    void init_database() {
+        SQLite::Database db = get_database();
+        create_log_table(db);
+        create_job_table(db);
+        create_vault_table(db);
+        create_node_table(db);
+        create_task_table(db);
+        create_project_table(db);
+        create_project_vault_table(db);
+        insert_log_table("none", "Initialization", "Client has been activate.");
+    }
+
+}

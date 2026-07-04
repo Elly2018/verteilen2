@@ -40,6 +40,27 @@ namespace verteilen2::server {
     int32_t insert_project_table(const char job[36], const std::string title, const std::string description);
     int32_t drop_project_table();
 
+    int32_t create_task_table();
+    int32_t drop_task_table();
+
+    int32_t create_job_table();
+    int32_t drop_job_table();
+
+    int32_t create_task_table();
+    int32_t drop_task_table();
+
+    int32_t create_vault_table();
+    int32_t drop_vault_table();
+
+    int32_t create_project_vault_table();
+    int32_t drop_project_vault_table();
+
+    int32_t create_node_table();
+    int32_t drop_node_table();
+
+    int32_t create_log_table();
+    int32_t drop_log_table();
+
 }
 
 #endif
