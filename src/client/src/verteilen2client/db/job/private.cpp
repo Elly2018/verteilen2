@@ -52,6 +52,18 @@ namespace verteilen2::client {
         )SQL");
     }
 
+    bool check_exists_job_table(SQLite::Database& db, const char job[36]) {
+        SQLite::Statement query(db, "SELECT COUNT(*) FROM job WHERE job_id = ?;");
+        query.bind(1, job);
+
+        if (query.executeStep()) {
+            int count = query.getColumn(0).getInt();
+            return count > 0;
+        }
+        
+        return false;
+    }
+
     int32_t get_latest_job_table(SQLite::Database& db, const int32_t amount, json& result) {
 
     }

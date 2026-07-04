@@ -44,7 +44,12 @@ namespace verteilen2::client {
     int32_t drop_job_table() {
         SQLite::Database db = get_database();
         return drop_job_table(db);
-    }   
+    }
+
+    bool check_exists_job_table(const char job[36]) {
+        SQLite::Database db = get_database();
+        return check_exists_job_table(db, job);
+    }
     
     int32_t get_latest_job_table(const int32_t amount, json& result) {
         SQLite::Database db = get_database();

@@ -22,6 +22,7 @@
     SOFTWARE.
  */
 #include <verteilen2client/api/api.h>
+#include <verteilen2client/db/local_record.h>
 
 namespace verteilen2::client {
 
@@ -45,9 +46,20 @@ namespace verteilen2::client {
         });
     }
 
+    static void register_job_message_getter(WebServer& app) {
+        CROW_ROUTE(app, "/api/get_job_detail/<path>/<path>")
+        .methods(crow::HTTPMethod::GET)
+        ([&app](const crow::request& req, const std::string& path1, const std::string& path2) {
+            std::string job_uuid = path1;
+            std::string datetime = path2;
+            return crow::response(200, "YES");
+        });
+    }
+
     void register_connect_server_ws_route(WebServer& app) {
         
         register_connect_request(app);
+        register_job_message_getter(app);
 
     }
 
