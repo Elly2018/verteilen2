@@ -36,7 +36,7 @@ namespace verteilen2::server {
         ([]() {
             crow::mustache::context ctx;
             
-            ctx["title"] = "Testing Title";
+            ctx["title"] = "Verteilen 2 Server";
 
             auto template_page = crow::mustache::load("index.html");
 
