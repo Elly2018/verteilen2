@@ -40,16 +40,19 @@ namespace verteilen2::client {
             default:
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__UNKNOWN:
                 {
-                    Verteilen2__RawData raw = Verteilen2__RawData();
+                    Verteilen2__RawData raw = VERTEILEN2__RAW_DATA__INIT;
 
                     size_t packed_size = verteilen2__raw_data__get_packed_size(&raw);
                     std::vector<uint8_t> send_buffer(packed_size);
+
+                    verteilen2__raw_data__pack(&raw, send_buffer.data());
                     
-                    int32_t bytes_sent = app_data.ws_client.channel->write(send_buffer.data(), send_buffer.size());
+                    int32_t bytes_sent = app_data.ws_client.send((const char*)send_buffer.data(), (int32_t)send_buffer.size());
 
                     if (bytes_sent < 0) {
                         spdlog::error("libhv socket write error occurred.");
                     }
+
                     break;
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
