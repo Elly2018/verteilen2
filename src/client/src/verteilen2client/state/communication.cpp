@@ -28,6 +28,7 @@
 #include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2client/data/appdata.h>
 #include <verteilen2client/state/analyzer.h>
+#include <verteilen2client/state/execute.h>
 
 namespace verteilen2::client {
 

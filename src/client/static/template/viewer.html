@@ -1,3 +1,13 @@
 <div id="viewer-content" class="mx-[5%]">
-    
+    {{#job_rows}}
+    <div class="collapse bg-base-100 border border-base-300">
+        <input type="checkbox" />
+        <div class="collapse-title font-semibold">{{name}}</div>
+        <div class="collapse-content text-sm">
+            {{#messages}}
+                <p>[{{datetime}}] {{message}}</p>
+            {{/messages}}
+        </div>
+    </div>
+    {{/job_rows}}
 </div>

@@ -22,6 +22,7 @@
     SOFTWARE.
  */
 #include <verteilen2client/state/analyzer.h>
+#include <spdlog/spdlog.h>
 #include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2/proto_gen/debug_log.pb-c.h>
 #include <verteilen2/proto_gen/job.pb-c.h>
@@ -39,6 +40,16 @@ namespace verteilen2::client {
             default:
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__UNKNOWN:
                 {
+                    Verteilen2__RawData raw = Verteilen2__RawData();
+
+                    size_t packed_size = verteilen2__raw_data__get_packed_size(&raw);
+                    std::vector<uint8_t> send_buffer(packed_size);
+                    
+                    int32_t bytes_sent = app_data.ws_client.channel->write(send_buffer.data(), send_buffer.size());
+
+                    if (bytes_sent < 0) {
+                        spdlog::error("libhv socket write error occurred.");
+                    }
                     break;
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
