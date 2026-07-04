@@ -22,20 +22,24 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef SERVER_CONFIG_H
-#define SERVER_CONFIG_H
-#include <crow.h>
-#include <crow/middlewares/cookie_parser.h>
-#include <crow/middlewares/session.h>
+#ifndef SERVER_DB_LOCAL_RECORD_H
+#define SERVER_DB_LOCAL_RECORD_H
+#include <cinttypes>
+#include <string>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <nlohmann/json.hpp>
 
-using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+using json = nlohmann::json;
 
-typedef crow::App<crow::CookieParser, Session> WebServer;
+namespace verteilen2::server {
 
-// 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
+    SQLite::Database get_database();
+    void init_database();
 
-// 2. Map how browsers request these assets
-#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
+    int32_t create_project_table();
+    int32_t insert_project_table(const char job[36], const std::string title, const std::string description);
+    int32_t drop_project_table();
+
+}
 
 #endif

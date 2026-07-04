@@ -21,21 +21,21 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_CONFIG_H
-#define SERVER_CONFIG_H
-#include <crow.h>
-#include <crow/middlewares/cookie_parser.h>
-#include <crow/middlewares/session.h>
+#include <verteilen2/uuid.h>
+#include <uuid.h>
 
-using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+namespace verteilen2 {
+    std::string generate_uuid(){
+        std::random_device rd;
+        std::array<unsigned int, 8> seed_data;
+        std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
+        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
+        std::mt19937 generator(seq);
+        
+        uuids::uuid_random_generator gen(&generator);
+        uuids::uuid id = gen();
+        std::string uuid_str = uuids::to_string(id);
 
-typedef crow::App<crow::CookieParser, Session> WebServer;
-
-// 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
-
-// 2. Map how browsers request these assets
-#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
-
-#endif
+        return uuid_str;
+    }
+}

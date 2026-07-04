@@ -27,6 +27,7 @@
 #include <verteilen2/network.h>
 #include <verteilen2server/logger.h>
 #include <verteilen2server/data/appdata.h>
+#include <verteilen2server/api/all.h>
 
 using namespace verteilen2;
 using namespace verteilen2::server;
@@ -62,8 +63,8 @@ static void web_run(App_data& app_data){
     
     spdlog::info("Initializing web service...");
     crow::mustache::set_global_base(VERTEILEN2_STATIC_DIRECTORY);
-    //register_static_route(app_data.app);
-    //register_template_route(app_data.app);
+    register_static_route(app_data.app);
+    register_template_route(app_data.app);
     //register_connect_server_ws_route(app_data.app);
     //register_ws_route(app_data);
     app_data.app.bindaddr("127.0.0.1").port(8080).multithreaded().run();

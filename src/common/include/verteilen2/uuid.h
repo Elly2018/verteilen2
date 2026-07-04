@@ -22,20 +22,12 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef SERVER_CONFIG_H
-#define SERVER_CONFIG_H
-#include <crow.h>
-#include <crow/middlewares/cookie_parser.h>
-#include <crow/middlewares/session.h>
+#ifndef COMMON_UUID_H
+#define COMMON_UUID_H
+#include <string>
 
-using Session = crow::SessionMiddleware<crow::InMemoryStore>;
-
-typedef crow::App<crow::CookieParser, Session> WebServer;
-
-// 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
-
-// 2. Map how browsers request these assets
-#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
+namespace verteilen2 {
+    std::string generate_uuid();
+}
 
 #endif

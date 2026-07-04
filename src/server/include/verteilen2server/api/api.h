@@ -22,20 +22,28 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef SERVER_CONFIG_H
-#define SERVER_CONFIG_H
-#include <crow.h>
-#include <crow/middlewares/cookie_parser.h>
-#include <crow/middlewares/session.h>
+#ifndef SERVER_API_API_H
+#define SERVER_API_API_H
+#include "../config.h"
 
-using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+namespace verteilen2::server {
 
-typedef crow::App<crow::CookieParser, Session> WebServer;
-
-// 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
-
-// 2. Map how browsers request these assets
-#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
+    /**
+     * 
+     * @brief REST-API route for attmpt connect to server's websocket endpoint
+     * 
+     * @param app The crow application reference
+     * 
+     * @note GET "/api/connect_ws_server"
+     * 
+     * * require body key: "server-address"
+     * 
+     * This will attpemt create a connection, after success, register it to App_data,
+     * For state to use it.
+     * 
+     */
+    void register_connect_server_ws_route(WebServer& app);
+    
+}
 
 #endif

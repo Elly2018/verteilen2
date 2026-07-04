@@ -21,21 +21,34 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_CONFIG_H
-#define SERVER_CONFIG_H
-#include <crow.h>
-#include <crow/middlewares/cookie_parser.h>
-#include <crow/middlewares/session.h>
+#include <verteilen2server/api/api.h>
 
-using Session = crow::SessionMiddleware<crow::InMemoryStore>;
+namespace verteilen2::server {
 
-typedef crow::App<crow::CookieParser, Session> WebServer;
+    static void register_connect_request(WebServer& app) {
+        CROW_ROUTE(app, "/api/connect_ws_client")
+        .methods(crow::HTTPMethod::POST)
+        ([&app](const crow::request& req) {
+            crow::json::rvalue json_data = crow::json::load(req.body);
 
-// 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
+            if (!json_data) {
+                return crow::response(400, "Invalid JSON payload");
+            }
 
-// 2. Map how browsers request these assets
-#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
+            if (!json_data.has("client-address")) {
+                return crow::response(400, "Missing required key: client-address");
+            }
 
-#endif
+            const auto& client_address = json_data["client-address"];
+
+            return crow::response(200, "YES");
+        });
+    }
+
+    void register_connect_server_ws_route(WebServer& app) {
+        
+        register_connect_request(app);
+
+    }
+
+}

@@ -21,17 +21,16 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/api/template.h>
+#include <verteilen2server/api/template.h>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
 #include <verteilen2/uuid.h>
-#include <verteilen2client/config.h>
-#include <verteilen2client/db/local_record.h>
-#include <verteilen2client/state/analyzer.h>
+#include <verteilen2server/config.h>
+#include <verteilen2server/db/local_record.h>
 
 using json = nlohmann::json;
 
-namespace verteilen2::client {
+namespace verteilen2::server {
 
     static crow::mustache::context json_to_mustache(const nlohmann::json& j) {
         crow::mustache::context ctx;
@@ -65,23 +64,6 @@ namespace verteilen2::client {
         return ctx;
     }
 
-    static void template_setting(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
-        ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
-        ctx["current_maximum_execution"] = 20;
-    }
-
-    static void template_log(WebServer& app, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
-
-        json res = json::object();
-        get_latest_log_table(Init_log_amount, res);
-
-        crow::mustache::context log_rows = json_to_mustache(res);
-
-        session_ctx.set("rows", log_rows["data"].dump());
-        ctx["log_rows"] = std::move(log_rows["data"]);
-        ctx["updating"] = session_ctx.contains("update") && session_ctx.get<bool>("update");
-    }
-
     static void register_template(WebServer& app) {
         CROW_ROUTE(app, "/template/<path>")
         .methods(crow::HTTPMethod::GET)
@@ -96,11 +78,11 @@ namespace verteilen2::client {
             }
             
             if(path.starts_with("setting")) {
-                template_setting(app, req, ctx);
+                //template_setting(app, req, ctx);
             }
             else if(path.starts_with("log")) {
                 if(path == "log-clear") {
-                    drop_log_table();
+                    //drop_log_table();
                 }
                 else if (path == "log-start-update") {
                     session_ctx.set<bool>("update", true);
@@ -109,7 +91,7 @@ namespace verteilen2::client {
                     session_ctx.set<bool>("update", false);
                 }
                 filename = "log";
-                template_log(app, req, ctx, session_ctx);
+                //template_log(app, req, ctx, session_ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + filename + ".html");

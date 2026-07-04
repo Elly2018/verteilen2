@@ -8,6 +8,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/src/common/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
+    "${CMAKE_SOURCE_DIR}/lib/uuid/include"
 )
 
 add_library(common STATIC
@@ -16,5 +17,6 @@ add_library(common STATIC
 
 target_link_libraries(common PUBLIC
     hv
+    stduuid
     ${PROTOBUF_C_LIBRARIES}
 )
