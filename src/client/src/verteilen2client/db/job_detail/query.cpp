@@ -37,23 +37,28 @@ namespace verteilen2::client {
     }
 
     int32_t insert_job_detail_table(const char job[36], const int32_t level, const std::string title, const std::string content) {
-
+        SQLite::Database db = get_database();
+        return insert_job_detail_table(db, job, level, title, content);
     }
 
     int32_t drop_job_detail_table() {
-
+        SQLite::Database db = get_database();
+        return drop_job_detail_table(db);
     }
 
     int32_t get_latest_job_detail_table(const char job[36], const int32_t amount, json& result) {
-
+        SQLite::Database db = get_database();
+        return get_latest_job_detail_table(db, job, amount, result);
     }
 
     int32_t get_latest_job_detail_table(const char job[36], const std::string last_timestamp, json& result) {
-
+        SQLite::Database db = get_database();
+        return get_latest_job_detail_table(db, job, last_timestamp, result);
     }
 
     int32_t get_history_job_detail_table(const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
-
+        SQLite::Database db = get_database();
+        return get_history_job_detail_table(db, job, amount, top_timestamp, result);
     }
 
 }

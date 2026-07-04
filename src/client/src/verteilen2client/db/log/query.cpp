@@ -43,12 +43,12 @@ namespace verteilen2::client {
 
     int32_t drop_log_table() {
         SQLite::Database db = get_database();
-        drop_log_table(db);
-        return create_log_table(db);
+        return drop_log_table(db);
     }
 
     std::string get_latest_datetime_log_table() {
         SQLite::Database db = get_database();
+        return get_latest_datetime_log_table(db);
     }
 
     int32_t get_latest_log_table(const int32_t amount, json& result) {
@@ -57,10 +57,12 @@ namespace verteilen2::client {
     }
 
     int32_t get_latest_log_table(const std::string last_timestamp, json& result) {
-
+        SQLite::Database db = get_database();
+        return get_latest_log_table(db, last_timestamp, result);
     }
 
     int32_t get_history_log_table(const int32_t amount, const std::string top_timestamp, json& result) {
-
+        SQLite::Database db = get_database();
+        return get_history_log_table(db, amount, top_timestamp, result);
     }
 }

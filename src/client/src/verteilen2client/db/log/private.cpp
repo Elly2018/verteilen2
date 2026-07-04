@@ -30,15 +30,7 @@ namespace verteilen2::client {
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                -- Automatically generates a valid RFC-4122 UUIDv4 string if not provided
-                job CHAR(36) NOT NULL DEFAULT (
-                    lower(hex(randomblob(4))) || '-' ||
-                    lower(hex(randomblob(2))) || '-4' ||
-                    substr(lower(hex(randomblob(2))), 2) || '-' ||
-                    substr('89ab', abs(random()) % 4 + 1, 1) || 
-                    substr(lower(hex(randomblob(2))), 2) || '-' ||
-                    lower(hex(randomblob(6)))
-                ),
+                job CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
                 content TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -55,8 +47,9 @@ namespace verteilen2::client {
     }
 
     int32_t drop_log_table(SQLite::Database& db) {
+        db.exec("PRAGMA foreign_keys = ON;");
         return db.exec(R"SQL(
-            DROP TABLE IF EXISTS log;
+            DELETE FROM log;
         )SQL");
     }
 

@@ -43,10 +43,30 @@ namespace verteilen2::client {
         )SQL");
     }
 
+    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content) {
+        SQLite::Statement query(db, "INSERT INTO job_detail (job, title, content) VALUES(?, ?, ?);");
+        query.bind(1, job);
+        query.bind(2, title);
+        query.bind(3, content);
+        return query.exec();
+    }
+
     int32_t drop_job_detail_table(SQLite::Database& db) {
         return db.exec(R"SQL(
-            DROP TABLE IF EXISTS job_detail;
+            DELETE FROM job_detail;
         )SQL");
     }
 
+    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result) {
+
+    }
+
+    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp, json& result) {
+
+    }
+
+    int32_t get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
+
+    }
+    
 }
