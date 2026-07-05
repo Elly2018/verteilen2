@@ -30,8 +30,8 @@
 
 namespace verteilen2::client {
 
-    static void register_index(WebServer& app) {
-        CROW_ROUTE(app, "/")
+    static void register_index(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/")
         .methods(crow::HTTPMethod::GET)
         ([]() {
             crow::mustache::context ctx;
@@ -44,8 +44,8 @@ namespace verteilen2::client {
         });
     }
 
-    static void register_resource(WebServer& app) {
-        CROW_ROUTE(app, "/css/<path>")
+    static void register_resource(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/css/<path>")
         .methods(crow::HTTPMethod::GET)
         ([](const std::string& path) {
             crow::response res;
@@ -61,7 +61,7 @@ namespace verteilen2::client {
             return res;
         });
 
-        CROW_ROUTE(app, "/js/<path>")
+        CROW_ROUTE(app_data.app, "/js/<path>")
         .methods(crow::HTTPMethod::GET)
         ([](const std::string& path) {
             crow::response res;
@@ -77,7 +77,7 @@ namespace verteilen2::client {
             return res;
         });
 
-        CROW_ROUTE(app, "/favicon.ico")
+        CROW_ROUTE(app_data.app, "/favicon.ico")
         .methods(crow::HTTPMethod::GET)
         ([]() {
             crow::response res;
@@ -94,10 +94,10 @@ namespace verteilen2::client {
         });
     }
 
-    void register_static_route(WebServer& app) {
+    void register_static_route(App_data& app_data) {
 
-        register_index(app);
-        register_resource(app);
+        register_index(app_data);
+        register_resource(app_data);
         
     }
 

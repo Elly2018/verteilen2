@@ -24,7 +24,8 @@
 #pragma once
 #ifndef CLIENT_API_API_H
 #define CLIENT_API_API_H
-#include "../config.h"
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::client {
 
@@ -42,7 +43,7 @@ namespace verteilen2::client {
      * For state to use it.
      * 
      */
-    void register_connect_server_ws_route(WebServer& app);
+    void register_connect_server_ws_route(App_data& app_data);
     
 }
 

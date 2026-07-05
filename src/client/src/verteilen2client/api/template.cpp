@@ -65,19 +65,19 @@ namespace verteilen2::client {
         return ctx;
     }
 
-    static void template_setting(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
+    static void template_setting(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
         ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
         ctx["current_maximum_execution"] = 20;
     }
 
-    static void template_viewer(WebServer& app, const crow::request& req, crow::mustache::context& ctx) {
+    static void template_viewer(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
 
     }
 
-    static void template_log(WebServer& app, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
+    static void template_log(App_data& app_data, const crow::request& req, crow::mustache::context& ctx, Session::context& session_ctx) {
 
         json res = json::object();
-        get_latest_log_table(Init_log_amount, res);
+        get_latest_log_table(app_data.db_getter(), Init_log_amount, res);
 
         crow::mustache::context log_rows = json_to_mustache(res);
 
@@ -86,28 +86,28 @@ namespace verteilen2::client {
         ctx["updating"] = session_ctx.contains("update") && session_ctx.get<bool>("update");
     }
 
-    static void register_template(WebServer& app) {
-        CROW_ROUTE(app, "/template/<path>")
+    static void register_template(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/template/<path>")
         .methods(crow::HTTPMethod::GET)
-        ([&app](const crow::request& req, const std::string& path) {
+        ([&app_data](const crow::request& req, const std::string& path) {
             crow::mustache::context ctx;
             std::string filename = path;
-            Session::context& session_ctx = app.get_context<Session>(req);
-            crow::CookieParser::context& cookie_ctx = app.get_context<crow::CookieParser>(req);
+            Session::context& session_ctx = app_data.app.get_context<Session>(req);
+            crow::CookieParser::context& cookie_ctx = app_data.app.get_context<crow::CookieParser>(req);
 
             if(cookie_ctx.get_cookie("key").empty()){
                 cookie_ctx.set_cookie("key", generate_uuid()).path("/").httponly();
             }
             
             if(path.starts_with("setting")) {
-                template_setting(app, req, ctx);
+                template_setting(app_data, req, ctx);
             }
             if(path.starts_with("viewer")) {
-                template_viewer(app, req, ctx);
+                template_viewer(app_data, req, ctx);
             }
             else if(path.starts_with("log")) {
                 if(path == "log-clear") {
-                    drop_log_table();
+                    drop_log_table(app_data.db_getter());
                 }
                 else if (path == "log-start-update") {
                     session_ctx.set<bool>("update", true);
@@ -116,7 +116,7 @@ namespace verteilen2::client {
                     session_ctx.set<bool>("update", false);
                 }
                 filename = "log";
-                template_log(app, req, ctx, session_ctx);
+                template_log(app_data, req, ctx, session_ctx);
             }
 
             auto template_page = crow::mustache::load("template/" + filename + ".html");
@@ -125,9 +125,9 @@ namespace verteilen2::client {
         });
     }
 
-    void register_template_route(WebServer& app) {
+    void register_template_route(App_data& app_data) {
 
-        register_template(app);
+        register_template(app_data);
 
     }
 

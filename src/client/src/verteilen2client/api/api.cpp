@@ -26,10 +26,10 @@
 
 namespace verteilen2::client {
 
-    static void register_connect_request(WebServer& app) {
-        CROW_ROUTE(app, "/api/connect_ws_server")
+    static void register_connect_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/connect_ws_server")
         .methods(crow::HTTPMethod::POST)
-        ([&app](const crow::request& req) {
+        ([&app_data](const crow::request& req) {
             crow::json::rvalue json_data = crow::json::load(req.body);
 
             if (!json_data) {
@@ -46,20 +46,20 @@ namespace verteilen2::client {
         });
     }
 
-    static void register_job_message_getter(WebServer& app) {
-        CROW_ROUTE(app, "/api/get_job_detail/<path>/<path>")
+    static void register_job_message_getter(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/get_job_detail/<path>/<path>")
         .methods(crow::HTTPMethod::GET)
-        ([&app](const crow::request& req, const std::string& path1, const std::string& path2) {
+        ([&app_data](const crow::request& req, const std::string& path1, const std::string& path2) {
             std::string job_uuid = path1;
             std::string datetime = path2;
             return crow::response(200, "YES");
         });
     }
 
-    void register_connect_server_ws_route(WebServer& app) {
+    void register_connect_server_ws_route(App_data& app_data) {
         
-        register_connect_request(app);
-        register_job_message_getter(app);
+        register_connect_request(app_data);
+        register_job_message_getter(app_data);
 
     }
 

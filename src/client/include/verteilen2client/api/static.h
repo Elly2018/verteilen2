@@ -24,11 +24,12 @@
 #pragma once
 #ifndef CLIENT_API_STATIC_H
 #define CLIENT_API_STATIC_H
-#include "../config.h"
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::client {
 
-    void register_static_route(WebServer& app);
+    void register_static_route(App_data& app_data);
 
 }
 
