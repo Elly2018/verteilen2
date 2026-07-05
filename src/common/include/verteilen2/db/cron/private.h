@@ -22,7 +22,23 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef SERVER_STATE_EXECUTE_SERVICE_H
-#define SERVER_STATE_EXECUTE_SERVICE_H
+#ifndef COMMON_DB_CRON_PRIVATE_H
+#define COMMON_DB_CRON_PRIVATE_H
+#include <cinttypes>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
+namespace verteilen2 {
+
+    int32_t create_cron_table(SQLite::Database db);
+    int32_t insert_cron_detail_table(SQLite::Database db, const char project[36], const std::string title, const std::string description, std::string timer);
+    int32_t drop_cron_table(SQLite::Database db);
+    int32_t get_latest_cron_table(SQLite::Database db, const int32_t amount, json& result);
+    int32_t get_latest_cron_table(SQLite::Database db, const std::string last_timestamp, json& result);
+    int32_t get_history_cron_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
+
+}
 
 #endif
