@@ -21,29 +21,11 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_DATA_APPDATA_H
-#define SERVER_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include <vector>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
-#include <verteilen2/db/local_record.h>
+#include <verteilen2/db/task/private.h>
 
 namespace verteilen2::server {
 
-    struct App_data {
-        WebServer app;
-        database_getter db_getter;
-        std::vector<hv::WebSocketClient> ws_clients;
-        hv::WebSocketClient ws_master;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
-    };
-
+    int32_t create_task_table(SQLite::Database db);
+    int32_t drop_task_table(SQLite::Database db);
+    
 }
-
-#endif

@@ -22,24 +22,25 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_LOG_PRIVATE_H
-#define CLIENT_DB_LOG_PRIVATE_H
+#ifndef COMMON_DB_LOCAL_RECORD_H
+#define COMMON_DB_LOCAL_RECORD_H
 #include <cinttypes>
+#include <string>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>
+#include <verteilen2/enum/app_type.h>
+#include <verteilen2/db/job/private.h>
+#include <verteilen2/db/job_detail/private.h>
+#include <verteilen2/db/log/private.h>
 
 using json = nlohmann::json;
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    int32_t create_log_table(SQLite::Database& db);
-    int32_t insert_log_table(SQLite::Database& db, const char job[36], const std::string title, const std::string content);
-    int32_t drop_log_table(SQLite::Database& db);
-    std::string get_latest_datetime_log_table(SQLite::Database& db);
-    int32_t get_latest_log_table(SQLite::Database& db, const int32_t amount, json& result);
-    int32_t get_latest_log_table(SQLite::Database& db, const std::string last_timestamp, json& result);
-    int32_t get_history_log_table(SQLite::Database& db, const int32_t amount, const std::string top_timestamp, json& result);
-    
+    typedef SQLite::Database (*database_getter)();
+
+    SQLite::Database get_database(App_type type);
+
 }
 
 #endif

@@ -21,46 +21,54 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/db/job_detail/private.h>
+#include <verteilen2/db/log/private.h>
 #include <verteilen2/path.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    int32_t create_job_detail_table(SQLite::Database& db) {
-        db.exec("PRAGMA foreign_keys = ON;");
+    int32_t create_log_table(SQLite::Database db) {
         return db.exec(R"SQL(
-            CREATE TABLE IF NOT EXISTS job_detail (
+            CREATE TABLE IF NOT EXISTS log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 job CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
                 content TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-                FOREIGN KEY (job) REFERENCES job(job_id)
-                    ON DELETE CASCADE
-                    ON UPDATE CASCADE
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         )SQL");
     }
 
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const int32_t level, const std::string title, const std::string content) {
-        SQLite::Statement query(db, "INSERT INTO job_detail (job, title, content) VALUES(?, ?, ?);");
+    int32_t insert_log_table(SQLite::Database db, const char job[36], const std::string title, const std::string content) {
+        SQLite::Statement query(db, "INSERT INTO log (job, title, content) VALUES(?, ?, ?);");
         query.bind(1, job);
         query.bind(2, title);
         query.bind(3, content);
         return query.exec();
     }
 
-    int32_t drop_job_detail_table(SQLite::Database& db) {
+    int32_t drop_log_table(SQLite::Database db) {
+        db.exec("PRAGMA foreign_keys = ON;");
         return db.exec(R"SQL(
-            DELETE FROM job_detail;
+            DELETE FROM log;
         )SQL");
     }
 
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at LIMIT ? ;");
-        query.bind(1, job);
-        query.bind(2, amount);
+    std::string get_latest_datetime_log_table(SQLite::Database db) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
+
+        if (query.executeStep()) {
+            SQLite::Column col = query.getColumn(0);
+            if (!col.isNull()) {
+                return col.getText();
+            }
+        }
+
+        return "1970-01-01 00:00:00";
+    }
+
+    int32_t get_latest_log_table(SQLite::Database db, const int32_t amount, json& result) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
+        query.bind(1, amount);
 
         result.clear();
         result["data"] = json::array();
@@ -86,14 +94,11 @@ namespace verteilen2::client {
         return result["data"].size();
     }
 
-    int32_t get_latest_job_detail_table(SQLite::Database& db, const char job[36], const std::string last_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at WHERE created_at > ? ;");
-        query.bind(1, job);
+    int32_t get_latest_log_table(SQLite::Database db, const std::string last_timestamp, json& result) {
+
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at WHERE created_at > ?;");
         query.bind(1, last_timestamp);
 
-        result.clear();
-        result["data"] = json::array();
-
         while(query.executeStep()) {
             json buff = json::object();
 
@@ -115,13 +120,11 @@ namespace verteilen2::client {
         return result["data"].size();
     }
 
-    int32_t get_history_job_detail_table(SQLite::Database& db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at DESC WHERE created_at < ? ;");
-        query.bind(1, job);
-        query.bind(1, top_timestamp);
+    int32_t get_history_log_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result) {
 
-        result.clear();
-        result["data"] = json::array();
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log LIMIT ? ORDER BY created_at DESC WHERE created_at < ?;");
+        query.bind(1, amount);
+        query.bind(2, top_timestamp);
 
         while(query.executeStep()) {
             json buff = json::object();
@@ -143,5 +146,5 @@ namespace verteilen2::client {
 
         return result["data"].size();
     }
-    
+
 }

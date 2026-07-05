@@ -25,27 +25,24 @@
 #include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <verteilen2/path.h>
-#include <verteilen2server/db/log/private.h>
-#include <verteilen2server/db/job/private.h>
-#include <verteilen2server/db/task/private.h>
-#include <verteilen2server/db/project/private.h>
-#include <verteilen2server/db/project_vault/private.h>
-#include <verteilen2server/db/vault/private.h>
-#include <verteilen2server/db/node/private.h>
+#include <verteilen2/db/log/private.h>
+#include <verteilen2/db/job/private.h>
+#include <verteilen2/db/task/private.h>
+#include <verteilen2/db/project/private.h>
+#include <verteilen2/db/project_vault/private.h>
+#include <verteilen2/db/vault/private.h>
+#include <verteilen2/db/node/private.h>
 
 namespace fs = std::filesystem;
 
 namespace verteilen2::server {
 
     SQLite::Database get_database() {
-        fs::path t = path_get_workpath(App_type::Server);
-        t /= "record.db";
-        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-        return db;
+        return get_database(App_type::Server);
     }
 
-    void init_database() {
-        SQLite::Database db = get_database();
+    void init_database(App_data& appdata) {
+        appdata. = get_database();
         create_log_table(db);
         create_job_table(db);
         create_vault_table(db);

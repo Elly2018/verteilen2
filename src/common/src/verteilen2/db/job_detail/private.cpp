@@ -21,52 +21,46 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/db/job/private.h>
+#include <verteilen2/db/job_detail/private.h>
 #include <verteilen2/path.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    int32_t create_job_table(SQLite::Database& db) {
+    int32_t create_job_detail_table(SQLite::Database db) {
+        db.exec("PRAGMA foreign_keys = ON;");
         return db.exec(R"SQL(
-            CREATE TABLE IF NOT EXISTS job (
+            CREATE TABLE IF NOT EXISTS job_detail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                job_id CHAR(36) NOT NULL,
+                job CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
-                description TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                content TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+                FOREIGN KEY (job) REFERENCES job(job_id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE
             );
         )SQL");
     }
 
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const std::string title, const std::string description) {
-        SQLite::Statement query(db, "INSERT INTO job (job_id, title, description) VALUES(?, ?, ?);");
+    int32_t insert_job_detail_table(SQLite::Database db, const char job[36], const int32_t level, const std::string title, const std::string content) {
+        SQLite::Statement query(db, "INSERT INTO job_detail (job, title, content) VALUES(?, ?, ?);");
         query.bind(1, job);
         query.bind(2, title);
-        query.bind(3, description);
+        query.bind(3, content);
         return query.exec();
     }
 
-    int32_t drop_job_table(SQLite::Database& db) {
+    int32_t drop_job_detail_table(SQLite::Database db) {
         return db.exec(R"SQL(
-            DELETE FROM job;
+            DELETE FROM job_detail;
         )SQL");
     }
 
-    bool check_exists_job_table(SQLite::Database& db, const char job[36]) {
-        SQLite::Statement query(db, "SELECT COUNT(*) FROM job WHERE job_id = ?;");
+    int32_t get_latest_job_detail_table(SQLite::Database db, const char job[36], const int32_t amount, json& result) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at LIMIT ? ;");
         query.bind(1, job);
-
-        if (query.executeStep()) {
-            int count = query.getColumn(0).getInt();
-            return count > 0;
-        }
-        
-        return false;
-    }
-
-    int32_t get_latest_job_table(SQLite::Database& db, const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job_id, title, description, created_at FROM job ORDER BY created_at LIMIT ? ;");
-        query.bind(1, amount);
+        query.bind(2, amount);
 
         result.clear();
         result["data"] = json::array();
@@ -75,15 +69,15 @@ namespace verteilen2::client {
             json buff = json::object();
 
             int32_t id = query.getColumn(0).getInt();
-            std::string job_id = query.getColumn(1).getText();
+            std::string job = query.getColumn(1).getText();
             std::string title = query.getColumn(2).getText();
-            std::string description = query.getColumn(3).getText();
+            std::string content = query.getColumn(3).getText();
             std::string created_at = query.getColumn(4).getText();
 
             buff["id"] = id;
-            buff["job_id"] = job_id;
+            buff["job"] = job;
             buff["title"] = title;
-            buff["description"] = description;
+            buff["content"] = content;
             buff["created_at"] = created_at;
 
             result["data"].push_back(buff);
@@ -92,8 +86,9 @@ namespace verteilen2::client {
         return result["data"].size();
     }
 
-    int32_t get_latest_job_table(SQLite::Database& db, const std::string last_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job_id, title, description, created_at FROM job ORDER BY created_at WHERE created_at > ? ;");
+    int32_t get_latest_job_detail_table(SQLite::Database db, const char job[36], const std::string last_timestamp, json& result) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at WHERE created_at > ? ;");
+        query.bind(1, job);
         query.bind(1, last_timestamp);
 
         result.clear();
@@ -103,15 +98,15 @@ namespace verteilen2::client {
             json buff = json::object();
 
             int32_t id = query.getColumn(0).getInt();
-            std::string job_id = query.getColumn(1).getText();
+            std::string job = query.getColumn(1).getText();
             std::string title = query.getColumn(2).getText();
-            std::string description = query.getColumn(3).getText();
+            std::string content = query.getColumn(3).getText();
             std::string created_at = query.getColumn(4).getText();
 
             buff["id"] = id;
-            buff["job_id"] = job_id;
+            buff["job"] = job;
             buff["title"] = title;
-            buff["description"] = description;
+            buff["content"] = content;
             buff["created_at"] = created_at;
 
             result["data"].push_back(buff);
@@ -120,10 +115,10 @@ namespace verteilen2::client {
         return result["data"].size();
     }
 
-    int32_t get_history_job_table(SQLite::Database& db, const int32_t amount, const std::string top_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job_id, title, description, created_at FROM job LIMIT ? ORDER BY created_at DESC WHERE created_at < ?;");
-        query.bind(1, amount);
-        query.bind(2, top_timestamp);
+    int32_t get_history_job_detail_table(SQLite::Database db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
+        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at DESC WHERE created_at < ? ;");
+        query.bind(1, job);
+        query.bind(1, top_timestamp);
 
         result.clear();
         result["data"] = json::array();
@@ -132,15 +127,15 @@ namespace verteilen2::client {
             json buff = json::object();
 
             int32_t id = query.getColumn(0).getInt();
-            std::string job_id = query.getColumn(1).getText();
+            std::string job = query.getColumn(1).getText();
             std::string title = query.getColumn(2).getText();
-            std::string description = query.getColumn(3).getText();
+            std::string content = query.getColumn(3).getText();
             std::string created_at = query.getColumn(4).getText();
 
             buff["id"] = id;
-            buff["job_id"] = job_id;
+            buff["job"] = job;
             buff["title"] = title;
-            buff["description"] = description;
+            buff["content"] = content;
             buff["created_at"] = created_at;
 
             result["data"].insert(result["data"].begin(), buff);
@@ -148,5 +143,5 @@ namespace verteilen2::client {
 
         return result["data"].size();
     }
-
+    
 }

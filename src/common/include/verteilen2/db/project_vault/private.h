@@ -22,24 +22,19 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DB_JOB_PRIVATE_H
-#define CLIENT_DB_JOB_PRIVATE_H
+#ifndef COMMON_DB_PROJECT_VAULT_PRIVATE_H
+#define COMMON_DB_PROJECT_VAULT_PRIVATE_H
 #include <cinttypes>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    int32_t create_job_table(SQLite::Database& db);
-    int32_t insert_job_detail_table(SQLite::Database& db, const char job[36], const std::string title, const std::string description);
-    int32_t drop_job_table(SQLite::Database& db);
-    bool check_exists_job_table(SQLite::Database& db, const char job[36]);
-    int32_t get_latest_job_table(SQLite::Database& db, const int32_t amount, json& result);
-    int32_t get_latest_job_table(SQLite::Database& db, const std::string last_timestamp, json& result);
-    int32_t get_history_job_table(SQLite::Database& db, const int32_t amount, const std::string top_timestamp, json& result);
-
+    int32_t create_project_vault_table(SQLite::Database db);
+    int32_t drop_project_vault_table(SQLite::Database db);
+    
 }
 
 #endif

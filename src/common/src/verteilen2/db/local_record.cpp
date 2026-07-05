@@ -21,29 +21,21 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_DATA_APPDATA_H
-#define SERVER_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include <vector>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
+#include <verteilen2client/db/local_record.h>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <verteilen2/path.h>
 #include <verteilen2/db/local_record.h>
+#include <verteilen2/enum/app_type.h>
 
-namespace verteilen2::server {
+namespace fs = std::filesystem;
 
-    struct App_data {
-        WebServer app;
-        database_getter db_getter;
-        std::vector<hv::WebSocketClient> ws_clients;
-        hv::WebSocketClient ws_master;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
-    };
+namespace verteilen2 {
+
+    SQLite::Database get_database(App_type type) {
+        fs::path t = path_get_workpath(type);
+        t /= "record.db";
+        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+        return db;
+    }
 
 }
-
-#endif

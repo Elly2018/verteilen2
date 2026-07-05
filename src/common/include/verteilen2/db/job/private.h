@@ -22,27 +22,23 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef SERVER_DATA_APPDATA_H
-#define SERVER_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include <vector>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
-#include "../config.h"
-#include "worker.h"
-#include <verteilen2/db/local_record.h>
+#ifndef COMMON_DB_JOB_PRIVATE_H
+#define COMMON_DB_JOB_PRIVATE_H
+#include <cinttypes>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <nlohmann/json.hpp>
 
-namespace verteilen2::server {
+using json = nlohmann::json;
 
-    struct App_data {
-        WebServer app;
-        database_getter db_getter;
-        std::vector<hv::WebSocketClient> ws_clients;
-        hv::WebSocketClient ws_master;
-        hv::WebSocketServer ws_server;
-        Worker workers[60];
-    };
+namespace verteilen2 {
+
+    int32_t create_job_table(SQLite::Database db);
+    int32_t insert_job_detail_table(SQLite::Database db, const char job[36], const std::string title, const std::string description);
+    int32_t drop_job_table(SQLite::Database db);
+    bool check_exists_job_table(SQLite::Database db, const char job[36]);
+    int32_t get_latest_job_table(SQLite::Database db, const int32_t amount, json& result);
+    int32_t get_latest_job_table(SQLite::Database db, const std::string last_timestamp, json& result);
+    int32_t get_history_job_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
 
 }
 
