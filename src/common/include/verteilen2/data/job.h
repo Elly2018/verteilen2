@@ -25,9 +25,23 @@
 #ifndef COMMON_DATA_JOB_H
 #define COMMON_DATA_JOB_H
 #include <verteilen2/proto_gen/job.pb-c.h>
+#include <unordered_map>
+#include <string>
 
 namespace verteilen2 {
 
+    struct job_env
+    {
+        std::unordered_map<std::string, bool> datas_bool;
+        std::unordered_map<std::string, int32_t> datas_int32;
+        std::unordered_map<std::string, int64_t> datas_int64;
+        std::unordered_map<std::string, float> datas_float;
+        std::unordered_map<std::string, double> datas_double;
+        std::unordered_map<std::string, std::string> datas_string;
+    };
+    
+    job_env job_data_get_env(Verteilen2__Job& job);
+    void job_data_set_env(Verteilen2__Job& job, job_env& env);
 
 }
 
