@@ -22,16 +22,20 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef MASTER_API_NODE_WS_H
-#define MASTER_API_NODE_WS_H
-#include "../config.h"
+#ifndef MASTER_CONFIG_H
+#define MASTER_CONFIG_H
 #include <crow.h>
+#include <crow/middlewares/cookie_parser.h>
+#include <crow/middlewares/session.h>
 
-namespace verteilen2::master {
+using Session = crow::SessionMiddleware<crow::InMemoryStore>;
 
-    void register_node_ws_route(crow::SimpleApp& app);
+typedef crow::App<crow::CookieParser, Session> WebServer;
 
-}
+// 1. Point the disk scanner to your sub-folder
+#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-master/"
+
+// 2. Map how browsers request these assets
+#define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"
 
 #endif
-
