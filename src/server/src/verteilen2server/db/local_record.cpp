@@ -42,15 +42,15 @@ namespace verteilen2::server {
     }
 
     void init_database(App_data& appdata) {
-        appdata. = get_database();
-        create_log_table(db);
-        create_job_table(db);
-        create_vault_table(db);
-        create_node_table(db);
-        create_task_table(db);
-        create_project_table(db);
-        create_project_vault_table(db);
-        insert_log_table("none", "Initialization", "Client has been activate.");
+        appdata.db_getter = get_database;
+        create_log_table(appdata.db_getter());
+        create_job_table(appdata.db_getter());
+        create_vault_table(appdata.db_getter());
+        create_node_table(appdata.db_getter());
+        create_task_table(appdata.db_getter());
+        create_project_table(appdata.db_getter());
+        create_project_vault_table(appdata.db_getter());
+        insert_log_table(appdata.db_getter(), "none", "Initialization", "Server has been activate.");
     }
 
 }

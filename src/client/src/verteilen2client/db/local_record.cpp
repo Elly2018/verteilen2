@@ -24,7 +24,6 @@
 #include <verteilen2client/db/local_record.h>
 #include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
-#include <verteilen2client/data/appdata.h>
 #include <verteilen2/path.h>
 #include <verteilen2/db/local_record.h>
 #include <verteilen2/db/log/private.h>

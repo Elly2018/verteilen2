@@ -32,6 +32,11 @@
 #include <verteilen2/db/job/private.h>
 #include <verteilen2/db/job_detail/private.h>
 #include <verteilen2/db/log/private.h>
+#include <verteilen2/db/node/private.h>
+#include <verteilen2/db/project/private.h>
+#include <verteilen2/db/project_vault/private.h>
+#include <verteilen2/db/task/private.h>
+#include <verteilen2/db/vault/private.h>
 
 using json = nlohmann::json;
 
