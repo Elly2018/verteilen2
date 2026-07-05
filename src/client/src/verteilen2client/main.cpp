@@ -36,7 +36,7 @@ using namespace verteilen2::client;
 
 static void db_run(App_data& app_data){
     spdlog::info("Initializing database...");
-    init_database();
+    init_database(app_data);
 }
 
 static void mDNS_run(App_data& app_data){

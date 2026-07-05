@@ -10,6 +10,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
     "${CMAKE_SOURCE_DIR}/lib/uuid/include"
+    "${CMAKE_SOURCE_DIR}/lib/json/include"
 )
 
 add_library(common STATIC

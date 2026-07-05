@@ -21,7 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/db/local_record.h>
+#include <verteilen2/db/local_record.h>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <verteilen2/path.h>
 #include <verteilen2/db/local_record.h>
