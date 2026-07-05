@@ -21,22 +21,42 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "server_ws.h"
+#include <verteilen2master/api/ws.h>
+#include <spdlog/spdlog.h>
+#include <unordered_map>
+#include <nlohmann/json.hpp>
+//#include <verteilen2master/db/local_record.h>
+
+using json = nlohmann::json;
 
 namespace verteilen2::master {
+    static std::unordered_map<crow::websocket::connection*, std::string> ws_clients;
 
-    void register_server_ws_route(crow::SimpleApp& app) {
-        CROW_WEBSOCKET_ROUTE(app, "/ws/server")
+    static void register_realtime_handle_request(App_data& app_data, WebServer& app) {
+        CROW_WEBSOCKET_ROUTE(app, "/ws")
         .onopen([&](crow::websocket::connection& conn){
-            
+            spdlog::info("[web] websocket connection successfully established.");
+            ws_clients.insert({ &conn, "" });
         })
         .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-        
+            spdlog::info("[web] websocket connection successfully closed.");
+            ws_clients.erase(&conn);
         })
-        .onmessage([&](crow::websocket::connection& /*conn*/, const std::string& data, bool is_binary){
+        .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
+            if(!json::accept(data) || is_binary) return;
+            json jdata = json::parse(data);
+            if(jdata["key"].is_string()){
+                ws_clients.insert({ &conn, jdata["key"].get<std::string>() });
+            }
 
+            //apply_client_update(app_data, conn);
         });
     }
 
-}
+    void register_ws_route(App_data& app_data) {
+        
+        register_realtime_handle_request(app_data, app_data.app);
 
+    }
+
+}

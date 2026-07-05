@@ -21,23 +21,30 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "node_ws.h"
+#pragma once
+#ifndef MASTER_API_API_H
+#define MASTER_API_API_H
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::master {
 
-    void register_node_ws_route(crow::SimpleApp& app) {
-        
-        CROW_WEBSOCKET_ROUTE(app, "/ws/node")
-        .onopen([&](crow::websocket::connection& conn){
-
-        })
-        .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
-        
-        })
-        .onmessage([&](crow::websocket::connection& /*conn*/, const std::string& data, bool is_binary){
-
-        });
-    }
-
+    /**
+     * 
+     * @brief REST-API route for attmpt connect to server's websocket endpoint
+     * 
+     * @param app The crow application reference
+     * 
+     * @note GET "/api/connect_ws_server"
+     * 
+     * * require body key: "server-address"
+     * 
+     * This will attpemt create a connection, after success, register it to App_data,
+     * For state to use it.
+     * 
+     */
+    void register_connect_server_ws_route(App_data& app_data);
+    
 }
 
+#endif

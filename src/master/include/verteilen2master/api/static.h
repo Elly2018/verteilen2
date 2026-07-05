@@ -24,12 +24,12 @@
 #pragma once
 #ifndef MASTER_API_STATIC_H
 #define MASTER_API_STATIC_H
-#include "../config.h"
-#include <crow.h>
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::master {
 
-    void register_static_route(crow::SimpleApp& app);
+    void register_static_route(App_data& app_data);
 
 }
 

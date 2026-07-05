@@ -22,16 +22,26 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef MASTER_API_AUTHENTICATION_H
-#define MASTER_API_AUTHENTICATION_H
-#include "../config.h"
-#include <crow.h>
+#ifndef MASTER_DATA_WORKER_H
+#define MASTER_DATA_WORKER_H
+#include <string>
+#include <cstdint>
+#include <thread>
+#include <atomic>
 
 namespace verteilen2::master {
 
-    void register_authentication_route(crow::SimpleApp& app);
+    enum class ThreadState {
+        Empty,
+        Idle,
+        Running
+    };
+
+    struct Worker {
+        std::thread worker;
+        std::atomic<ThreadState> state;
+    };
 
 }
 
 #endif
-

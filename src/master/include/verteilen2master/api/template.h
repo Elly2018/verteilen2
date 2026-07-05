@@ -21,21 +21,18 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "session.h"
+#pragma once
+#ifndef MASTER_API_TEMPLATE_H
+#define MASTER_API_TEMPLATE_H
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::master {
 
-    void register_session_route(crow::SimpleApp& app) {
+    constexpr int32_t Init_log_amount = 30;
 
-        CROW_ROUTE(app, "/api/session")
-        ([](const crow::request& req, crow::response& res) {
-            if(req.method == crow::HTTPMethod::Get) {
-
-            }
-            res.set_static_file_info("static/master/index.html");
-            res.end();
-        });
-
-    }
+    void register_template_route(App_data& app_data);
 
 }
+
+#endif

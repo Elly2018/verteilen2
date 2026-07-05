@@ -21,19 +21,36 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "authentication.h"
+#pragma once
+#ifndef MASTER_LOGGER_H
+#define MASTER_LOGGER_H
+#include <crow.h>
+#include <verteilen2master/config.h>
+#include <spdlog/spdlog.h>
 
-namespace verteilen2::master {
-
-    void register_authentication_route(crow::SimpleApp& app) {
-
-        CROW_ROUTE(app, "/api/authentication")
-        ([](const crow::request& req, crow::response& res) {
-            res.set_static_file_info("static/master/index.html");
-            res.end();
-        });
-        
+class CrowSpdlogBridge : public crow::ILogHandler {
+public:
+    void log(const std::string& message, crow::LogLevel level) override {
+        // Map Crow's LogLevels to spdlog formats
+        // Note: Crow's incoming message string does not end with a newline \n
+        switch (level) {
+            case crow::LogLevel::Debug:
+                spdlog::debug("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Info:
+                spdlog::info("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Warning:
+                spdlog::warn("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Error:
+                spdlog::error("[Crow] {}", message);
+                break;
+            case crow::LogLevel::Critical:
+                spdlog::critical("[Crow] {}", message);
+                break;
+        }
     }
+};
 
-}
-
+#endif

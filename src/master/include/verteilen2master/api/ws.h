@@ -22,16 +22,15 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef MASTER_API_SERVER_WS_H
-#define MASTER_API_SERVER_WS_H
-#include "../config.h"
-#include <crow.h>
+#ifndef MASTER_API_WS_H
+#define MASTER_API_WS_H
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::master {
-
-    void register_server_ws_route(crow::SimpleApp& app);
+    
+    void register_ws_route(App_data& app_data);
 
 }
 
 #endif
-

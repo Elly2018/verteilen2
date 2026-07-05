@@ -25,15 +25,27 @@
 #ifndef MASTER_DATA_APPDATA_H
 #define MASTER_DATA_APPDATA_H
 #include <vector>
+#include <string>
+#include <cstdint>
+#include <hv/WebSocketClient.h>
+#include <hv/WebSocketServer.h>
+#include "../config.h"
+#include "worker.h"
 #include <verteilen2/data/all.h>
+#include <verteilen2/db/local_record.h>
 
 namespace verteilen2::master {
 
     struct App_data {
+        WebServer app;
+        database_getter db_getter;
+        hv::WebSocketClient ws_client;
+        hv::WebSocketServer ws_server;
         std::vector<Verteilen2__Project*> projects;
         std::vector<Verteilen2__Task*> tasks;
         std::vector<Verteilen2__Job*> jobs;
         std::vector<Verteilen2__Vault*> vaults;
+        Worker workers[60];
     };
 
 }

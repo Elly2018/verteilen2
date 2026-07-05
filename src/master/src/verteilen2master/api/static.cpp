@@ -21,13 +21,84 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include "static.h"
+#include <verteilen2master/api/static.h>
+#include <filesystem>
+#include <spdlog/spdlog.h>
 #include <crow.h>
+#include <verteilen2/io.h>
+#include <verteilen2master/config.h>
 
 namespace verteilen2::master {
 
-    void register_static_route(crow::SimpleApp& app) {
-        app.static_file("/", "static/master");
+    static void register_index(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/")
+        .methods(crow::HTTPMethod::GET)
+        ([]() {
+            crow::mustache::context ctx;
+            
+            ctx["title"] = "Verteilen 2 Client";
+
+            auto template_page = crow::mustache::load("index.html");
+
+            return template_page.render(ctx);
+        });
+    }
+
+    static void register_resource(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/css/<path>")
+        .methods(crow::HTTPMethod::GET)
+        ([](const std::string& path) {
+            crow::response res;
+            std::filesystem::path current_cwd = std::filesystem::current_path();
+            std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "css" / path;
+            std::string p = _p.lexically_normal().string();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
+            
+            res.set_header("Content-Type", "text/css");
+            res.body = buffer;
+            res.code = 200;
+            return res;
+        });
+
+        CROW_ROUTE(app_data.app, "/js/<path>")
+        .methods(crow::HTTPMethod::GET)
+        ([](const std::string& path) {
+            crow::response res;
+            std::filesystem::path current_cwd = std::filesystem::current_path();
+            std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "js" / path;
+            std::string p = _p.lexically_normal().string();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
+            
+            res.set_header("Content-Type", "application/javascript");
+            res.body = buffer;
+            res.code = 200;
+            return res;
+        });
+
+        CROW_ROUTE(app_data.app, "/favicon.ico")
+        .methods(crow::HTTPMethod::GET)
+        ([]() {
+            crow::response res;
+            std::filesystem::path current_cwd = std::filesystem::current_path();
+            std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "favicon.ico";
+            std::string p = _p.lexically_normal().string();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
+            
+            res.set_header("Content-Type", "image/x-icon");
+            res.body = buffer;
+            res.code = 200;
+            return res;
+        });
+    }
+
+    void register_static_route(App_data& app_data) {
+
+        register_index(app_data);
+        register_resource(app_data);
+        
     }
 
 }
