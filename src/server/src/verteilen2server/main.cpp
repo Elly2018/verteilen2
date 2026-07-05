@@ -73,7 +73,7 @@ static void web_run(App_data& app_data){
     register_template_route(app_data.app);
     //register_connect_server_ws_route(app_data.app);
     //register_ws_route(app_data);
-    app_data.app.bindaddr("127.0.0.1").port(8080).multithreaded().run();
+    app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(8080)).multithreaded().run();
 }
 
 int main(){

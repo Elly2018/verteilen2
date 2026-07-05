@@ -26,6 +26,7 @@
 
 #if defined(_WIN32)
     #include <winsock2.h>
+    #include <ws2tcpip.h>
     #include <iphlpapi.h>
     #pragma comment(lib, "iphlpapi.lib")
     #pragma comment(lib, "ws2_32.lib")
@@ -34,9 +35,47 @@
     #include <ifaddrs.h>
     #include <netinet/in.h>
     #include <arpa/inet.h>
+    #include <unistd.h>
 #endif
 
 namespace verteilen2 {
+
+    static bool is_port_fine(int32_t port) {
+#ifdef _WIN32
+        WSADATA wsaData;
+        if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) return false;
+        SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock == INVALID_SOCKET) { WSACleanup(); return false; }
+#else
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock < 0) return false;
+#endif
+
+        // Allow quick reuse of the port so we don't lock it ourselves during the test
+        int opt = 1;
+#ifdef _WIN32
+        setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof(opt));
+#else
+        setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+#endif
+
+        sockaddr_in addr;
+        addr.sin_family = AF_INET;
+        addr.sin_port = htons(port);
+        inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr);
+
+        // Try to bind to the port
+        bool available = (bind(sock, (struct sockaddr*)&addr, sizeof(addr)) == 0);
+
+        // Clean up the socket immediately
+#ifdef _WIN32
+        closesocket(sock);
+        WSACleanup();
+#else
+        close(sock);
+#endif
+        return available;
+    }
 
     std::vector<std::string> network_get_all_ipv4() {
         std::vector<std::string> ips;
@@ -164,6 +203,16 @@ namespace verteilen2 {
 #endif
 
         return ips;
+    }
+
+    int32_t network_get_port_available(int32_t start) {
+        while(start <= 65535) {
+            if(is_port_fine(start)){
+                return start;
+            }
+            start++;
+        }
+        return -1;
     }
 
 }

@@ -42,6 +42,8 @@ namespace verteilen2 {
      */
     std::vector<std::string> network_get_all_ipv6();
 
+    int32_t network_get_port_available(int32_t start);
+
 }
 
 #endif
