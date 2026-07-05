@@ -25,7 +25,13 @@
 
 namespace verteilen2 {
 
-    int32_t create_node_table(SQLite::Database db);
-    int32_t drop_node_table(SQLite::Database db);
+    int32_t create_node_table(SQLite::Database db) {
+
+    }
+    
+    int32_t drop_node_table(SQLite::Database db) {
+
+    }
+    
     
 }

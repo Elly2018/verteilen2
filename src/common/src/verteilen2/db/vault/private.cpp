@@ -23,9 +23,14 @@
  */
 #include <verteilen2/db/vault/private.h>
 
-namespace verteilen2::server {
+namespace verteilen2 {
 
-    int32_t create_vault_table(SQLite::Database db);
-    int32_t drop_vault_table(SQLite::Database db);
+    int32_t create_vault_table(SQLite::Database db) {
+
+    }
+
+    int32_t drop_vault_table(SQLite::Database db) {
+
+    }
     
 }

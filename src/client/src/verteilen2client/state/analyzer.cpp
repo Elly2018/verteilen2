@@ -31,8 +31,8 @@
 
 namespace verteilen2::client {
 
-    static void print_log(Verteilen2__DebugLog& raw_debuglog) {
-        insert_log_table(raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
+    static void print_log(App_data& app_data, Verteilen2__DebugLog& raw_debuglog) {
+        insert_log_table(app_data.db_getter(), raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
     }
 
     void analysis(App_data& app_data, Verteilen2__RawData& raw_msg) {
@@ -65,7 +65,7 @@ namespace verteilen2::client {
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__DEBUG_LOG:
                 {
                     Verteilen2__DebugLog* debuglog = verteilen2__debug_log__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
-                    print_log(*debuglog);
+                    print_log(app_data, *debuglog);
                     verteilen2__debug_log__free_unpacked(debuglog, NULL);
                     break;
                 }

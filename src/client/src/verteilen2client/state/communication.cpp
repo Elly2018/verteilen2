@@ -47,7 +47,7 @@ namespace verteilen2::client {
         app_data.ws_client.setReconnect(&reconn);
         
         app_data.ws_client.onopen = [&app_data]() {
-            app_data.server_alive = true;
+            spdlog::info("Websocket to server connection has been established");
         };
         app_data.ws_client.onmessage = [&app_data](const std::string& msg) {
             const uint8_t* raw_data = reinterpret_cast<const uint8_t*>(msg.data());
@@ -63,7 +63,7 @@ namespace verteilen2::client {
             verteilen2__raw_data__free_unpacked(raw_msg, NULL);
         };  
         app_data.ws_client.onclose = [&app_data]() {
-            app_data.server_alive = false;
+            spdlog::info("Websocket to server connection has been closed");
         };
 
         app_data.ws_client.open(address.c_str());
