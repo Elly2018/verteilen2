@@ -21,3 +21,5 @@ cp -r bin/share/verteilen-2-client package/verteilen-2-client/usr/share/verteile
 cd package
 
 dpkg-deb --build verteilen-2-client
+dpkg-deb --build verteilen-2-server
+dpkg-deb --build verteilen-2-master
