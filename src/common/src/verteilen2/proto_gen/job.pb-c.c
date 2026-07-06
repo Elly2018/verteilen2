@@ -7,42 +7,6 @@
 #endif
 
 #include "job.pb-c.h"
-void   verteilen2__job__map_boolean_entry__init
-                     (Verteilen2__Job__MapBooleanEntry         *message)
-{
-  static const Verteilen2__Job__MapBooleanEntry init_value = VERTEILEN2__JOB__MAP_BOOLEAN_ENTRY__INIT;
-  *message = init_value;
-}
-void   verteilen2__job__map_int32_entry__init
-                     (Verteilen2__Job__MapInt32Entry         *message)
-{
-  static const Verteilen2__Job__MapInt32Entry init_value = VERTEILEN2__JOB__MAP_INT32_ENTRY__INIT;
-  *message = init_value;
-}
-void   verteilen2__job__map_int64_entry__init
-                     (Verteilen2__Job__MapInt64Entry         *message)
-{
-  static const Verteilen2__Job__MapInt64Entry init_value = VERTEILEN2__JOB__MAP_INT64_ENTRY__INIT;
-  *message = init_value;
-}
-void   verteilen2__job__map_float_entry__init
-                     (Verteilen2__Job__MapFloatEntry         *message)
-{
-  static const Verteilen2__Job__MapFloatEntry init_value = VERTEILEN2__JOB__MAP_FLOAT_ENTRY__INIT;
-  *message = init_value;
-}
-void   verteilen2__job__map_double_entry__init
-                     (Verteilen2__Job__MapDoubleEntry         *message)
-{
-  static const Verteilen2__Job__MapDoubleEntry init_value = VERTEILEN2__JOB__MAP_DOUBLE_ENTRY__INIT;
-  *message = init_value;
-}
-void   verteilen2__job__map_string_entry__init
-                     (Verteilen2__Job__MapStringEntry         *message)
-{
-  static const Verteilen2__Job__MapStringEntry init_value = VERTEILEN2__JOB__MAP_STRING_ENTRY__INIT;
-  *message = init_value;
-}
 void   verteilen2__job__init
                      (Verteilen2__Job         *message)
 {
@@ -88,313 +52,7 @@ void   verteilen2__job__free_unpacked
   assert(message->base.descriptor == &verteilen2__job__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
-static const ProtobufCFieldDescriptor verteilen2__job__map_boolean_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapBooleanEntry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_BOOL,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapBooleanEntry, value),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_boolean_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_boolean_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_boolean_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapBooleanEntry",
-  "MapBooleanEntry",
-  "Verteilen2__Job__MapBooleanEntry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapBooleanEntry),
-  2,
-  verteilen2__job__map_boolean_entry__field_descriptors,
-  verteilen2__job__map_boolean_entry__field_indices_by_name,
-  1,  verteilen2__job__map_boolean_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_boolean_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__map_int32_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapInt32Entry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_INT32,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapInt32Entry, value),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_int32_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_int32_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_int32_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapInt32Entry",
-  "MapInt32Entry",
-  "Verteilen2__Job__MapInt32Entry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapInt32Entry),
-  2,
-  verteilen2__job__map_int32_entry__field_descriptors,
-  verteilen2__job__map_int32_entry__field_indices_by_name,
-  1,  verteilen2__job__map_int32_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_int32_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__map_int64_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapInt64Entry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_INT64,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapInt64Entry, value),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_int64_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_int64_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_int64_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapInt64Entry",
-  "MapInt64Entry",
-  "Verteilen2__Job__MapInt64Entry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapInt64Entry),
-  2,
-  verteilen2__job__map_int64_entry__field_descriptors,
-  verteilen2__job__map_int64_entry__field_indices_by_name,
-  1,  verteilen2__job__map_int64_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_int64_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__map_float_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapFloatEntry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_FLOAT,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapFloatEntry, value),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_float_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_float_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_float_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapFloatEntry",
-  "MapFloatEntry",
-  "Verteilen2__Job__MapFloatEntry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapFloatEntry),
-  2,
-  verteilen2__job__map_float_entry__field_descriptors,
-  verteilen2__job__map_float_entry__field_indices_by_name,
-  1,  verteilen2__job__map_float_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_float_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__map_double_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapDoubleEntry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_DOUBLE,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapDoubleEntry, value),
-    NULL,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_double_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_double_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_double_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapDoubleEntry",
-  "MapDoubleEntry",
-  "Verteilen2__Job__MapDoubleEntry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapDoubleEntry),
-  2,
-  verteilen2__job__map_double_entry__field_descriptors,
-  verteilen2__job__map_double_entry__field_indices_by_name,
-  1,  verteilen2__job__map_double_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_double_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__map_string_entry__field_descriptors[2] =
-{
-  {
-    "key",
-    1,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapStringEntry, key),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "value",
-    2,
-    PROTOBUF_C_LABEL_NONE,
-    PROTOBUF_C_TYPE_STRING,
-    0,   /* quantifier_offset */
-    offsetof(Verteilen2__Job__MapStringEntry, value),
-    NULL,
-    &protobuf_c_empty_string,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-};
-static const unsigned verteilen2__job__map_string_entry__field_indices_by_name[] = {
-  0,   /* field[0] = key */
-  1,   /* field[1] = value */
-};
-static const ProtobufCIntRange verteilen2__job__map_string_entry__number_ranges[1 + 1] =
-{
-  { 1, 0 },
-  { 0, 2 }
-};
-const ProtobufCMessageDescriptor verteilen2__job__map_string_entry__descriptor =
-{
-  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
-  "verteilen2.Job.MapStringEntry",
-  "MapStringEntry",
-  "Verteilen2__Job__MapStringEntry",
-  "verteilen2",
-  sizeof(Verteilen2__Job__MapStringEntry),
-  2,
-  verteilen2__job__map_string_entry__field_descriptors,
-  verteilen2__job__map_string_entry__field_indices_by_name,
-  1,  verteilen2__job__map_string_entry__number_ranges,
-  (ProtobufCMessageInit) verteilen2__job__map_string_entry__init,
-  NULL,NULL,NULL    /* reserved[123] */
-};
-static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
+static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[10] =
 {
   {
     "uuid",
@@ -445,80 +103,20 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
-    "map_boolean",
+    "d_map",
     5,
-    PROTOBUF_C_LABEL_REPEATED,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_boolean),
-    offsetof(Verteilen2__Job, map_boolean),
-    &verteilen2__job__map_boolean_entry__descriptor,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "map_int32",
-    6,
-    PROTOBUF_C_LABEL_REPEATED,
-    PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_int32),
-    offsetof(Verteilen2__Job, map_int32),
-    &verteilen2__job__map_int32_entry__descriptor,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "map_int64",
-    7,
-    PROTOBUF_C_LABEL_REPEATED,
-    PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_int64),
-    offsetof(Verteilen2__Job, map_int64),
-    &verteilen2__job__map_int64_entry__descriptor,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "map_float",
-    8,
-    PROTOBUF_C_LABEL_REPEATED,
-    PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_float),
-    offsetof(Verteilen2__Job, map_float),
-    &verteilen2__job__map_float_entry__descriptor,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "map_double",
-    9,
-    PROTOBUF_C_LABEL_REPEATED,
-    PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_double),
-    offsetof(Verteilen2__Job, map_double),
-    &verteilen2__job__map_double_entry__descriptor,
-    NULL,
-    0,             /* flags */
-    0,NULL,NULL    /* reserved1,reserved2, etc */
-  },
-  {
-    "map_string",
-    10,
-    PROTOBUF_C_LABEL_REPEATED,
-    PROTOBUF_C_TYPE_MESSAGE,
-    offsetof(Verteilen2__Job, n_map_string),
-    offsetof(Verteilen2__Job, map_string),
-    &verteilen2__job__map_string_entry__descriptor,
+    0,   /* quantifier_offset */
+    offsetof(Verteilen2__Job, d_map),
+    &verteilen2__dynamic_map__descriptor,
     NULL,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "inputs_0",
-    11,
+    6,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
@@ -530,7 +128,7 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
   },
   {
     "inputs_1",
-    12,
+    7,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
@@ -542,7 +140,7 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
   },
   {
     "inputs_2",
-    13,
+    8,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
@@ -554,7 +152,7 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
   },
   {
     "inputs_3",
-    14,
+    9,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
@@ -566,7 +164,7 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
   },
   {
     "inputs_4",
-    15,
+    10,
     PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
@@ -578,17 +176,12 @@ static const ProtobufCFieldDescriptor verteilen2__job__field_descriptors[15] =
   },
 };
 static const unsigned verteilen2__job__field_indices_by_name[] = {
-  10,   /* field[10] = inputs_0 */
-  11,   /* field[11] = inputs_1 */
-  12,   /* field[12] = inputs_2 */
-  13,   /* field[13] = inputs_3 */
-  14,   /* field[14] = inputs_4 */
-  4,   /* field[4] = map_boolean */
-  8,   /* field[8] = map_double */
-  7,   /* field[7] = map_float */
-  5,   /* field[5] = map_int32 */
-  6,   /* field[6] = map_int64 */
-  9,   /* field[9] = map_string */
+  4,   /* field[4] = d_map */
+  5,   /* field[5] = inputs_0 */
+  6,   /* field[6] = inputs_1 */
+  7,   /* field[7] = inputs_2 */
+  8,   /* field[8] = inputs_3 */
+  9,   /* field[9] = inputs_4 */
   1,   /* field[1] = name */
   3,   /* field[3] = script */
   2,   /* field[2] = type */
@@ -597,7 +190,7 @@ static const unsigned verteilen2__job__field_indices_by_name[] = {
 static const ProtobufCIntRange verteilen2__job__number_ranges[1 + 1] =
 {
   { 1, 0 },
-  { 0, 15 }
+  { 0, 10 }
 };
 const ProtobufCMessageDescriptor verteilen2__job__descriptor =
 {
@@ -607,7 +200,7 @@ const ProtobufCMessageDescriptor verteilen2__job__descriptor =
   "Verteilen2__Job",
   "verteilen2",
   sizeof(Verteilen2__Job),
-  15,
+  10,
   verteilen2__job__field_descriptors,
   verteilen2__job__field_indices_by_name,
   1,  verteilen2__job__number_ranges,
