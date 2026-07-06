@@ -2,21 +2,18 @@ syntax = "proto3";
 
 package verteilen2;
 
+import "dynamic_map.proto";
+
 // MsgType: DEBUG_LOG
 message Job {
     string uuid = 1;
     string name = 2;
     int32 type = 3;
     string script = 4;
-    map<string, bool> map_boolean = 5;
-    map<string, int32> map_int32 = 6;
-    map<string, int64> map_int64 = 7;
-    map<string, float> map_float = 8;
-    map<string, double> map_double = 9;
-    map<string, string> map_string = 10;
-    string inputs_0 = 11;
-    string inputs_1 = 12;
-    string inputs_2 = 13;
-    string inputs_3 = 14;
-    string inputs_4 = 15;
+    DynamicMap d_map = 5;
+    string inputs_0 = 6;
+    string inputs_1 = 7;
+    string inputs_2 = 8;
+    string inputs_3 = 9;
+    string inputs_4 = 10;
 }
