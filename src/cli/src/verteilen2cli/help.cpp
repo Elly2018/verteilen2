@@ -21,27 +21,25 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_ENV_H
-#define COMMON_ENV_H
-#include <filesystem>
-#include "enum/app_type.h"
+#include <stdio.h>
+#include <verteilen2cli/category.h>
 
-namespace fs = std::filesystem;
+namespace verteilen2::cli {
 
-namespace verteilen2 {
+    void print_help() {
+        printf("YES\n");
+    }
 
-    enum class AppEnvironment {
-        NATIVE,
-        DOCKER,
-        KUBERNETES
-    };
+    void print_help_master() {
+        printf("Master\n");
+    }
 
-    std::string env_get_env(std::string);
-    bool is_running_in_k8s();
-    bool is_running_in_docker();
-    AppEnvironment detect_environment();
+    void print_help_client() {
+        printf("Client\n");
+    }
+
+    void print_help_proxy() {
+        printf("Proxy\n");
+    }
 
 }
-
-#endif

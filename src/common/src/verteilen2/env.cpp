@@ -27,12 +27,16 @@
 
 namespace verteilen2 {
 
+    std::string env_get_env(std::string) {
+        return std::getenv("KUBERNETES_SERVICE_HOST");
+    }
+
     bool is_running_in_k8s() {
         if (std::filesystem::exists("/var/run/secrets/kubernetes.io")) {
             return true;
         }
         
-        if (std::getenv("KUBERNETES_SERVICE_HOST") != nullptr) {
+        if (!get_env("KUBERNETES_SERVICE_HOST").empty()) {
             return true;
         }
         return false;

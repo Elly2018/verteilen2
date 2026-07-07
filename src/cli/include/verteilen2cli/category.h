@@ -22,26 +22,14 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_ENV_H
-#define COMMON_ENV_H
-#include <filesystem>
-#include "enum/app_type.h"
+#ifndef CLI_CATEGORY_H
+#define CLI_CATEGORY_H
 
-namespace fs = std::filesystem;
-
-namespace verteilen2 {
-
-    enum class AppEnvironment {
-        NATIVE,
-        DOCKER,
-        KUBERNETES
-    };
-
-    std::string env_get_env(std::string);
-    bool is_running_in_k8s();
-    bool is_running_in_docker();
-    AppEnvironment detect_environment();
-
+namespace verteilen2::cli {
+    void print_help();
+    void print_help_master();
+    void print_help_client();
+    void print_help_proxy();
 }
 
 #endif
