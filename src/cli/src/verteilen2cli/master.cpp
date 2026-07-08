@@ -21,24 +21,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLI_CATEGORY_H
-#define CLI_CATEGORY_H
-#include <argh.h>
+#include <stdio.h>
+#include <verteilen2cli/category.h>
 
 namespace verteilen2::cli {
 
-    bool handle_help(argh::parser& cmdl);
-    void print_help();
-    void print_help_master();
-    void print_help_client();
-    void print_help_proxy();
-
-    bool handle_master(argh::parser& cmdl);
-    bool handle_client(argh::parser& cmdl);
-    bool handle_proxy(argh::parser& cmdl);
-    bool handle_tui(argh::parser& cmdl);
+    bool handle_master(argh::parser& cmdl) {
+        return false;
+    }
 
 }
-
-#endif

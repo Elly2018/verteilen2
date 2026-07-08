@@ -26,71 +26,8 @@
 #include <algorithm>
 #include <argh.h>
 #include <verteilen2cli/category.h>
-#include <ftxui/component/app.hpp>
-#include <ftxui/component/captured_mouse.hpp>
-#include <ftxui/component/component.hpp>
-#include <ftxui/component/component_base.hpp>
-#include <ftxui/dom/elements.hpp>
 
 using namespace verteilen2::cli;
-
-/// @brief Handle the help category
-/// @param cmdl argument worker
-/// @return True if it catch result
-static bool handle_help(argh::parser& cmdl){
-
-    std::string help_sub_text = "";
-    
-    if (cmdl.flags().count("h") || cmdl.flags().count("help")){
-        print_help();
-        return true;
-    }
-
-    if(cmdl.params().count("help")){
-        help_sub_text = cmdl.params().at("help");
-    }
-
-    if(cmdl.params().count("h")){
-        help_sub_text = cmdl.params().at("h");
-    }
-
-    std::transform(help_sub_text.begin(), help_sub_text.end(), help_sub_text.begin(), [](unsigned char c){ return std::tolower(c); });
-
-    if(help_sub_text.size() > 0){
-        if(help_sub_text == "master"){
-            print_help_master();
-        }
-        else if(help_sub_text == "client"){
-            print_help_client();
-        }
-        else if(help_sub_text == "proxy"){
-            print_help_proxy();
-        }
-        else{
-            printf("Cannot find the module: %s\n", help_sub_text.c_str());
-            printf("Type --help to find the CLI usage\n");
-        }
-        return true;
-    }
-
-    return false;
-}
-
-static bool handle_tui(argh::parser& cmdl) {
-
-}
-
-static bool handle_master(argh::parser& cmdl) {
-
-}
-
-static bool handle_client(argh::parser& cmdl) {
-    
-}
-
-static bool handle_proxy(argh::parser& cmdl) {
-    
-}
 
 int main(int argc, char* argv[])
 {
