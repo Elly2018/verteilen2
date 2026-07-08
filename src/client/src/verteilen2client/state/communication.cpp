@@ -22,9 +22,12 @@
     SOFTWARE.
  */
 #include <verteilen2client/state/communication.h>
+#include <thread>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <ikcp.h>
 #include <spdlog/spdlog.h>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
 #include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2client/data/appdata.h>
 #include <verteilen2client/state/analyzer.h>
@@ -32,12 +35,34 @@
 
 namespace verteilen2::client {
 
-    void create_websocket_server(App_data& app_data) {
-        app_data.ws_server = hv::WebSocketServer();
-        app_data.ws_server.run("12808", false);
+    static int32_t udp_output(const char *buf, int len, ikcpcb *kcp, void *user) {
+
     }
 
-    void create_websocket_connection(App_data& app_data, const std::string address) {
+    void create_kcp_server(App_data& app_data) {
+        int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+        struct sockaddr_in local_addr;
+        memset(&local_addr, 0, sizeof(local_addr));
+        local_addr.sin_family = AF_INET;
+        local_addr.sin_addr.s_addr = INADDR_ANY;
+        local_addr.sin_port = htons(12808); // Local bound port
+        bind(sockfd, (struct sockaddr*)&local_addr, sizeof(local_addr));
+
+        ikcpcb *kcp = ikcp_create(0x11223344, &sockfd);
+        kcp->output = udp_output;
+
+        ikcp_nodelay(kcp, 1, 10, 2, 1);
+        ikcp_wndsize(kcp, 128, 128);
+        ikcp_setmtu(kcp, 1400);
+
+        std::string proto_bytes;
+        event.SerializeToString(&proto_bytes);
+
+        app_data.kcp_worker.state = ThreadState::Running;
+        app_data.kcp_worker.worker = std::thread(update_kcp_server, std::ref(app_data));
+    }
+
+    void create_kcp_connection(App_data& app_data, const std::string address) {
         reconn_setting_t reconn;
         reconn.min_delay = 1000;
         reconn.max_delay = 10000;
@@ -68,6 +93,10 @@ namespace verteilen2::client {
 
         app_data.ws_client.open(address.c_str());
         app_data.ws_client.start();
+    }
+
+    void update_kcp_server(App_data& app_data) {
+
     }
 
 }

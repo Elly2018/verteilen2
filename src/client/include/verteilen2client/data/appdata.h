@@ -37,8 +37,7 @@ namespace verteilen2::client {
     struct App_data {
         WebServer app;
         database_getter db_getter;
-        hv::WebSocketClient ws_client;
-        hv::WebSocketServer ws_server;
+        Worker kcp_worker;
         Worker workers[60];
     };
 

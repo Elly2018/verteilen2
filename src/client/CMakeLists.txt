@@ -14,6 +14,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
+    "${CMAKE_SOURCE_DIR}/lib/kcp/include"
 )
 
 link_libraries(
@@ -26,6 +27,7 @@ link_libraries(
     dl
     spdlog
     hv
+    kcp
     PkgConfig::PROTOBUF_C
 )
 
