@@ -28,6 +28,10 @@
 
 namespace verteilen2 {
 
+    /**
+     * @brief 
+     * 
+     */
     struct Task_config {
         int32_t constant;
         char key_name[64];

@@ -37,3 +37,8 @@ You could just use server application and client application. \
 It's prefectly fine if you're just doing the local stuff.
 
 ## Master
+
+The upper management for multiple server.\
+It provides authentication or roles management.
+
+And backup, share resources, advance computing, services deployment solution.

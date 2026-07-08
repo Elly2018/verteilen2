@@ -22,16 +22,17 @@
     SOFTWARE.
  */
 #include <verteilen2client/state/analyzer.h>
+#include <spdlog/spdlog.h>
 #include <verteilen2/proto_gen/header.pb-c.h>
 #include <verteilen2/proto_gen/debug_log.pb-c.h>
-#include <verteilen2/proto_gen/execute_job.pb-c.h>
+#include <verteilen2/proto_gen/job.pb-c.h>
 #include <verteilen2client/db/local_record.h>
 #include <verteilen2client/state/execute/job.h>
 
 namespace verteilen2::client {
 
-    static void print_log(Verteilen2__DebugLog& raw_debuglog) {
-        insert_log_table(raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
+    static void print_log(App_data& app_data, Verteilen2__DebugLog& raw_debuglog) {
+        insert_log_table(app_data.db_getter(), raw_debuglog.uuid, raw_debuglog.title, raw_debuglog.content);
     }
 
     void analysis(App_data& app_data, Verteilen2__RawData& raw_msg) {
@@ -39,19 +40,32 @@ namespace verteilen2::client {
             default:
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__UNKNOWN:
                 {
+                    Verteilen2__RawData raw = VERTEILEN2__RAW_DATA__INIT;
+
+                    size_t packed_size = verteilen2__raw_data__get_packed_size(&raw);
+                    std::vector<uint8_t> send_buffer(packed_size);
+
+                    verteilen2__raw_data__pack(&raw, send_buffer.data());
+                    
+                    int32_t bytes_sent = app_data.ws_client.send((const char*)send_buffer.data(), (int32_t)send_buffer.size());
+
+                    if (bytes_sent < 0) {
+                        spdlog::error("libhv socket write error occurred.");
+                    }
+
                     break;
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__EXECUTE_JOB:
                 {
-                    Verteilen2__ExecuteJob* executejob = verteilen2__execute_job__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
+                    Verteilen2__Job* executejob = verteilen2__job__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
                     execute_job_run(app_data, executejob);
-                    verteilen2__execute_job__free_unpacked(executejob, NULL);
+                    verteilen2__job__free_unpacked(executejob, NULL);
                     break;
                 }
             case Verteilen2__MsgType::VERTEILEN2__MSG_TYPE__DEBUG_LOG:
                 {
                     Verteilen2__DebugLog* debuglog = verteilen2__debug_log__unpack(NULL, raw_msg.data.len, raw_msg.data.data);
-                    print_log(*debuglog);
+                    print_log(app_data, *debuglog);
                     verteilen2__debug_log__free_unpacked(debuglog, NULL);
                     break;
                 }

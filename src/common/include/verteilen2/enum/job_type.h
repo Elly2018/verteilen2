@@ -27,7 +27,23 @@
 
 namespace verteilen2 {
 
+    /**
+     * @brief The Execution Type
+     * 
+     * Define the behaviour of job structure.
+     * 
+     * When client agent received it, it will check job_type first, then decide the execute stradgy.
+     * 
+     */
     enum class Job_type {
+        /**
+         * @brief Check Path Exist
+         * 
+         * Treat input0 as a path string, and perform a path exists here
+         * 
+         * @return Callback A boolean value to server
+         * 
+         */
         Path_exists = 0,
 
         Path_copy = 1000,

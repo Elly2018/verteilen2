@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package verteilen2;
+
+import "dynamic_map.proto";
+
+message Vault {
+    string uuid = 1;
+    string name = 2;
+    string description = 3;
+    DynamicMap d_map = 4;
+}

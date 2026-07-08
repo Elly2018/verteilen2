@@ -24,17 +24,9 @@
 #pragma once
 #ifndef COMMON_DATA_CRON_H
 #define COMMON_DATA_CRON_H
-#include "../vconst.h"
-#include "../data_field.h"
+#include <verteilen2/proto_gen/cron.pb-c.h>
 
 namespace verteilen2 {
-
-    struct Cron_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char description[DESCRIPTION_LENGTH];
-        Data_field project;
-    };
     
 }
 

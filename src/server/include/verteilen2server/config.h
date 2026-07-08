@@ -33,7 +33,7 @@ using Session = crow::SessionMiddleware<crow::InMemoryStore>;
 typedef crow::App<crow::CookieParser, Session> WebServer;
 
 // 1. Point the disk scanner to your sub-folder
-#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-client/"
+#define VERTEILEN2_STATIC_DIRECTORY "../share/verteilen-2-server/"
 
 // 2. Map how browsers request these assets
 #define VERTEILEN2_STATIC_ENDPOINT "/static/<path>"

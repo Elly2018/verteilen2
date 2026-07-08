@@ -25,31 +25,24 @@
 #include <filesystem>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <verteilen2/path.h>
-#include <verteilen2client/data/appdata.h>
-#include <verteilen2client/db/log/private.h>
-#include <verteilen2client/db/job/private.h>
-#include <verteilen2client/db/job_detail/private.h>
+#include <verteilen2/db/local_record.h>
+#include <verteilen2/db/log/private.h>
+#include <verteilen2/db/job/private.h>
+#include <verteilen2/db/job_detail/private.h>
 
 namespace fs = std::filesystem;
 
 namespace verteilen2::client {
 
     SQLite::Database get_database() {
-        
-        fs::path t = path_get_workpath(App_type::Client);
-
-        t /= "record.db";
-
-        SQLite::Database db = SQLite::Database(t.string(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-
-        return db;
+        return get_database(App_type::Client);
     }
 
-    void init_database() {
-        SQLite::Database db = get_database();
-        create_log_table(db);
-        create_job_table(db);
-        create_job_detail_table(db);
-        insert_log_table("none", "Initialization", "Client has been activate.");
+    void init_database(App_data& appdata) {
+        appdata.db_getter = get_database;
+        create_log_table(appdata.db_getter());
+        create_job_table(appdata.db_getter());
+        create_job_detail_table(appdata.db_getter());
+        insert_log_table(appdata.db_getter(), "none", "Initialization", "Client has been activate.");
     }
 }

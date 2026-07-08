@@ -24,19 +24,9 @@
 #pragma once
 #ifndef COMMON_DATA_PROFILE_H
 #define COMMON_DATA_PROFILE_H
-#include <cinttypes>
-#include "../vconst.h"
-#include "../enum/profile_type.h"
+#include <verteilen2/proto_gen/profile.pb-c.h>
 
 namespace verteilen2 {
-
-    struct Profile_data {
-        char uuid[UUID_LENGTH];
-        char name[NAME_LENGTH];
-        char email[EMAIL_LENGTH];
-        char pwd_hash[PWD_HASH_LENGTH];
-        Profile_type type;
-    };
     
 }
 

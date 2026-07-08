@@ -1,49 +1,27 @@
 # Verteilen 2 Client
 
-Compute agent for the verteilen application
+Compute agent for the verteilen application.
 
-## Tech Stacks
-
-* Htmx
-* Sqlite3
-* Crow
-* Boost::asio
-* Boost::beast
-* protobuf
-* DaisyUI
-* spdlog
+## Purposes
 
 ## Features
 
 - [ ] WebUI
 
-## API
+## Database
 
-#### GET "/"
+[Database Detail](./Database.md)
 
-To the the homepage !!
+## Workflow
 
-#### GET "/<template>"
+[Workflow Detail](./Workflow.md)
 
-Fetch the template page components from static/template
+## API (REST-API)
 
-#### POST "/api/connect_ws_server"
+[Rest-API Detail](./API.md)
 
-```json
-// Body
-{
-    "body": {
-        "server-address": "string"
-    }
-}
-```
+## API (Websocket)
 
-Trying to connect to the server application.
-
-## Websocket
-
-#### GET "/ws" Entry
-
-Trying to listening the realtime event, such as log update.
+[Websocket Detail](./Websocket.md)
 
 ## Screenshots

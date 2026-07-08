@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package verteilen2;
+
+// MsgType: DEBUG_LOG
+message DeployService {
+    string id = 1;
+    string name = 2;
+    int32 type = 3;
+    string prepare_script = 4;
+    string deploy_script = 5;
+    string command = 6;
+}

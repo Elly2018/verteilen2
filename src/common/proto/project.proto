@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package verteilen2;
+
+import "data_field.proto";
+
+message Project {
+    string uuid = 1;
+    string name = 2;
+    string description = 3;
+    DataField vault = 4;
+    repeated DataField tasks = 5;
+}

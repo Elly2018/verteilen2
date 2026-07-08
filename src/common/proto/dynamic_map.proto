@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package verteilen2;
+
+message DynamicMap {
+    map<string, bool> map_boolean = 1;
+    map<string, int32> map_int32 = 2;
+    map<string, int64> map_int64 = 3;
+    map<string, float> map_float = 4;
+    map<string, double> map_double = 5;
+    map<string, string> map_string = 6;
+}

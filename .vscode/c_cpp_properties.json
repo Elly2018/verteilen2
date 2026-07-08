@@ -14,6 +14,7 @@
                 "${workspaceFolder}/lib/sqlite/include",
                 "${workspaceFolder}/lib/spdlog/include",
                 "${workspaceFolder}/lib/libhv/include",
+                "${workspaceFolder}/lib/kcp/include",
                 "${workspaceFolder}/lib/uuid/include"
             ],
             "defines": [

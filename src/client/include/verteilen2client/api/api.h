@@ -24,11 +24,26 @@
 #pragma once
 #ifndef CLIENT_API_API_H
 #define CLIENT_API_API_H
-#include "../config.h"
+#include <cinttypes>
+#include "../data/appdata.h"
 
 namespace verteilen2::client {
 
-    void register_connect_server_ws_route(WebServer& app);
+    /**
+     * 
+     * @brief REST-API route for attmpt connect to server's websocket endpoint
+     * 
+     * @param app The crow application reference
+     * 
+     * @note GET "/api/connect_ws_server"
+     * 
+     * * require body key: "server-address"
+     * 
+     * This will attpemt create a connection, after success, register it to App_data,
+     * For state to use it.
+     * 
+     */
+    void register_connect_server_ws_route(App_data& app_data);
     
 }
 

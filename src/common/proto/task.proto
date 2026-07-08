@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package verteilen2;
+
+import "data_field.proto";
+
+message Task {
+    string uuid = 1;
+    string name = 2;
+    string description = 3;
+    int32 type = 4;
+    string cluster_field_key = 5;
+    string multicore_field_key = 6;
+    repeated DataField jobs = 7;
+}

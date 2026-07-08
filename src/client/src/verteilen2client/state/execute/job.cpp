@@ -22,11 +22,12 @@
     SOFTWARE.
  */
 #include <verteilen2client/state/execute/job.h>
+#include <verteilen2client/state/execute.h>
 #include <verteilen2/enum/job_type.h>
 
 namespace verteilen2::client {
 
-    static void running_job(App_data& app_data, int32_t id, Verteilen2__ExecuteJob job) {
+    static void running_job(App_data& app_data, int32_t id, Verteilen2__Job job) {
 
         switch (job.type) {
             default:
@@ -49,50 +50,13 @@ namespace verteilen2::client {
         app_data.workers[id].state = ThreadState::Idle;
     }
 
-    bool execute_job_run(App_data& app_data, Verteilen2__ExecuteJob* job) {
+    bool execute_job_run(App_data& app_data, Verteilen2__Job* job) {
         int32_t id = execute_worker_idle(app_data);
         if(id == -1) return false;
-        Verteilen2__ExecuteJob buffer = Verteilen2__ExecuteJob(*job);
+        Verteilen2__Job buffer = Verteilen2__Job(*job);
         app_data.workers[id].state = ThreadState::Running;
         app_data.workers[id].worker = std::thread(running_job, std::ref(app_data), id, buffer);
         return true;
-    }
-
-    int32_t execute_worker_idle(App_data& app_data) {
-        for(int32_t i = 0; i < 60; i++){
-            if(app_data.workers[i].state.load() != ThreadState::Running){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    int32_t execute_total_idle(App_data& app_data) {
-        int32_t c;
-        for(int32_t i = 0; i < 60; i++){
-            if(app_data.workers[i].state.load() != ThreadState::Running){
-                c++;
-            }
-        }
-        return c;
-    }
-
-    int32_t execute_total_running(App_data& app_data) {
-        int32_t c;
-        for(int32_t i = 0; i < 60; i++){
-            if(app_data.workers[i].state.load() == ThreadState::Running){
-                c++;
-            }
-        }
-        return c;
-    }
-
-    std::array<bool, 60> execute_total_running_array(App_data& app_data) {
-        std::array<bool, 60> a;
-        for(int32_t i = 0; i < 60; i++){
-            a[i] = app_data.workers[i].state.load() == ThreadState::Running;
-        }
-        return a;
     }
 
 }

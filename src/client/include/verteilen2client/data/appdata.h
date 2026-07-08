@@ -30,15 +30,14 @@
 #include <hv/WebSocketServer.h>
 #include "../config.h"
 #include "worker.h"
+#include <verteilen2/db/local_record.h>
 
 namespace verteilen2::client {
 
     struct App_data {
         WebServer app;
-        std::string server_address;
-        bool server_alive;
-        hv::WebSocketClient ws_client;
-        hv::WebSocketServer ws_server;
+        database_getter db_getter;
+        Worker kcp_worker;
         Worker workers[60];
     };
 

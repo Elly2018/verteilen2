@@ -22,10 +22,12 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_API_ALL_H
-#define CLIENT_API_ALL_H
-#include "api.h"
-#include "static.h"
-#include "template.h"
-#include "ws.h"
+#ifndef COMMON_DATA_CRON_H
+#define COMMON_DATA_CRON_H
+#include <verteilen2/proto_gen/cron.pb-c.h>
+
+namespace verteilen2 {
+    
+}
+
 #endif

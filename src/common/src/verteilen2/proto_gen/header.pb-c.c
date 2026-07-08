@@ -103,18 +103,20 @@ const ProtobufCMessageDescriptor verteilen2__raw_data__descriptor =
   (ProtobufCMessageInit) verteilen2__raw_data__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCEnumValue verteilen2__msg_type__enum_values_by_number[3] =
+static const ProtobufCEnumValue verteilen2__msg_type__enum_values_by_number[4] =
 {
   { "UNKNOWN", "VERTEILEN2__MSG_TYPE__UNKNOWN", 0 },
   { "DEBUG_LOG", "VERTEILEN2__MSG_TYPE__DEBUG_LOG", 1 },
   { "EXECUTE_JOB", "VERTEILEN2__MSG_TYPE__EXECUTE_JOB", 2 },
+  { "DEPLOY_SERVICE", "VERTEILEN2__MSG_TYPE__DEPLOY_SERVICE", 3 },
 };
 static const ProtobufCIntRange verteilen2__msg_type__value_ranges[] = {
-{0, 0},{0, 3}
+{0, 0},{0, 4}
 };
-static const ProtobufCEnumValueIndex verteilen2__msg_type__enum_values_by_name[3] =
+static const ProtobufCEnumValueIndex verteilen2__msg_type__enum_values_by_name[4] =
 {
   { "DEBUG_LOG", 1 },
+  { "DEPLOY_SERVICE", 3 },
   { "EXECUTE_JOB", 2 },
   { "UNKNOWN", 0 },
 };
@@ -125,9 +127,9 @@ const ProtobufCEnumDescriptor verteilen2__msg_type__descriptor =
   "MsgType",
   "Verteilen2__MsgType",
   "verteilen2",
-  3,
+  4,
   verteilen2__msg_type__enum_values_by_number,
-  3,
+  4,
   verteilen2__msg_type__enum_values_by_name,
   1,
   verteilen2__msg_type__value_ranges,

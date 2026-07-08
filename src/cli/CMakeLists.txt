@@ -1,12 +1,25 @@
 file(GLOB_RECURSE CLI_SOURCE CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/cli/*.h"
-    "${CMAKE_SOURCE_DIR}/src/cli/*.hpp"
-    "${CMAKE_SOURCE_DIR}/src/cli/*.c"
-    "${CMAKE_SOURCE_DIR}/src/cli/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/cli/src/*.c"
+    "${CMAKE_SOURCE_DIR}/src/cli/src/*.cpp"
+)
+
+include_directories(
+    "${CMAKE_SOURCE_DIR}/src/cli/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include"
+    "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
+    "${CMAKE_SOURCE_DIR}/lib/argh"
+    "${CMAKE_SOURCE_DIR}/lib/json/include"
+    "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
 )
 
 add_executable(cli
     ${CLI_SOURCE}
 )
 
-target_include_directories(cli PRIVATE "${CMAKE_SOURCE_DIR}/lib/argh")
+link_libraries(
+    common 
+    pthread
+    dl
+    spdlog
+    PkgConfig::PROTOBUF_C
+)

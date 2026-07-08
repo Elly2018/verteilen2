@@ -22,22 +22,21 @@
     SOFTWARE.
  */
 #include <verteilen2client/api/static.h>
-#include <fstream>
-#include <sstream>
 #include <filesystem>
 #include <spdlog/spdlog.h>
 #include <crow.h>
+#include <verteilen2/io.h>
 #include <verteilen2client/config.h>
 
 namespace verteilen2::client {
 
-    static void register_index(WebServer& app) {
-        CROW_ROUTE(app, "/")
+    static void register_index(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/")
         .methods(crow::HTTPMethod::GET)
         ([]() {
             crow::mustache::context ctx;
             
-            ctx["title"] = "Testing Title";
+            ctx["title"] = "Verteilen 2 Client";
 
             auto template_page = crow::mustache::load("index.html");
 
@@ -45,78 +44,60 @@ namespace verteilen2::client {
         });
     }
 
-    static void register_resource(WebServer& app) {
-        CROW_ROUTE(app, "/css/<path>")
+    static void register_resource(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/css/<path>")
         .methods(crow::HTTPMethod::GET)
         ([](const std::string& path) {
             crow::response res;
             std::filesystem::path current_cwd = std::filesystem::current_path();
             std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "css" / path;
             std::string p = _p.lexically_normal().string();
-            std::ifstream file(p, std::ios::binary);
-            if (!file.is_open()) {
-                res.code = 404;
-                return res;
-            }
-
-            std::stringstream buffer;
-            buffer << file.rdbuf();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
             
             res.set_header("Content-Type", "text/css");
-            res.body = buffer.str();
+            res.body = buffer;
             res.code = 200;
             return res;
         });
 
-        CROW_ROUTE(app, "/js/<path>")
+        CROW_ROUTE(app_data.app, "/js/<path>")
         .methods(crow::HTTPMethod::GET)
         ([](const std::string& path) {
             crow::response res;
             std::filesystem::path current_cwd = std::filesystem::current_path();
             std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "js" / path;
             std::string p = _p.lexically_normal().string();
-            std::ifstream file(p, std::ios::binary);
-            if (!file.is_open()) {
-                res.code = 404;
-                return res;
-            }
-
-            std::stringstream buffer;
-            buffer << file.rdbuf();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
             
             res.set_header("Content-Type", "application/javascript");
-            res.body = buffer.str();
+            res.body = buffer;
             res.code = 200;
             return res;
         });
 
-        CROW_ROUTE(app, "/favicon.ico")
+        CROW_ROUTE(app_data.app, "/favicon.ico")
         .methods(crow::HTTPMethod::GET)
         ([]() {
             crow::response res;
             std::filesystem::path current_cwd = std::filesystem::current_path();
             std::filesystem::path _p = current_cwd / std::string(VERTEILEN2_STATIC_DIRECTORY) / "favicon.ico";
             std::string p = _p.lexically_normal().string();
-            std::ifstream file(p, std::ios::binary);
-            if (!file.is_open()) {
-                res.code = 404;
-                return res;
-            }
-
-            std::stringstream buffer;
-            buffer << file.rdbuf();
+            std::string buffer;
+            if(!read_all_text(p, buffer)) res.code = 404;
             
             res.set_header("Content-Type", "image/x-icon");
-            res.body = buffer.str();
+            res.body = buffer;
             res.code = 200;
             return res;
         });
     }
 
-    void register_static_route(WebServer& app) {
+    void register_static_route(App_data& app_data) {
 
-        register_index(app);
-        register_resource(app);
+        register_index(app_data);
+        register_resource(app_data);
         
     }
 

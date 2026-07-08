@@ -27,6 +27,11 @@
 
 namespace verteilen2 {
 
+    /**
+     * @brief Container for uuid owner
+     * 
+     * A simple container structure for two uuid stick together.
+     */
     struct Data_owner {
         char uuid[36];
         char target[36];
