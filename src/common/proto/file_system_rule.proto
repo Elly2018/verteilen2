@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum SyncType {
+    NONE = 0;
+    CREATE = 1;
+    MODIFY = 2;
+    DELETE = 4;
+}
+
+// MsgType: DEBUG_LOG
+message FileSystemRule {
+    string uuid = 1;
+    string target_uuid = 2;
+    string filename = 3;
+    SyncType type = 4;
+}
