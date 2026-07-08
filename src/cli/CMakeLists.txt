@@ -10,6 +10,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/argh"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
+    "${CMAKE_SOURCE_DIR}/lib/ftxui/include"
 )
 
 add_executable(cli
@@ -21,5 +22,6 @@ link_libraries(
     pthread
     dl
     spdlog
+    ftxui::ftxui
     PkgConfig::PROTOBUF_C
 )
