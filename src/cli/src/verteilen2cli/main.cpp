@@ -26,11 +26,18 @@
 #include <algorithm>
 #include <argh.h>
 #include <verteilen2cli/category.h>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/captured_mouse.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/component_base.hpp>
+#include <ftxui/dom/elements.hpp>
+
+using namespace verteilen2::cli;
 
 /// @brief Handle the help category
 /// @param cmdl argument worker
 /// @return True if it catch result
-bool handle_help(argh::parser& cmdl){
+static bool handle_help(argh::parser& cmdl){
 
     std::string help_sub_text = "";
     
@@ -69,15 +76,19 @@ bool handle_help(argh::parser& cmdl){
     return false;
 }
 
-bool handle_master(argh::parser& cmdl){
+static bool handle_tui(argh::parser& cmdl) {
 
 }
 
-bool handle_client(argh::parser& cmdl){
+static bool handle_master(argh::parser& cmdl) {
+
+}
+
+static bool handle_client(argh::parser& cmdl) {
     
 }
 
-bool handle_proxy(argh::parser& cmdl){
+static bool handle_proxy(argh::parser& cmdl) {
     
 }
 
@@ -87,9 +98,14 @@ int main(int argc, char* argv[])
     cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
     if(handle_help(cmdl)){
         return EXIT_SUCCESS;
-    }
+    } else if (handle_master(cmdl)) {
+        return EXIT_SUCCESS;
+    } else if (handle_client(cmdl)) {
+        return EXIT_SUCCESS;
+    } else if (handle_proxy(cmdl)) {
+        return EXIT_SUCCESS;
+    } 
 
-    printf("Finish Program...\n");
-
+    handle_tui(cmdl);
     return EXIT_SUCCESS;
 }
