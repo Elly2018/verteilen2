@@ -36,67 +36,24 @@
 namespace verteilen2::client {
 
     static int32_t udp_output(const char *buf, int len, ikcpcb *kcp, void *user) {
-
+        return 0;
     }
 
     void create_kcp_server(App_data& app_data) {
-        int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-        struct sockaddr_in local_addr;
-        memset(&local_addr, 0, sizeof(local_addr));
-        local_addr.sin_family = AF_INET;
-        local_addr.sin_addr.s_addr = INADDR_ANY;
-        local_addr.sin_port = htons(12808); // Local bound port
-        bind(sockfd, (struct sockaddr*)&local_addr, sizeof(local_addr));
+        int32_t mock_socket_fd = 42;
+        uint32_t session_id = 0x11223344;
 
-        ikcpcb *kcp = ikcp_create(0x11223344, &sockfd);
-        kcp->output = udp_output;
-
-        ikcp_nodelay(kcp, 1, 10, 2, 1);
-        ikcp_wndsize(kcp, 128, 128);
-        ikcp_setmtu(kcp, 1400);
-
-        std::string proto_bytes;
-        event.SerializeToString(&proto_bytes);
-
+        app_data.kcp_session = KcpSession(session_id, &mock_socket_fd, udp_output);
         app_data.kcp_worker.state = ThreadState::Running;
         app_data.kcp_worker.worker = std::thread(update_kcp_server, std::ref(app_data));
     }
 
     void create_kcp_connection(App_data& app_data, const std::string address) {
-        reconn_setting_t reconn;
-        reconn.min_delay = 1000;
-        reconn.max_delay = 10000;
-        reconn.delay_policy = 2;
-        reconn.max_retry_cnt = 5;
-
-        app_data.ws_client.setReconnect(&reconn);
         
-        app_data.ws_client.onopen = [&app_data]() {
-            spdlog::info("Websocket to server connection has been established");
-        };
-        app_data.ws_client.onmessage = [&app_data](const std::string& msg) {
-            google::protobuf::Arena arena;
-            verteilen2::RawData* raw_msg = google::protobuf::Arena::CreateMessage<verteilen2::RawData>(&arena);
-            raw_msg->ParseFromArray(msg.data().c_str(), msg.data().size());
-
-            if (raw_msg == NULL) {
-                spdlog::error("Failed to unpack raw network frame via Protobuf-C");
-                return;
-            }
-
-            analysis(app_data, *raw_msg);
-            verteilen2__raw_data__free_unpacked(raw_msg, NULL);
-        };  
-        app_data.ws_client.onclose = [&app_data]() {
-            spdlog::info("Websocket to server connection has been closed");
-        };
-
-        app_data.ws_client.open(address.c_str());
-        app_data.ws_client.start();
     }
 
     void update_kcp_server(App_data& app_data) {
-
+        app_data.kcp_session.update();
     }
 
 }

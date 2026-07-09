@@ -29,14 +29,15 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_enum_5fmsg_5ftype_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\023enum_msg_type.proto\022\nverteilen2*j\n\007Msg"
-  "Type\022\023\n\017MsgType_UNKNOWN\020\000\022\025\n\021MsgType_DEB"
-  "UG_LOG\020\001\022\027\n\023MsgType_EXECUTE_JOB\020\002\022\032\n\026Msg"
-  "Type_DEPLOY_SERVICE\020\003b\006proto3"
+  "\n\023enum_msg_type.proto\022\nverteilen2*\200\001\n\007Ms"
+  "gType\022\023\n\017MsgType_UNKNOWN\020\000\022\025\n\021MsgType_DE"
+  "BUG_LOG\020\001\022\027\n\023MsgType_EXECUTE_JOB\020\002\022\032\n\026Ms"
+  "gType_DEPLOY_SERVICE\020\003\022\024\n\020MsgType_SET_UU"
+  "ID\020\004b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_enum_5fmsg_5ftype_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_enum_5fmsg_5ftype_2eproto = {
-    false, false, 149, descriptor_table_protodef_enum_5fmsg_5ftype_2eproto,
+    false, false, 172, descriptor_table_protodef_enum_5fmsg_5ftype_2eproto,
     "enum_msg_type.proto",
     &descriptor_table_enum_5fmsg_5ftype_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_enum_5fmsg_5ftype_2eproto::offsets,
@@ -60,6 +61,7 @@ bool MsgType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;

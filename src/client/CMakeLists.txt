@@ -28,10 +28,10 @@ link_libraries(
     dl
     spdlog
     hv
-    kcp
     ${Protobuf_LIBRARIES}
 )
 
 add_executable(client
     ${CLIENT_SOURCE}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package verteilen2.client;
+
+message SetUUID {
+    string uuid = 1;
+}

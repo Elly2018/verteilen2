@@ -52,12 +52,13 @@ enum MsgType : int {
   MsgType_DEBUG_LOG = 1,
   MsgType_EXECUTE_JOB = 2,
   MsgType_DEPLOY_SERVICE = 3,
+  MsgType_SET_UUID = 4,
   MsgType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgType_IsValid(int value);
 constexpr MsgType MsgType_MIN = MsgType_UNKNOWN;
-constexpr MsgType MsgType_MAX = MsgType_DEPLOY_SERVICE;
+constexpr MsgType MsgType_MAX = MsgType_SET_UUID;
 constexpr int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgType_descriptor();

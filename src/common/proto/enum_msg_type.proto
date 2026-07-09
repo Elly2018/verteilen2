@@ -7,4 +7,5 @@ enum MsgType {
     MsgType_DEBUG_LOG = 1;
     MsgType_EXECUTE_JOB = 2;
     MsgType_DEPLOY_SERVICE = 3;
+    MsgType_SET_UUID = 4;
 }

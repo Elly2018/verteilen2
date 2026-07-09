@@ -26,17 +26,18 @@
 #define CLIENT_DATA_APPDATA_H
 #include <string>
 #include <cstdint>
-#include <hv/WebSocketClient.h>
-#include <hv/WebSocketServer.h>
 #include "../config.h"
 #include "worker.h"
+#include <verteilen2/kcp.h>
 #include <verteilen2/db/local_record.h>
 
 namespace verteilen2::client {
 
     struct App_data {
         WebServer app;
+        std::string uuid;
         database_getter db_getter;
+        KcpSession kcp_session;
         Worker kcp_worker;
         Worker workers[60];
     };

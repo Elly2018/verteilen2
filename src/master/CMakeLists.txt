@@ -14,6 +14,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
+    "${CMAKE_SOURCE_DIR}/lib/kcp"
 )
 
 link_libraries(
@@ -30,4 +31,5 @@ link_libraries(
 
 add_executable(master
     ${MASTER_SOURCE}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )

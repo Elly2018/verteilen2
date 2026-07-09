@@ -14,11 +14,13 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
     "${CMAKE_SOURCE_DIR}/lib/uuid/include"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
+    "${CMAKE_SOURCE_DIR}/lib/kcp"
 )
 
 add_library(common STATIC
     ${COMMON_SOURCE}
     ${PROTO_SOURCES}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )
 
 target_link_libraries(common PUBLIC

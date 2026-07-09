@@ -28,11 +28,11 @@
 #include <array>
 #include <string>
 #include "../../data/appdata.h"
-#include <verteilen2/proto_gen/deploy_service.pb-c.h>
+#include <verteilen2/proto_gen/struct_deploy_service.pb.h>
 
 namespace verteilen2::client {
 
-    bool execute_service_deploy(App_data& app_data, Verteilen2__DeployService* job);
+    bool execute_service_deploy(App_data& app_data, verteilen2::DeployService* job);
 
 }
 
