@@ -29,7 +29,7 @@ link_libraries(
     spdlog
     hv
     kcp
-    PkgConfig::PROTOBUF_C
+    ${Protobuf_LIBRARIES}
 )
 
 add_executable(client

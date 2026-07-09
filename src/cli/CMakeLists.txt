@@ -24,5 +24,5 @@ link_libraries(
     dl
     spdlog
     ftxui::ftxui
-    PkgConfig::PROTOBUF_C
+    ${Protobuf_LIBRARIES}
 )

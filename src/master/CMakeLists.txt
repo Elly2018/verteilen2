@@ -25,7 +25,7 @@ link_libraries(
     dl
     spdlog
     hv
-    PkgConfig::PROTOBUF_C
+    ${Protobuf_LIBRARIES}
 )
 
 add_executable(master
