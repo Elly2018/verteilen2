@@ -16,7 +16,8 @@
                 "${workspaceFolder}/lib/libhv/include",
                 "${workspaceFolder}/lib/kcp",
                 "${workspaceFolder}/lib/ftxui/include",
-                "${workspaceFolder}/lib/uuid/include"
+                "${workspaceFolder}/lib/uuid/include",
+                "${workspaceFolder}/lib/efsw/include"
             ],
             "defines": [
                 "BOOST_ERROR_CODE_HEADER_ONLY",
