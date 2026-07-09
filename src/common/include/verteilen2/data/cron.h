@@ -24,7 +24,7 @@
 #pragma once
 #ifndef COMMON_DATA_CRON_H
 #define COMMON_DATA_CRON_H
-#include <verteilen2/proto_gen/cron.pb.h>
+#include <verteilen2/proto_gen/struct_cron.pb.h>
 
 namespace verteilen2 {
     

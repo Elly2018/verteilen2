@@ -24,8 +24,8 @@
 #pragma once
 #ifndef COMMON_DATA_JOB_H
 #define COMMON_DATA_JOB_H
-#include <verteilen2/proto_gen/dynamic_map.pb.h>
-#include <verteilen2/proto_gen/job.pb.h>
+#include <verteilen2/proto_gen/struct_dynamic_map.pb.h>
+#include <verteilen2/proto_gen/struct_job.pb.h>
 #include <unordered_map>
 #include <string>
 

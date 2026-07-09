@@ -25,8 +25,8 @@
 #ifndef COMMON_DATA_TASK_H
 #define COMMON_DATA_TASK_H
 #include <vector>
-#include <verteilen2/proto_gen/task.pb.h>
-#include <verteilen2/proto_gen/job.pb.h>
+#include <verteilen2/proto_gen/struct_task.pb.h>
+#include <verteilen2/proto_gen/struct_job.pb.h>
 
 namespace verteilen2 {
 

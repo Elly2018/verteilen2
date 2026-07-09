@@ -24,7 +24,7 @@
 #pragma once
 #ifndef COMMON_DATA_VAULT_H
 #define COMMON_DATA_VAULT_H
-#include <verteilen2/proto_gen/vault.pb.h>
+#include <verteilen2/proto_gen/struct_vault.pb.h>
 
 namespace verteilen2 {
 
