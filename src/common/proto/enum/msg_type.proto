@@ -3,8 +3,8 @@ syntax = "proto3";
 package verteilen2;
 
 enum MsgType {
-    UNKNOWN = 0;
-    DEBUG_LOG = 1;
-    EXECUTE_JOB = 2;
-    DEPLOY_SERVICE = 3;
+    MsgType_UNKNOWN = 0;
+    MsgType_DEBUG_LOG = 1;
+    MsgType_EXECUTE_JOB = 2;
+    MsgType_DEPLOY_SERVICE = 3;
 }

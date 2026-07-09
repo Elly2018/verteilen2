@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package verteilen2.action.common;
 
-import "../enum/file_event_type.proto";
+import "enum/file_event_type.proto";
 
 message FileEvent {
     string fs_uuid = 1;

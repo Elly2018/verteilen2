@@ -3,7 +3,7 @@ syntax = "proto3";
 package verteilen2;
 
 enum FileEventType {
-    NONE = 0;
-    PUSH = 1;
-    DELETE = 2;
+    FileEventType_NONE = 0;
+    FileEventType_PUSH = 1;
+    FileEventType_DELETE = 2;
 }

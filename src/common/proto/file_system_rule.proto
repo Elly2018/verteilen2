@@ -3,10 +3,10 @@ syntax = "proto3";
 package verteilen2;
 
 enum SyncType {
-    NONE = 0;
-    CREATE = 1;
-    MODIFY = 2;
-    DELETE = 4;
+    SyncType_NONE = 0;
+    SyncType_CREATE = 1;
+    SyncType_MODIFY = 2;
+    SyncType_DELETE = 4;
 }
 
 // MsgType: DEBUG_LOG

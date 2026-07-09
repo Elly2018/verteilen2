@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package verteilen2.action.server;
 
-import "../enum/status.proto";
+import "enum/status.proto";
 
 message JobResult {
     string uuid = 1;

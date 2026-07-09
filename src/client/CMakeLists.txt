@@ -1,5 +1,6 @@
 file(GLOB_RECURSE CLIENT_SOURCE CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/client/src/*.c"
+    "${CMAKE_SOURCE_DIR}/src/client/src/*.cc"
     "${CMAKE_SOURCE_DIR}/src/client/src/*.cpp"
 )
 
