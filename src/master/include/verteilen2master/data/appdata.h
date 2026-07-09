@@ -41,10 +41,10 @@ namespace verteilen2::master {
         database_getter db_getter;
         hv::WebSocketClient ws_client;
         hv::WebSocketServer ws_server;
-        std::vector<Verteilen2__Project*> projects;
-        std::vector<Verteilen2__Task*> tasks;
-        std::vector<Verteilen2__Job*> jobs;
-        std::vector<Verteilen2__Vault*> vaults;
+        std::vector<verteilen2::Project*> projects;
+        std::vector<verteilen2::Task*> tasks;
+        std::vector<verteilen2::Job*> jobs;
+        std::vector<verteilen2::Vault*> vaults;
         Worker workers[60];
     };
 

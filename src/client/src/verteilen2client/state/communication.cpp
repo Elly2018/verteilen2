@@ -28,7 +28,7 @@
 #include <sys/socket.h>
 #include <ikcp.h>
 #include <spdlog/spdlog.h>
-#include <verteilen2/proto_gen/header.pb-c.h>
+#include <verteilen2/proto_gen/struct_header.pb.h>
 #include <verteilen2client/data/appdata.h>
 #include <verteilen2client/state/analyzer.h>
 #include <verteilen2client/state/execute.h>
@@ -75,9 +75,9 @@ namespace verteilen2::client {
             spdlog::info("Websocket to server connection has been established");
         };
         app_data.ws_client.onmessage = [&app_data](const std::string& msg) {
-            const uint8_t* raw_data = reinterpret_cast<const uint8_t*>(msg.data());
-            uint64_t data_len = msg.size();
-            Verteilen2__RawData* raw_msg = verteilen2__raw_data__unpack(NULL, msg.size(), raw_data);
+            google::protobuf::Arena arena;
+            verteilen2::RawData* raw_msg = google::protobuf::Arena::CreateMessage<verteilen2::RawData>(&arena);
+            raw_msg->ParseFromArray(msg.data().c_str(), msg.data().size());
 
             if (raw_msg == NULL) {
                 spdlog::error("Failed to unpack raw network frame via Protobuf-C");

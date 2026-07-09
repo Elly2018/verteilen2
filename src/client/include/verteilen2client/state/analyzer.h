@@ -26,11 +26,11 @@
 #define CLIENT_STATE_ANALYZER_H
 #include <string>
 #include "../data/appdata.h"
-#include <verteilen2/proto_gen/header.pb-c.h>
+#include <verteilen2/proto_gen/struct_header.pb.h>
 
 namespace verteilen2::client {
 
-    void analysis(App_data& app_data, Verteilen2__RawData& raw_msg);
+    void analysis(App_data& app_data, verteilen2::RawData* raw_msg);
 
 }
 

@@ -38,7 +38,7 @@ namespace verteilen2 {
         )SQL");
     }
 
-    int32_t insert_log_table(SQLite::Database db, const char job[36], const std::string title, const std::string content) {
+    int32_t insert_log_table(SQLite::Database db, std::string job, const std::string title, const std::string content) {
         SQLite::Statement query(db, "INSERT INTO log (job, title, content) VALUES(?, ?, ?);");
         query.bind(1, job);
         query.bind(2, title);
