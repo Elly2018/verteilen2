@@ -24,7 +24,7 @@
 #pragma once
 #ifndef COMMON_DATA_PROFILE_H
 #define COMMON_DATA_PROFILE_H
-#include <verteilen2/proto_gen/profile.pb-c.h>
+#include <verteilen2/proto_gen/profile.pb.h>
 
 namespace verteilen2 {
     

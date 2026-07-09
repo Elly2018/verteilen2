@@ -24,7 +24,8 @@
 #pragma once
 #ifndef COMMON_DATA_JOB_H
 #define COMMON_DATA_JOB_H
-#include <verteilen2/proto_gen/job.pb-c.h>
+#include <verteilen2/proto_gen/dynamic_map.pb.h>
+#include <verteilen2/proto_gen/job.pb.h>
 #include <unordered_map>
 #include <string>
 
@@ -40,8 +41,8 @@ namespace verteilen2 {
         std::unordered_map<std::string, std::string> datas_string;
     };
     
-    job_env job_data_get_env(Verteilen2__Job& job);
-    void job_data_set_env(Verteilen2__Job& job, job_env& env);
+    job_env job_data_get_env(verteilen2::Job& job);
+    void job_data_set_env(verteilen2::Job& job, job_env& env);
 
 }
 

@@ -25,13 +25,13 @@
 #ifndef COMMON_DATA_TASK_H
 #define COMMON_DATA_TASK_H
 #include <vector>
-#include <verteilen2/proto_gen/task.pb-c.h>
-#include <verteilen2/proto_gen/job.pb-c.h>
+#include <verteilen2/proto_gen/task.pb.h>
+#include <verteilen2/proto_gen/job.pb.h>
 
 namespace verteilen2 {
 
-    int32_t task_data_get_job_count(Verteilen2__Task& task);
-    int32_t task_data_get_job_count(Verteilen2__Task& task, std::vector<Verteilen2__Job>& jobs);
+    int32_t task_data_get_job_count(verteilen2::Task& task);
+    int32_t task_data_get_job_count(verteilen2::Task& task, std::vector<verteilen2::Job>& jobs);
 
 }
 
