@@ -28,53 +28,53 @@
 
 namespace verteilen2 {
 
-    int32_t project_data_get_task_count(Verteilen2__Project& project) {
+    int32_t project_data_get_task_count(verteilen2::Project& project) {
         int32_t c = 0;
-        for(int32_t i = 0; i < project.n_tasks; i++){
-            if (!project.tasks[i]->vaild) continue;
+        for(int32_t i = 0; i < project.tasks_size(); i++){
+            if (!project.tasks().at(i).vaild()) continue;
             c++;
         }
         return c;
     }
 
-    int32_t project_data_get_task_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks) {
+    int32_t project_data_get_task_count(verteilen2::Project& project, std::vector<verteilen2::Task>& tasks) {
         int32_t c = 0;
         std::unordered_map<std::string, bool> exists;
         for(int32_t i = 0; i < tasks.size(); i++){
-            exists.insert({ std::string(tasks.at(i).uuid), true });
+            exists.insert({ std::string(tasks.at(i).uuid()), true });
         }
-        for(int32_t i = 0; i < project.n_tasks; i++){
-            if (!project.tasks[i]->vaild) continue;
-            if(exists.count(std::string(project.tasks[i]->uuid)) == 0) continue;
+        for(int32_t i = 0; i < project.tasks_size(); i++){
+            if (!project.tasks().at(i).vaild()) continue;
+            if(exists.count(std::string(project.tasks().at(i).uuid())) == 0) continue;
             c++;
         }
         return c;
     }
 
-    int32_t project_data_get_job_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks) {
+    int32_t project_data_get_job_count(verteilen2::Project& project, std::vector<verteilen2::Task>& tasks) {
         int32_t c = 0;
-        std::unordered_map<std::string, Verteilen2__Task&> exists;
+        std::unordered_map<std::string, verteilen2::Task&> exists;
         for(int32_t i = 0; i < tasks.size(); i++){
-            exists.insert({ std::string(tasks.at(i).uuid), tasks.at(i) });
+            exists.insert({ std::string(tasks.at(i).uuid()), tasks.at(i) });
         }
-        for(int32_t i = 0; i < project.n_tasks; i++){
-            std::string buff = std::string(project.tasks[i]->uuid);
-            if (!project.tasks[i]->vaild) continue;
+        for(int32_t i = 0; i < project.tasks_size(); i++){
+            std::string buff = std::string(project.tasks().at(i).uuid());
+            if (!project.tasks().at(i).vaild()) continue;
             if (exists.count(buff) == 0) continue;
             c += task_data_get_job_count(exists.at(buff));
         }
         return c;
     }
 
-    int32_t project_data_get_job_count(Verteilen2__Project& project, std::vector<Verteilen2__Task>& tasks, std::vector<Verteilen2__Job>& jobs) {
+    int32_t project_data_get_job_count(verteilen2::Project& project, std::vector<verteilen2::Task>& tasks, std::vector<verteilen2::Job>& jobs) {
         int32_t c = 0;
-        std::unordered_map<std::string, Verteilen2__Task&> exists;
+        std::unordered_map<std::string, verteilen2::Task&> exists;
         for(int32_t i = 0; i < tasks.size(); i++){
-            exists.insert({ std::string(tasks.at(i).uuid), tasks.at(i) });
+            exists.insert({ std::string(tasks.at(i).uuid()), tasks.at(i) });
         }
-        for(int32_t i = 0; i < project.n_tasks; i++){
-            std::string buff = std::string(project.tasks[i]->uuid);
-            if (!project.tasks[i]->vaild) continue;
+        for(int32_t i = 0; i < project.tasks_size(); i++){
+            std::string buff = std::string(project.tasks().at(i).uuid());
+            if (!project.tasks().at(i).vaild()) continue;
             if (exists.count(buff) == 0) continue;
             c += task_data_get_job_count(exists.at(buff), jobs);
         }

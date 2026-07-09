@@ -27,23 +27,23 @@
 
 namespace verteilen2 {
 
-    int32_t task_data_get_job_count(Verteilen2__Task& task) {
+    int32_t task_data_get_job_count(verteilen2::Task& task) {
         int32_t c = 0;
-        for(int32_t i = 0; i < task.n_jobs; i++){
-            if (!task.jobs[i]->vaild) continue;
+        for(int32_t i = 0; i < task.jobs_size(); i++){
+            if (!task.jobs().at(i).vaild()) continue;
             c++;
         }
         return c;
     }
-    int32_t task_data_get_job_count(Verteilen2__Task& task, std::vector<Verteilen2__Job>& jobs) {
+    int32_t task_data_get_job_count(verteilen2::Task& task, std::vector<verteilen2::Job>& jobs) {
         int32_t c = 0;
         std::unordered_map<std::string, bool> exists;
         for(int32_t i = 0; i < jobs.size(); i++){
-            exists.insert({ std::string(jobs.at(i).uuid), true });
+            exists.insert({ std::string(jobs.at(i).uuid()), true });
         }
-        for(int32_t i = 0; i < task.n_jobs; i++){
-            if (!task.jobs[i]->vaild) continue;
-            if(exists.count(std::string(task.jobs[i]->uuid)) == 0) continue;
+        for(int32_t i = 0; i < task.jobs_size(); i++){
+            if (!task.jobs().at(i).vaild()) continue;
+            if(exists.count(std::string(task.jobs().at(i).uuid())) == 0) continue;
             c++;
         }
         return c;

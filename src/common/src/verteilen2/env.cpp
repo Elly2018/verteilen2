@@ -36,7 +36,7 @@ namespace verteilen2 {
             return true;
         }
         
-        if (!get_env("KUBERNETES_SERVICE_HOST").empty()) {
+        if (!env_get_env("KUBERNETES_SERVICE_HOST").empty()) {
             return true;
         }
         return false;
