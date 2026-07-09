@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package verteilen2.action.server;
+
+import "../enum/status.proto";
+
+message JobResult {
+    string uuid = 1;
+    string label = 2;
+    Status status = 3;
+}

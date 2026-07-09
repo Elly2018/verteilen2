@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum Status {
+    NONE = 0;
+    SUCCESS = 1;
+    FAILED = 2;
+    OTHER = 3;
+}

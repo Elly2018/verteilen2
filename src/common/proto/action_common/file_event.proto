@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package verteilen2.action.common;
+
+import "../enum/file_event_type.proto";
+
+message FileEvent {
+    string fs_uuid = 1;
+    string filename = 2;
+    FileEventType type = 3;
+}

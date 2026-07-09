@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package verteilen2.action.client;
+
+import "../file_system.proto";
+import "../enum/action_fs_type.proto";
+
+// MsgType: DEBUG_LOG
+message FileSystem {
+    ActionFSType type = 1;
+    FileSystem fs = 2;
+}
