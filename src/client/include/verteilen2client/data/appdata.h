@@ -24,6 +24,7 @@
 #pragma once
 #ifndef CLIENT_DATA_APPDATA_H
 #define CLIENT_DATA_APPDATA_H
+#include <atomic>
 #include <string>
 #include <cstdint>
 #include <mdns_cpp/mdns.hpp>
@@ -44,7 +45,7 @@ namespace verteilen2::client {
         database_getter db_getter;
         Worker workers[worker_limit];
         FSWorker fsworker[worker_limit];
-        bool shutdown;
+        std::atomic<bool> shutdown{false};
     };
 
     void app_data_release_all(App_data& app_data);
