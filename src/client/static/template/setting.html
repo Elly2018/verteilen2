@@ -23,6 +23,18 @@
                 <p class="label">How many thread can this node spawn</p>
             </fieldset>
 
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Maximum Content Line</legend>
+                <input id="maximum-execution" type="number" class="input" placeholder="20"
+                    value="{{ content_max_line }}" />
+                <p class="label">How many messages allow in one scrollable element</p>
+            </fieldset>
+
+            <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+                <legend class="fieldset-legend">Enable File System</legend>
+                <input type="checkbox" checked="{{ file_system_enable }}" class="checkbox" />
+            </fieldset>
+
             <p id="setting-message" class="text-red-500"></p>
         </div>
     </div>

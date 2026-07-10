@@ -25,6 +25,7 @@
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
 #include <verteilen2/uuid.h>
+#include <verteilen2/env.h>
 #include <verteilen2client/config.h>
 #include <verteilen2client/db/local_record.h>
 #include <verteilen2client/state/analyzer.h>
@@ -66,8 +67,10 @@ namespace verteilen2::client {
     }
 
     static void template_setting(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
-        ctx["current_server_address"] = "ws://127.0.0.1/ws/client";
+        ctx["current_server_address"] = "127.0.0.1:" + std::to_string(kcp_port);
         ctx["current_maximum_execution"] = 20;
+        ctx["content_max_line"] = 2000;
+        ctx["file_system_enable"] = true;
     }
 
     static void template_viewer(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
