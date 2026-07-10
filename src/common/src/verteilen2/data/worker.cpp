@@ -29,8 +29,8 @@ namespace verteilen2 {
         for(int32_t i = 0; i < worker_limit; i++){
             if(worker[i].state == ThreadState::Running) {
                 if(worker[i].worker.joinable()){
+                    worker[i].state = ThreadState::Empty;
                     worker[i].worker.join();
-                    worker[i].state = ThreadState::Idle;
                 }
             }
         }

@@ -51,16 +51,11 @@ static void mDNS_run(App_data& app_data){
         v.pop_back();
     }
     spdlog::info("Define mDNS message: {}", v);
-    app_data.mdns;
     app_data.mdns.setServiceHostname(v);
     app_data.mdns.startService();
     mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
         spdlog::info("mDNS: {}", msg);
     });
-}
-
-static void mDNS_shutdown(App_data& app_data) {
-    app_data.mdns.stopService();
 }
 
 static void network_run(App_data& app_data) {
@@ -86,22 +81,17 @@ static void web_run(App_data& app_data){
     app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(8080)).multithreaded().run();
 }
 
-void signal_handler(int signal_num) {
-    if (signal_num == SIGINT) {
-        app_data.shutdown = true;
-        app_data.app.stop();
-    }
-}
-
 int main(){
-    std::signal(SIGINT, signal_handler);
-
     db_run(app_data);
     mDNS_run(app_data);
     network_run(app_data);
     web_run(app_data);
 
+    app_data.shutdown.store(true);
+
     network_shutdown(app_data);
-    mDNS_shutdown(app_data);
     app_data_release_all(app_data);
+
+    spdlog::info("Successfully exit");
+    exit(0);
 }

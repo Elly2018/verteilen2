@@ -107,9 +107,10 @@ namespace verteilen2::client {
         struct sockaddr_in remote_addr;
         socklen_t addr_len = sizeof(remote_addr);
 
-        while (!app_data.shutdown) {
-            
-            while (true) {
+        while (!app_data.shutdown.load()) {
+
+            while (true && !app_data.shutdown.load()) {
+
                 ssize_t bytes_recv = recvfrom(
                     app_data.server.socket_fd, packet_buffer, sizeof(packet_buffer), 
                     0, (struct sockaddr*)&remote_addr, &addr_len

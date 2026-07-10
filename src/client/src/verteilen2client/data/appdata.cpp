@@ -22,10 +22,12 @@
     SOFTWARE.
  */
 #include <verteilen2client/data/appdata.h>
+#include <spdlog/spdlog.h>
 
 namespace verteilen2::client {
 
     void app_data_release_all(App_data& app_data) {
+        spdlog::info("Shuwdown app_data...");
         fs_work_release_all(app_data.fsworker);
         work_release_all(app_data.workers);
     }
