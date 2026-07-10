@@ -32,8 +32,6 @@
 using namespace verteilen2;
 using namespace verteilen2::client;
 
-App_data app_data = App_data();
-
 static void db_run(App_data& app_data){
     spdlog::info("Initializing database...");
     init_database(app_data);
@@ -82,6 +80,8 @@ static void web_run(App_data& app_data){
 }
 
 int main(){
+    App_data app_data = App_data();
+
     db_run(app_data);
     mDNS_run(app_data);
     network_run(app_data);
