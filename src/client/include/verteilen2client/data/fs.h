@@ -22,18 +22,26 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_STATE_EXECUTE_JOB_H
-#define CLIENT_STATE_EXECUTE_JOB_H
-#include <cinttypes>
-#include <array>
+#ifndef CLIENT_DATA_FS_H
+#define CLIENT_DATA_FS_H
 #include <string>
-#include "../../data/appdata.h"
-#include <verteilen2/proto_gen/struct_job.pb.h>
+#include <cstdint>
+#include <thread>
+#include <atomic>
+#include <efsw/efsw.hpp>
+#include <verteilen2/env.h>
 
 namespace verteilen2::client {
 
-    bool execute_job_run(App_data& app_data, Job* job);
-    
+    struct FSWorker {
+        efsw::FileWatcher* watcher;
+        efsw::FileWatchListener* listener;
+        efsw::WatchID watch_ID;
+        std::string path;
+        bool vaild;
+    };
+
+    int32_t fs_worker_get_idle(FSWorker* fsworker);
 }
 
 #endif

@@ -62,19 +62,20 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_client_5ffile_5fsystem_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\030client_file_system.proto\022\021verteilen2.c"
-  "lient\032\031enum_action_fs_type.proto\"_\n\nFile"
-  "System\022&\n\004type\030\001 \001(\0162\030.verteilen2.Action"
-  "FSType\022)\n\002fs\030\002 \001(\0132\035.verteilen2.client.F"
-  "ileSystemb\006proto3"
+  "lient\032\030struct_file_system.proto\032\031enum_ac"
+  "tion_fs_type.proto\"X\n\nFileSystem\022&\n\004type"
+  "\030\001 \001(\0162\030.verteilen2.ActionFSType\022\"\n\002fs\030\002"
+  " \001(\0132\026.verteilen2.FileSystemb\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_client_5ffile_5fsystem_2eproto_deps[1] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_client_5ffile_5fsystem_2eproto_deps[2] = {
   &::descriptor_table_enum_5faction_5ffs_5ftype_2eproto,
+  &::descriptor_table_struct_5ffile_5fsystem_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_client_5ffile_5fsystem_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_client_5ffile_5fsystem_2eproto = {
-    false, false, 177, descriptor_table_protodef_client_5ffile_5fsystem_2eproto,
+    false, false, 196, descriptor_table_protodef_client_5ffile_5fsystem_2eproto,
     "client_file_system.proto",
-    &descriptor_table_client_5ffile_5fsystem_2eproto_once, descriptor_table_client_5ffile_5fsystem_2eproto_deps, 1, 1,
+    &descriptor_table_client_5ffile_5fsystem_2eproto_once, descriptor_table_client_5ffile_5fsystem_2eproto_deps, 2, 1,
     schemas, file_default_instances, TableStruct_client_5ffile_5fsystem_2eproto::offsets,
     file_level_metadata_client_5ffile_5fsystem_2eproto, file_level_enum_descriptors_client_5ffile_5fsystem_2eproto,
     file_level_service_descriptors_client_5ffile_5fsystem_2eproto,
@@ -92,12 +93,18 @@ namespace client {
 
 class FileSystem::_Internal {
  public:
-  static const ::verteilen2::client::FileSystem& fs(const FileSystem* msg);
+  static const ::verteilen2::FileSystem& fs(const FileSystem* msg);
 };
 
-const ::verteilen2::client::FileSystem&
+const ::verteilen2::FileSystem&
 FileSystem::_Internal::fs(const FileSystem* msg) {
   return *msg->_impl_.fs_;
+}
+void FileSystem::clear_fs() {
+  if (GetArenaForAllocation() == nullptr && _impl_.fs_ != nullptr) {
+    delete _impl_.fs_;
+  }
+  _impl_.fs_ = nullptr;
 }
 FileSystem::FileSystem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -115,7 +122,7 @@ FileSystem::FileSystem(const FileSystem& from)
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_fs()) {
-    _this->_impl_.fs_ = new ::verteilen2::client::FileSystem(*from._impl_.fs_);
+    _this->_impl_.fs_ = new ::verteilen2::FileSystem(*from._impl_.fs_);
   }
   _this->_impl_.type_ = from._impl_.type_;
   // @@protoc_insertion_point(copy_constructor:verteilen2.client.FileSystem)
@@ -179,7 +186,7 @@ const char* FileSystem::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         } else
           goto handle_unusual;
         continue;
-      // .verteilen2.client.FileSystem fs = 2;
+      // .verteilen2.FileSystem fs = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_fs(), ptr);
@@ -223,7 +230,7 @@ uint8_t* FileSystem::_InternalSerialize(
       1, this->_internal_type(), target);
   }
 
-  // .verteilen2.client.FileSystem fs = 2;
+  // .verteilen2.FileSystem fs = 2;
   if (this->_internal_has_fs()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(2, _Internal::fs(this),
@@ -246,7 +253,7 @@ size_t FileSystem::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .verteilen2.client.FileSystem fs = 2;
+  // .verteilen2.FileSystem fs = 2;
   if (this->_internal_has_fs()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -278,7 +285,7 @@ void FileSystem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   (void) cached_has_bits;
 
   if (from._internal_has_fs()) {
-    _this->_internal_mutable_fs()->::verteilen2::client::FileSystem::MergeFrom(
+    _this->_internal_mutable_fs()->::verteilen2::FileSystem::MergeFrom(
         from._internal_fs());
   }
   if (from._internal_type() != 0) {

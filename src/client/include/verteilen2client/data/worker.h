@@ -28,6 +28,7 @@
 #include <cstdint>
 #include <thread>
 #include <atomic>
+#include <verteilen2/env.h>
 
 namespace verteilen2::client {
 
@@ -41,6 +42,8 @@ namespace verteilen2::client {
         std::thread worker;
         std::atomic<ThreadState> state;
     };
+
+    int32_t worker_get_idle(Worker* worker);
 
 }
 

@@ -21,19 +21,15 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_STATE_EXECUTE_JOB_H
-#define CLIENT_STATE_EXECUTE_JOB_H
-#include <cinttypes>
-#include <array>
-#include <string>
-#include "../../data/appdata.h"
-#include <verteilen2/proto_gen/struct_job.pb.h>
+#include <verteilen2client/data/fs.h>
 
 namespace verteilen2::client {
 
-    bool execute_job_run(App_data& app_data, Job* job);
-    
-}
+    int32_t fs_worker_get_idle(FSWorker* fsworker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(!fsworker[i].vaild) return i;
+        }
+        return -1;
+    }
 
-#endif
+}

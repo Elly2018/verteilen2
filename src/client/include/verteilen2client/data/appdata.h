@@ -28,6 +28,8 @@
 #include <cstdint>
 #include "../config.h"
 #include "worker.h"
+#include "fs.h"
+#include <verteilen2/env.h>
 #include <verteilen2/kcp.h>
 #include <verteilen2/db/local_record.h>
 
@@ -39,7 +41,8 @@ namespace verteilen2::client {
         database_getter db_getter;
         KcpSession kcp_session;
         Worker kcp_worker;
-        Worker workers[60];
+        Worker workers[worker_limit];
+        FSWorker fsworker[worker_limit];
     };
 
 }

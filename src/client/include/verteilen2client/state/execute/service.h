@@ -32,7 +32,7 @@
 
 namespace verteilen2::client {
 
-    bool execute_service_deploy(App_data& app_data, verteilen2::DeployService* job);
+    bool execute_service_deploy(App_data& app_data, DeployService* job);
 
 }
 

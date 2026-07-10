@@ -30,6 +30,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include "struct_file_system.pb.h"
 #include "enum_action_fs_type.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -184,23 +185,23 @@ class FileSystem final :
     kFsFieldNumber = 2,
     kTypeFieldNumber = 1,
   };
-  // .verteilen2.client.FileSystem fs = 2;
+  // .verteilen2.FileSystem fs = 2;
   bool has_fs() const;
   private:
   bool _internal_has_fs() const;
   public:
   void clear_fs();
-  const ::verteilen2::client::FileSystem& fs() const;
-  PROTOBUF_NODISCARD ::verteilen2::client::FileSystem* release_fs();
-  ::verteilen2::client::FileSystem* mutable_fs();
-  void set_allocated_fs(::verteilen2::client::FileSystem* fs);
+  const ::verteilen2::FileSystem& fs() const;
+  PROTOBUF_NODISCARD ::verteilen2::FileSystem* release_fs();
+  ::verteilen2::FileSystem* mutable_fs();
+  void set_allocated_fs(::verteilen2::FileSystem* fs);
   private:
-  const ::verteilen2::client::FileSystem& _internal_fs() const;
-  ::verteilen2::client::FileSystem* _internal_mutable_fs();
+  const ::verteilen2::FileSystem& _internal_fs() const;
+  ::verteilen2::FileSystem* _internal_mutable_fs();
   public:
   void unsafe_arena_set_allocated_fs(
-      ::verteilen2::client::FileSystem* fs);
-  ::verteilen2::client::FileSystem* unsafe_arena_release_fs();
+      ::verteilen2::FileSystem* fs);
+  ::verteilen2::FileSystem* unsafe_arena_release_fs();
 
   // .verteilen2.ActionFSType type = 1;
   void clear_type();
@@ -219,7 +220,7 @@ class FileSystem final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::verteilen2::client::FileSystem* fs_;
+    ::verteilen2::FileSystem* fs_;
     int type_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -257,30 +258,24 @@ inline void FileSystem::set_type(::verteilen2::ActionFSType value) {
   // @@protoc_insertion_point(field_set:verteilen2.client.FileSystem.type)
 }
 
-// .verteilen2.client.FileSystem fs = 2;
+// .verteilen2.FileSystem fs = 2;
 inline bool FileSystem::_internal_has_fs() const {
   return this != internal_default_instance() && _impl_.fs_ != nullptr;
 }
 inline bool FileSystem::has_fs() const {
   return _internal_has_fs();
 }
-inline void FileSystem::clear_fs() {
-  if (GetArenaForAllocation() == nullptr && _impl_.fs_ != nullptr) {
-    delete _impl_.fs_;
-  }
-  _impl_.fs_ = nullptr;
+inline const ::verteilen2::FileSystem& FileSystem::_internal_fs() const {
+  const ::verteilen2::FileSystem* p = _impl_.fs_;
+  return p != nullptr ? *p : reinterpret_cast<const ::verteilen2::FileSystem&>(
+      ::verteilen2::_FileSystem_default_instance_);
 }
-inline const ::verteilen2::client::FileSystem& FileSystem::_internal_fs() const {
-  const ::verteilen2::client::FileSystem* p = _impl_.fs_;
-  return p != nullptr ? *p : reinterpret_cast<const ::verteilen2::client::FileSystem&>(
-      ::verteilen2::client::_FileSystem_default_instance_);
-}
-inline const ::verteilen2::client::FileSystem& FileSystem::fs() const {
+inline const ::verteilen2::FileSystem& FileSystem::fs() const {
   // @@protoc_insertion_point(field_get:verteilen2.client.FileSystem.fs)
   return _internal_fs();
 }
 inline void FileSystem::unsafe_arena_set_allocated_fs(
-    ::verteilen2::client::FileSystem* fs) {
+    ::verteilen2::FileSystem* fs) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.fs_);
   }
@@ -292,9 +287,9 @@ inline void FileSystem::unsafe_arena_set_allocated_fs(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:verteilen2.client.FileSystem.fs)
 }
-inline ::verteilen2::client::FileSystem* FileSystem::release_fs() {
+inline ::verteilen2::FileSystem* FileSystem::release_fs() {
   
-  ::verteilen2::client::FileSystem* temp = _impl_.fs_;
+  ::verteilen2::FileSystem* temp = _impl_.fs_;
   _impl_.fs_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -307,34 +302,35 @@ inline ::verteilen2::client::FileSystem* FileSystem::release_fs() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::verteilen2::client::FileSystem* FileSystem::unsafe_arena_release_fs() {
+inline ::verteilen2::FileSystem* FileSystem::unsafe_arena_release_fs() {
   // @@protoc_insertion_point(field_release:verteilen2.client.FileSystem.fs)
   
-  ::verteilen2::client::FileSystem* temp = _impl_.fs_;
+  ::verteilen2::FileSystem* temp = _impl_.fs_;
   _impl_.fs_ = nullptr;
   return temp;
 }
-inline ::verteilen2::client::FileSystem* FileSystem::_internal_mutable_fs() {
+inline ::verteilen2::FileSystem* FileSystem::_internal_mutable_fs() {
   
   if (_impl_.fs_ == nullptr) {
-    auto* p = CreateMaybeMessage<::verteilen2::client::FileSystem>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::verteilen2::FileSystem>(GetArenaForAllocation());
     _impl_.fs_ = p;
   }
   return _impl_.fs_;
 }
-inline ::verteilen2::client::FileSystem* FileSystem::mutable_fs() {
-  ::verteilen2::client::FileSystem* _msg = _internal_mutable_fs();
+inline ::verteilen2::FileSystem* FileSystem::mutable_fs() {
+  ::verteilen2::FileSystem* _msg = _internal_mutable_fs();
   // @@protoc_insertion_point(field_mutable:verteilen2.client.FileSystem.fs)
   return _msg;
 }
-inline void FileSystem::set_allocated_fs(::verteilen2::client::FileSystem* fs) {
+inline void FileSystem::set_allocated_fs(::verteilen2::FileSystem* fs) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete _impl_.fs_;
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.fs_);
   }
   if (fs) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(fs);
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(fs));
     if (message_arena != submessage_arena) {
       fs = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, fs, submessage_arena);

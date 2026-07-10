@@ -10,6 +10,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/argh"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
+    "${CMAKE_SOURCE_DIR}/lib/efsw/include"
     "${CMAKE_SOURCE_DIR}/lib/crow/include"
     "${CMAKE_SOURCE_DIR}/lib/mdns/include"
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
@@ -28,6 +29,7 @@ link_libraries(
     dl
     spdlog
     hv
+    efsw
     ${Protobuf_LIBRARIES}
 )
 

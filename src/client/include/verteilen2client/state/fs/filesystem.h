@@ -28,11 +28,12 @@
 #include <array>
 #include <string>
 #include "../../data/appdata.h"
+#include <verteilen2/proto_gen/client_file_system.pb.h>
 
 namespace verteilen2::client {
 
-    bool fs_create_filesystem(App_data& app_data);
-    bool fs_delete_filesystem(App_data& app_data);
+    bool fs_create_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs);
+    bool fs_delete_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs);
 
 }
 

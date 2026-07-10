@@ -31,6 +31,8 @@ namespace fs = std::filesystem;
 
 namespace verteilen2 {
 
+    constexpr int32_t worker_limit = 60;
+
     enum class AppEnvironment {
         NATIVE,
         DOCKER,
