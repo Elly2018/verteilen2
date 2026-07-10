@@ -30,7 +30,6 @@
 namespace verteilen2::client {
 
     void create_kcp_server(App_data& app_data);
-    void create_kcp_connection(App_data& app_data, const std::string address);
     void update_kcp_server(App_data& app_data);
 
 }

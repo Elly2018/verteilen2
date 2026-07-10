@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <fcntl.h>
 #include <ikcp.h>
 #include <spdlog/spdlog.h>
 #include <verteilen2/env.h>
@@ -77,53 +78,28 @@ namespace verteilen2::client {
     void create_kcp_server(App_data& app_data) {
         fs_init_filesystem();
 
-        app_data.self.socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
-        if (app_data.self.socket_fd < 0) {
-            spdlog::critical("Failed to create UDP socket!");
-            return;
-        }
-
-        std::memset(&app_data.self.server_addr, 0, sizeof(app_data.self.server_addr));
-        app_data.self.server_addr.sin_family = AF_INET;
-        app_data.self.server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-        app_data.self.server_addr.sin_port = htons(kcp_port);
-
-        if (bind(app_data.self.socket_fd, (struct sockaddr*)&app_data.self.server_addr, sizeof(app_data.self.server_addr)) < 0) {
-            spdlog::critical("Failed to bind UDP socket to port {}", kcp_port);
-            return;
-        }
-
-        app_data.self.kcp_session = KcpSession(KCP_CONV_ID, &app_data, udp_input, udp_output);
-        app_data.self.kcp_worker.state = ThreadState::Running;
-        app_data.self.kcp_worker.worker = std::thread(update_kcp_server, std::ref(app_data));
-    }
-
-    void create_kcp_connection(App_data& app_data, const std::string address) {
         app_data.server.socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
         if (app_data.server.socket_fd < 0) {
             spdlog::critical("Failed to create UDP socket!");
             return;
         }
 
+        int32_t flags = fcntl(app_data.server.socket_fd, F_GETFL, 0);
+        fcntl(app_data.server.socket_fd, F_SETFL, flags | O_NONBLOCK);
+
         std::memset(&app_data.server.server_addr, 0, sizeof(app_data.server.server_addr));
         app_data.server.server_addr.sin_family = AF_INET;
-        app_data.server.server_addr.sin_port = htons(9000);
+        app_data.server.server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+        app_data.server.server_addr.sin_port = htons(kcp_port);
 
-        int32_t result = inet_pton(AF_INET, address.c_str(), &app_data.server.server_addr.sin_addr);
-        if (result <= 0) {
-            if (result == 0) {
-                spdlog::error("Invalid IP address format: {}", address);
-            } else {
-                spdlog::error("inet_pton failed: {}", strerror(errno));
-            }
+        if (bind(app_data.server.socket_fd, (struct sockaddr*)&app_data.server.server_addr, sizeof(app_data.server.server_addr)) < 0) {
+            spdlog::critical("Failed to bind UDP socket to port {}", kcp_port);
             return;
         }
 
         app_data.server.kcp_session = KcpSession(KCP_CONV_ID, &app_data, udp_input, udp_output);
         app_data.server.kcp_worker.state = ThreadState::Running;
-        
-        app_data.server.kcp_session.send_data("OK");
-        app_data.server.kcp_session.update();
+        app_data.server.kcp_worker.worker = std::thread(update_kcp_server, std::ref(app_data));
     }
 
     void update_kcp_server(App_data& app_data) {
@@ -131,44 +107,23 @@ namespace verteilen2::client {
         struct sockaddr_in remote_addr;
         socklen_t addr_len = sizeof(remote_addr);
 
-        while (app_data.self.kcp_worker.state == ThreadState::Running) {
+        while (app_data.server.kcp_worker.state == ThreadState::Running) {
             
-            // 1. Read raw wire bytes off the OS network buffer
-            while (true) {
-                ssize_t bytes_recv = recvfrom(
-                    app_data.self.socket_fd, packet_buffer, sizeof(packet_buffer), 
-                    0, (struct sockaddr*)&remote_addr, &addr_len
-                );
-
-                if (bytes_recv < 0) break; // Break loop when no more packets are available (EAGAIN)
-                if (bytes_recv < 24) continue; // Drop malformed packets
-
-                // Route wire data straight into KCP
-                app_data.self.kcp_session.handle_udp_receive(packet_buffer, bytes_recv);
-            }
-
             while (true) {
                 ssize_t bytes_recv = recvfrom(
                     app_data.server.socket_fd, packet_buffer, sizeof(packet_buffer), 
                     0, (struct sockaddr*)&remote_addr, &addr_len
                 );
 
-                if (bytes_recv < 0) break; // Break loop when no more packets are available (EAGAIN)
-                if (bytes_recv < 24) continue; // Drop malformed packets
+                if (bytes_recv < 0) break;
+                if (bytes_recv < 24) continue;
 
-                // Route wire data straight into KCP
+                app_data.server.server_addr = remote_addr;
                 app_data.server.kcp_session.handle_udp_receive(packet_buffer, bytes_recv);
             }
 
-            // 2. Tick and process the Server Engine
-            app_data.self.kcp_session.update();
-            app_data.self.kcp_session.check_and_recv();
-
-            // 3. Tick and process the Outbound Client Engine (If it has been initialized)
-            if (app_data.server.kcp_worker.state == ThreadState::Running) {
-                app_data.server.kcp_session.update();
-                app_data.server.kcp_session.check_and_recv();
-            }
+            app_data.server.kcp_session.update();
+            app_data.server.kcp_session.check_and_recv();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }

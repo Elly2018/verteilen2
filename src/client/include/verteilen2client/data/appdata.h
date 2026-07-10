@@ -37,7 +37,6 @@ namespace verteilen2::client {
 
     struct App_data {
         WebServer app;
-        Socket self;
         Socket server;
         database_getter db_getter;
         Worker workers[worker_limit];
