@@ -21,8 +21,6 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <mdns_cpp/mdns.hpp>
-#include <mdns_cpp/logger.hpp>
 #include <spdlog/spdlog.h>
 #include <verteilen2/network.h>
 #include <verteilen2client/logger.h>
@@ -33,6 +31,8 @@
 
 using namespace verteilen2;
 using namespace verteilen2::client;
+
+App_data app_data = App_data();
 
 static void db_run(App_data& app_data){
     spdlog::info("Initializing database...");
@@ -51,17 +51,26 @@ static void mDNS_run(App_data& app_data){
         v.pop_back();
     }
     spdlog::info("Define mDNS message: {}", v);
-    mdns_cpp::mDNS mdns;
-    mdns.setServiceHostname(v);
-    mdns.startService();
+    app_data.mdns;
+    app_data.mdns.setServiceHostname(v);
+    app_data.mdns.startService();
     mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
         spdlog::info("mDNS: {}", msg);
     });
 }
 
-static void websocket_run(App_data& app_data) {
-    spdlog::info("Initializing websocket service...");
+static void mDNS_shutdown(App_data& app_data) {
+    app_data.mdns.stopService();
+}
+
+static void network_run(App_data& app_data) {
+    spdlog::info("Initializing kcp service...");
     create_kcp_server(app_data);
+}
+
+static void network_shutdown(App_data& app_data) {
+    spdlog::info("Shutdown kcp service...");
+    shutdown_kcp_server(app_data);
 }
 
 static void web_run(App_data& app_data){
@@ -77,10 +86,22 @@ static void web_run(App_data& app_data){
     app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(8080)).multithreaded().run();
 }
 
+void signal_handler(int signal_num) {
+    if (signal_num == SIGINT) {
+        app_data.shutdown = true;
+        app_data.app.stop();
+    }
+}
+
 int main(){
-    App_data app_data = App_data();
+    std::signal(SIGINT, signal_handler);
+
     db_run(app_data);
     mDNS_run(app_data);
-    websocket_run(app_data);
+    network_run(app_data);
     web_run(app_data);
+
+    network_shutdown(app_data);
+    mDNS_shutdown(app_data);
+    app_data_release_all(app_data);
 }

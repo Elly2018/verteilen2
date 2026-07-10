@@ -35,8 +35,8 @@ namespace verteilen2::client {
         insert_log_table(app_data.db_getter(), raw_data->uuid(), raw_data->title(), raw_data->content());
     }
 
-    void analysis(App_data& app_data, verteilen2::RawData& raw_msg) {
-        switch(raw_msg.type()) {
+    void analysis(App_data& app_data, verteilen2::RawData* raw_msg) {
+        switch(raw_msg->type()) {
             default:
             case verteilen2::MsgType_UNKNOWN:
                 {
@@ -46,7 +46,7 @@ namespace verteilen2::client {
                 {
                     google::protobuf::Arena arena;
                     verteilen2::Job* executejob = google::protobuf::Arena::CreateMessage<verteilen2::Job>(&arena);
-                    if(executejob->ParseFromArray(raw_msg.data().c_str(), raw_msg.data().size())) {
+                    if(executejob->ParseFromArray(raw_msg->data().c_str(), raw_msg->data().size())) {
                         execute_job_run(app_data, executejob);
                     }
                     break;
@@ -55,7 +55,7 @@ namespace verteilen2::client {
                 {
                     google::protobuf::Arena arena;
                     verteilen2::DebugLog* debuglog = google::protobuf::Arena::CreateMessage<verteilen2::DebugLog>(&arena);
-                    if(debuglog->ParseFromArray(raw_msg.data().c_str(), raw_msg.data().size())) {
+                    if(debuglog->ParseFromArray(raw_msg->data().c_str(), raw_msg->data().size())) {
                         print_log(app_data, debuglog);
                     }
                     break;

@@ -26,6 +26,8 @@
 #define CLIENT_DATA_APPDATA_H
 #include <string>
 #include <cstdint>
+#include <mdns_cpp/mdns.hpp>
+#include <mdns_cpp/logger.hpp>
 #include "../config.h"
 #include <verteilen2/data/worker.h>
 #include <verteilen2/data/fs.h>
@@ -38,6 +40,7 @@ namespace verteilen2::client {
     struct App_data {
         WebServer app;
         Socket server;
+        mdns_cpp::mDNS mdns;
         database_getter db_getter;
         Worker workers[worker_limit];
         FSWorker fsworker[worker_limit];

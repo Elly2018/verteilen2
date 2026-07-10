@@ -107,7 +107,7 @@ namespace verteilen2::client {
         struct sockaddr_in remote_addr;
         socklen_t addr_len = sizeof(remote_addr);
 
-        while (app_data.server.kcp_worker.state == ThreadState::Running) {
+        while (!app_data.shutdown) {
             
             while (true) {
                 ssize_t bytes_recv = recvfrom(
@@ -126,6 +126,12 @@ namespace verteilen2::client {
             app_data.server.kcp_session.check_and_recv();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+    }
+
+    void shutdown_kcp_server(App_data& app_data) {
+        if(app_data.server.kcp_worker.worker.joinable()){
+            app_data.server.kcp_worker.worker.join();
         }
     }
 

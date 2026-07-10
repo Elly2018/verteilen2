@@ -31,7 +31,7 @@ namespace verteilen2::client {
 
     void create_kcp_server(App_data& app_data);
     void update_kcp_server(App_data& app_data);
-
+    void shutdown_kcp_server(App_data& app_data);
 }
 
 #endif
