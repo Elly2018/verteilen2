@@ -22,6 +22,7 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/lib/sqlite")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/spdlog")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/libhv")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/uuid")
+add_subdirectory("${CMAKE_SOURCE_DIR}/lib/efsw")
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/common")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/cli")
