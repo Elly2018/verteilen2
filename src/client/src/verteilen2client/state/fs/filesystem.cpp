@@ -23,6 +23,7 @@
  */
 #include <verteilen2client/state/fs/filesystem.h>
 #include <verteilen2/path.h>
+#include <spdlog/spdlog.h>
 
 namespace verteilen2::client {
 
@@ -53,6 +54,16 @@ namespace verteilen2::client {
             }
         }
     };
+
+    void fs_init_filesystem() {
+        fs::path p = path_get_workpath(App_type::Client);
+        p /= "fs";
+        if(!fs::exists(p)) fs::create_directories(p);
+        for(const auto& subdir : fs::directory_iterator(p)){
+            spdlog::warn("[FS INIT] Destroy file system folder caches. {}", subdir.path().string());
+            fs::remove_all(subdir);
+        }
+    }
 
     bool fs_create_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs) {
         fs::path p = path_get_workpath(App_type::Client);

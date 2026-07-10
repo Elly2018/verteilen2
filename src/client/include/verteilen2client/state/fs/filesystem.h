@@ -32,6 +32,7 @@
 
 namespace verteilen2::client {
 
+    void fs_init_filesystem();
     bool fs_create_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs);
     bool fs_delete_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs);
 

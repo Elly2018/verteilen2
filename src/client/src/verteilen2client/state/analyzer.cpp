@@ -60,6 +60,10 @@ namespace verteilen2::client {
                     }
                     break;
                 }
+            case verteilen2::MsgType_SET_UUID:
+                {
+                    break;
+                }
         }
     }
 

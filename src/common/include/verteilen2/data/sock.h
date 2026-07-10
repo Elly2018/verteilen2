@@ -22,30 +22,21 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include "../config.h"
-#include <verteilen2/data/worker.h>
-#include <verteilen2/data/fs.h>
-#include <verteilen2/env.h>
-#include <verteilen2/data/sock.h>
-#include <verteilen2/db/local_record.h>
+#ifndef COMMON_DATA_SOCKET_H
+#define COMMON_DATA_SOCKET_H
+#include <verteilen2/kcp.h>
+#include "worker.h"
+#include <netinet/in.h>
 
-namespace verteilen2::client {
-
-    struct App_data {
-        WebServer app;
-        Socket self;
-        Socket server;
-        database_getter db_getter;
-        Worker workers[worker_limit];
-        FSWorker fsworker[worker_limit];
-        bool shutdown;
+namespace verteilen2 {
+    
+    struct Socket {
+        KcpSession kcp_session;
+        Worker kcp_worker;
+        sockaddr_in server_addr;
+        uint32_t socket_fd;
+        std::string uuid;
     };
-
-    void app_data_release_all(App_data& app_data);
 
 }
 
