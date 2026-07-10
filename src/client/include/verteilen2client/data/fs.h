@@ -42,6 +42,7 @@ namespace verteilen2::client {
     };
 
     int32_t fs_worker_get_idle(FSWorker* fsworker);
+    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path);
 }
 
 #endif

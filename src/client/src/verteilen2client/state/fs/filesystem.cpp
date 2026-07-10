@@ -55,41 +55,69 @@ namespace verteilen2::client {
     };
 
     bool fs_create_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs) {
+        fs::path p = path_get_workpath(App_type::Client);
+        p /= "fs";
+        p /= fs->fs().uuid();
+        if(!fs::exists(p)) fs::create_directories(p);
+        std::string target_path = p.string();
+        int32_t find = fs_worker_get_index_by_path(app_data.fsworker, target_path);
+
         switch(fs->type()) {
-            default:
             case ActionFSType::ActionFSType_CREATE:
             {
+                if(find != -1) return true;
                 int32_t ava = fs_worker_get_idle(app_data.fsworker);
-                if(ava == -1) break;
+                if(ava == -1) return false;
 
+                app_data.fsworker[ava].path = target_path;
                 app_data.fsworker[ava].watcher = new efsw::FileWatcher();
                 app_data.fsworker[ava].listener = new UpdateListener();
-                fs::path p = path_get_workpath(App_type::Client);
-                p /= "fs";
-                p /= fs->fs().uuid();
-                if(!fs::exists(p)) fs::create_directories(p);
-                app_data.fsworker[ava].path = p.string();
-                app_data.fsworker[ava].watch_ID = app_data.fsworker[ava].watcher->addWatch(p.string(), app_data.fsworker[ava].listener, true);
+                app_data.fsworker[ava].watch_ID = app_data.fsworker[ava].watcher->addWatch(target_path, app_data.fsworker[ava].listener, true);
                 app_data.fsworker[ava].watcher->watch();
                 app_data.fsworker[ava].vaild = true;
-                break;
+                return true;
             }
             case ActionFSType::ActionFSType_UPDATE:
             {
-                break;
+                if(find != -1) return false;
+                app_data.fsworker[find].watcher->removeWatch(app_data.fsworker[find].watch_ID);
+                delete app_data.fsworker[find].listener;
+
+                app_data.fsworker[find].path = target_path;
+                app_data.fsworker[find].listener = new UpdateListener();
+                app_data.fsworker[find].watch_ID = app_data.fsworker[find].watcher->addWatch(target_path, app_data.fsworker[find].listener, true);
+                app_data.fsworker[find].watcher->watch();
+
+                return true;
             }
         }
+        return false;
     }
     
     bool fs_delete_filesystem(App_data& app_data, verteilen2::client::FileSystem* fs) {
+        fs::path p = path_get_workpath(App_type::Client);
+        p /= "fs";
+        p /= fs->fs().uuid();
+        if(!fs::exists(p)) return true;
+        std::string target_path = p.string();
+        int32_t find = fs_worker_get_index_by_path(app_data.fsworker, target_path);
+
         switch(fs->type()) {
-            default:
             case ActionFSType::ActionFSType_REMOVE:
             {
+                if(find == -1) return false;
+
+                app_data.fsworker[find].path.clear();
+                app_data.fsworker[find].watcher->removeWatch(app_data.fsworker[find].watch_ID);
+                delete app_data.fsworker[find].listener;
+                delete app_data.fsworker[find].watcher;
+                app_data.fsworker[find].vaild = false;
+
                 break;
             }
         }
+        return false;
     }
     
 
-}
+};

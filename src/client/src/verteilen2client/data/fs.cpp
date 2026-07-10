@@ -32,4 +32,11 @@ namespace verteilen2::client {
         return -1;
     }
 
+    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(fsworker[i].path == path) return i;
+        }
+        return -1;
+    }
+
 }
