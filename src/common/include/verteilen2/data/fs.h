@@ -21,15 +21,29 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/data/worker.h>
+#pragma once
+#ifndef CLIENT_DATA_FS_H
+#define CLIENT_DATA_FS_H
+#include <string>
+#include <cstdint>
+#include <thread>
+#include <atomic>
+#include <efsw/efsw.hpp>
+#include <verteilen2/env.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    int32_t worker_get_idle(Worker* worker) {
-        for(int32_t i = 0; i < worker_limit; i++){
-            if(worker[i].state != ThreadState::Running) return i;
-        }
-        return -1;
-    }
+    struct FSWorker {
+        efsw::FileWatcher* watcher;
+        efsw::FileWatchListener* listener;
+        efsw::WatchID watch_ID;
+        std::string path;
+        bool vaild;
+    };
 
+    void fs_work_release_all(FSWorker* fsworker);
+    int32_t fs_worker_get_idle(FSWorker* fsworker);
+    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path);
 }
+
+#endif

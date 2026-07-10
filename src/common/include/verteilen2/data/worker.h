@@ -22,27 +22,30 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_FS_H
-#define CLIENT_DATA_FS_H
+#ifndef CLIENT_DATA_WORKER_H
+#define CLIENT_DATA_WORKER_H
 #include <string>
 #include <cstdint>
 #include <thread>
 #include <atomic>
-#include <efsw/efsw.hpp>
 #include <verteilen2/env.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    struct FSWorker {
-        efsw::FileWatcher* watcher;
-        efsw::FileWatchListener* listener;
-        efsw::WatchID watch_ID;
-        std::string path;
-        bool vaild;
+    enum class ThreadState {
+        Empty,
+        Idle,
+        Running
     };
 
-    int32_t fs_worker_get_idle(FSWorker* fsworker);
-    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path);
+    struct Worker {
+        std::thread worker;
+        std::atomic<ThreadState> state;
+    };
+
+    void work_release_all(Worker* worker);
+    int32_t worker_get_idle(Worker* worker);
+
 }
 
 #endif

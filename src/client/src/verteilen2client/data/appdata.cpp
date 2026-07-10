@@ -21,22 +21,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/data/fs.h>
+#include <verteilen2client/data/appdata.h>
 
 namespace verteilen2::client {
 
-    int32_t fs_worker_get_idle(FSWorker* fsworker) {
-        for(int32_t i = 0; i < worker_limit; i++){
-            if(!fsworker[i].vaild) return i;
-        }
-        return -1;
-    }
-
-    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path) {
-        for(int32_t i = 0; i < worker_limit; i++){
-            if(fsworker[i].path == path) return i;
-        }
-        return -1;
+    void app_data_release_all(App_data& app_data) {
+        fs_work_release_all(app_data.fsworker);
+        work_release_all(app_data.workers);
     }
 
 }

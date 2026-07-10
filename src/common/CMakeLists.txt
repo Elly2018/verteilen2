@@ -14,6 +14,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
     "${CMAKE_SOURCE_DIR}/lib/uuid/include"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
+    "${CMAKE_SOURCE_DIR}/lib/efsw/include"
     "${CMAKE_SOURCE_DIR}/lib/kcp"
 )
 
@@ -28,5 +29,6 @@ target_link_libraries(common PUBLIC
     stduuid
     SQLiteCpp
     sqlite3
+    efsw
     ${Protobuf_LIBRARIES}
 )

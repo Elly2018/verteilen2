@@ -21,33 +21,34 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include "../config.h"
-#include <verteilen2/data/worker.h>
 #include <verteilen2/data/fs.h>
-#include <verteilen2/env.h>
-#include <verteilen2/kcp.h>
-#include <verteilen2/db/local_record.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    struct App_data {
-        WebServer app;
-        std::string uuid;
-        database_getter db_getter;
-        KcpSession kcp_session;
-        Worker kcp_worker;
-        Worker workers[worker_limit];
-        FSWorker fsworker[worker_limit];
-        bool shutdown;
-    };
+    void fs_work_release_all(FSWorker* fsworker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(fsworker[i].vaild) {
+                fsworker[i].path.clear();
+                fsworker[i].watcher->removeWatch(fsworker[i].watch_ID);
+                delete fsworker[i].listener;
+                delete fsworker[i].watcher;
+                fsworker[i].vaild = false;
+            }
+        }
+    }
 
-    void app_data_release_all(App_data& app_data);
+    int32_t fs_worker_get_idle(FSWorker* fsworker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(!fsworker[i].vaild) return i;
+        }
+        return -1;
+    }
+
+    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(fsworker[i].path == path) return i;
+        }
+        return -1;
+    }
 
 }
-
-#endif

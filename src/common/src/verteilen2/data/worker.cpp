@@ -21,30 +21,26 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef CLIENT_DATA_WORKER_H
-#define CLIENT_DATA_WORKER_H
-#include <string>
-#include <cstdint>
-#include <thread>
-#include <atomic>
-#include <verteilen2/env.h>
+#include <verteilen2/data/worker.h>
 
-namespace verteilen2::client {
+namespace verteilen2 {
 
-    enum class ThreadState {
-        Empty,
-        Idle,
-        Running
-    };
+    void work_release_all(Worker* worker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(worker[i].state == ThreadState::Running) {
+                if(worker[i].worker.joinable()){
+                    worker[i].worker.join();
+                    worker[i].state = ThreadState::Idle;
+                }
+            }
+        }
+    }
 
-    struct Worker {
-        std::thread worker;
-        std::atomic<ThreadState> state;
-    };
-
-    int32_t worker_get_idle(Worker* worker);
+    int32_t worker_get_idle(Worker* worker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(worker[i].state != ThreadState::Running) return i;
+        }
+        return -1;
+    }
 
 }
-
-#endif
