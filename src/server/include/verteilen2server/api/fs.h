@@ -22,34 +22,14 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_ENV_H
-#define COMMON_ENV_H
-#include <filesystem>
-#include "enum/app_type.h"
+#ifndef SERVER_API_FS_H
+#define SERVER_API_FS_H
+#include "../data/appdata.h"
 
-namespace fs = std::filesystem;
+namespace verteilen2::server {
 
-namespace verteilen2 {
-
-    constexpr int32_t worker_limit = 60;
-    constexpr int32_t client_web_port = 8080;
-    constexpr int32_t server_web_port = 8081;
-    constexpr int32_t master_web_port = 8082;
-    constexpr int32_t client_kcp_port = 9000;
-    constexpr int32_t server_kcp_port = 9001;
-    constexpr int32_t master_kcp_port = 9002;
-
-    enum class AppEnvironment {
-        NATIVE,
-        DOCKER,
-        KUBERNETES
-    };
-
-    std::string env_get_env(std::string);
-    bool is_running_in_k8s();
-    bool is_running_in_docker();
-    AppEnvironment detect_environment();
-
+    void register_fs_route(App_data& app_data);
+    
 }
 
 #endif

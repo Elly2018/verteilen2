@@ -38,7 +38,7 @@ namespace verteilen2::client {
     void create_kcp_server(App_data& app_data) {
         fs_init_filesystem();
 
-        int32_t p = network_get_port_available(client_kcp_port);
+        int32_t p = network_get_port_available(app_data.cli.udp_port);
         spdlog::info("[KCP Create] KCP port: {}", p);
         app_data.server.socket_fd = app_data.server.kcp_server.createsocket(p);
         

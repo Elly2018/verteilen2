@@ -29,7 +29,7 @@ namespace verteilen2::server {
 
     bool app_data_cli_init(App_data& app_data, int argc, char* argv[]) {
         app_data.cli.level = spdlog::level::info;
-        app_data.cli.web_port = web_port;
+        app_data.cli.web_port = server_web_port;
         app_data.cli.udp_port = client_kcp_port;
         
         argh::parser cmdl;
