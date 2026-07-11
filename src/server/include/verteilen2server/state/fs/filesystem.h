@@ -32,6 +32,8 @@
 namespace verteilen2::server {
 
     void fs_init_filesystem();
+    void fs_create_filesystem(App_data& app_data, std::string uuid);
+    void fs_delete_filesystem(App_data& app_data, std::string uuid);
 
 }
 
