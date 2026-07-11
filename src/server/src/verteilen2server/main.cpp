@@ -56,6 +56,7 @@ static void web_run(App_data& app_data){
     spdlog::info("Initializing web service...");
     crow::mustache::set_global_base(VERTEILEN2_STATIC_DIRECTORY);
     register_api_route(app_data);
+    register_fs_route(app_data);
     register_static_route(app_data);
     register_template_route(app_data);
     register_ws_route(app_data);

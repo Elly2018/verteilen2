@@ -22,19 +22,35 @@
     SOFTWARE.
  */
 #include <verteilen2server/api/fs.h>
+#include <verteilen2/path.h>
 
 namespace verteilen2::server {
 
     static void register_fs_download_request(App_data& app_data) {
-        CROW_ROUTE(app_data.app, "/api/fs/{}")
+        CROW_ROUTE(app_data.app, "/api/fs/<string>/<string>")
         .methods(crow::HTTPMethod::GET)
-        ([&app_data](const crow::request& req, const std::string& uuid, const std::string& filename) {
+        ([&app_data](const crow::request& req, crow::response& res, const std::string uuid, const std::string filename) {
+            fs::path p = path_get_workpath(App_type::Server);
+            p /= "fs";
+            p /= uuid;
+            p /= filename;
+            if(!fs::exists(p)) {
+                res.code = 404;
+                res.body = "Cannot find the file";
+                spdlog::warn("[API FS Download] Cannot find file: {}", p.string());
+                return;
+            }
             
+            res.add_header("Content-Disposition", "attachment; filename=\"" + p.filename().string() + "\"");
+            res.add_header("Content-Type", "application/octet-stream");
+
+            res.set_static_file_info_unsafe(p.string());
+            res.end();
         });
     }
 
     void register_fs_route(App_data& app_data) {
-
+        register_fs_download_request(app_data);
     }
     
 }

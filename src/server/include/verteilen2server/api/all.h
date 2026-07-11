@@ -25,6 +25,7 @@
 #ifndef SERVER_API_ALL_H
 #define SERVER_API_ALL_H
 #include "api.h"
+#include "fs.h"
 #include "static.h"
 #include "template.h"
 #include "ws.h"
