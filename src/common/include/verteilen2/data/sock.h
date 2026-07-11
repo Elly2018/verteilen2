@@ -24,16 +24,21 @@
 #pragma once
 #ifndef COMMON_DATA_SOCKET_H
 #define COMMON_DATA_SOCKET_H
-#include <verteilen2/kcp.h>
-#include "worker.h"
-#include <netinet/in.h>
+#include <hv/UdpClient.h>
+#include <hv/UdpServer.h>
 
 namespace verteilen2 {
     
-    struct Socket {
-        KcpSession kcp_session;
-        Worker kcp_worker;
-        sockaddr_in server_addr;
+    typedef void (*sock_on_recvfrom_func)(hio_t* io, void* buf, int readbytes);
+
+    struct KCPClient {
+        hv::UdpClient kcp_client;
+        uint32_t socket_fd;
+        std::string uuid;
+    };
+
+    struct KCPServer {
+        hv::UdpServer kcp_server;
         uint32_t socket_fd;
         std::string uuid;
     };

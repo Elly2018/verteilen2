@@ -40,7 +40,8 @@ namespace verteilen2::client {
 
     struct App_data {
         WebServer app;
-        Socket server;
+        KCPServer server;
+        hv::SocketChannelPtr server_target;
         mdns_cpp::mDNS mdns;
         database_getter db_getter;
         Worker workers[worker_limit];

@@ -30,7 +30,6 @@
 #include <mdns_cpp/mdns.hpp>
 #include <mdns_cpp/logger.hpp>
 #include "../config.h"
-#include "worker.h"
 #include <verteilen2/data/worker.h>
 #include <verteilen2/data/fs.h>
 #include <verteilen2/env.h>
@@ -41,8 +40,8 @@ namespace verteilen2::server {
 
     struct App_data {
         WebServer app;
-        Socket master;
-        std::vector<Socket> ws_clients;
+        KCPServer master;
+        std::vector<sockaddr*> clients;
         mdns_cpp::mDNS mdns;
         database_getter db_getter;
         Worker workers[worker_limit];
