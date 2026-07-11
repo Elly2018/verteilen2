@@ -76,7 +76,7 @@ namespace verteilen2::server {
         });
     }
 
-    static void register_fs_delete_request(App_data& app_data) {
+    static void register_connect_client_request(App_data& app_data) {
         CROW_ROUTE(app_data.app, "/api/connect_client")
         .methods(crow::HTTPMethod::POST)
         ([&app_data](const crow::request& req) {
@@ -109,6 +109,8 @@ namespace verteilen2::server {
         
         register_connect_request(app_data);
         register_fs_create_request(app_data);
+        register_fs_delete_request(app_data);
+        register_connect_client_request(app_data);
 
     }
 

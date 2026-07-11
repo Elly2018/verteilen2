@@ -39,23 +39,6 @@ static void db_run(App_data& app_data){
     init_database(app_data);
 }
 
-static void mDNS_run(App_data& app_data){
-    spdlog::info("Initializing mDNS service...");
-    mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
-        spdlog::debug("[mDNS] {}", msg);
-        if(msg.find("verteilen-2-client") != std::string::npos) {
-            uint64_t p = msg.find(":");
-            if(p != std::string::npos) {
-                std::string ips = msg.substr(0, p);
-                if(ips.size() >= 7) {
-                    spdlog::info("Recevied mDNS service: {}", ips);
-                }
-            }
-        }
-    });
-    app_data.mdns.executeDiscovery();
-}
-
 static void network_run(App_data& app_data) {
     spdlog::info("Initializing websocket service...");
     create_kcp_server(app_data);
@@ -83,7 +66,6 @@ int main(){
     App_data app_data = App_data();
 
     db_run(app_data);
-    mDNS_run(app_data);
     network_run(app_data);
     web_run(app_data);
 
