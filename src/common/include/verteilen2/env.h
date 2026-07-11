@@ -33,7 +33,9 @@ namespace verteilen2 {
 
     constexpr int32_t worker_limit = 60;
     constexpr int32_t web_port = 8080;
-    constexpr int32_t kcp_port = 9000;
+    constexpr int32_t client_kcp_port = 9000;
+    constexpr int32_t server_kcp_port = 9001;
+    constexpr int32_t master_kcp_port = 9002;
 
     enum class AppEnvironment {
         NATIVE,

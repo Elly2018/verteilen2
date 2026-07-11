@@ -67,7 +67,7 @@ namespace verteilen2::client {
     }
 
     static void template_setting(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
-        ctx["current_server_address"] = "127.0.0.1:" + std::to_string(kcp_port);
+        ctx["current_server_address"] = "127.0.0.1:" + std::to_string(server_kcp_port);
         ctx["current_maximum_execution"] = 20;
         ctx["content_max_line"] = 2000;
         ctx["file_system_enable"] = true;
