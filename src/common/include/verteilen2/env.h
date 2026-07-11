@@ -32,6 +32,7 @@ namespace fs = std::filesystem;
 namespace verteilen2 {
 
     constexpr int32_t worker_limit = 60;
+    constexpr int32_t web_port = 8080;
     constexpr int32_t kcp_port = 9000;
 
     enum class AppEnvironment {
