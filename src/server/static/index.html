@@ -61,6 +61,12 @@
                                         hx-on:click="close_resource()">
                                     Vault
                                 </button></li>
+                                <li><button hx-get="/template/filesystem"
+                                        hx-target="#app-ctx"
+                                        hx-swap="innerHTML"
+                                        hx-on:click="close_resource()">
+                                    File System
+                                </button></li>
                             </ul>
                         </details>
                     </li>
