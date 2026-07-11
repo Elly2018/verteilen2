@@ -26,11 +26,11 @@
 namespace verteilen2 {
 
     int32_t create_task_table(SQLite::Database db) {
-
+        return 0;
     }
 
     int32_t drop_task_table(SQLite::Database db) {
-
+        return 0;
     }
     
 }

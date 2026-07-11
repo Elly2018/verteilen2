@@ -41,22 +41,14 @@ static void db_run(App_data& app_data){
 
 static void mDNS_run(App_data& app_data){
     spdlog::info("Initializing mDNS service...");
-    std::vector<std::string> ipv4s = network_get_all_ipv4();
-    std::string v = "verteilen-2-server:";
-    for(const auto& ip : ipv4s){
-        v += ip;
-        v += ",";
-    }
-    if(v.size() > 0) {
-        v.pop_back();
-    }
-    spdlog::info("Define mDNS message: {}", v);
-    mdns_cpp::mDNS mdns;
-    mdns.setServiceHostname(v);
-    mdns.startService();
     mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
-        spdlog::info("mDNS: {}", msg);
+        if(msg.starts_with("verteilen-2-client")) {
+            uint64_t p = msg.find(":");
+            std::string ips = msg.substr(p);
+            spdlog::info("Recevied mDNS service: {}", ips);
+        }
     });
+    app_data.mdns.executeDiscovery();
 }
 
 static void network_run(App_data& app_data) {
