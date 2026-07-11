@@ -29,14 +29,40 @@ namespace verteilen2::cli {
     Cli_data parse(int argc, char* argv[]) {
         Cli_data data = Cli_data();
         data.help_module = -1;
+        data.handle_target = -1;
 
         argh::parser cmdl;
         cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
+
+        for(int32_t i = 0; i < cmdl.pos_args().size(); i++) {
+            const std::string& arg = cmdl.pos_args().at(i);
+            if(i == 0) {
+                if(arg == "client") {
+                    data.handle_target = 0;
+                }
+                else if(arg == "server") {
+                    data.handle_target = 1;
+                }
+                else if(arg == "master") {
+                    data.handle_target = 2;
+                }
+            }
+            if(i == 1 && data.handle_target >= 0) {
+                data.command = arg;
+            }
+            if(i == 2 && data.handle_target >= 0) {
+                data.sub_command = arg;
+            }
+            if(i > 2 && data.handle_target >= 0) {
+                data.arguments.push_back(arg);
+            }
+        }
 
         for(auto& flag : cmdl.flags()){
             if(flag == "help" || flag == "h") {
                 data.help_call = true;
             }
+            
         }
 
         for(auto& param : cmdl.params()){

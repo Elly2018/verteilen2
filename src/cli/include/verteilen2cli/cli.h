@@ -25,12 +25,18 @@
 #ifndef CLI_CLI_H
 #define CLI_CLI_H
 #include <cinttypes>
+#include <string>
+#include <vector>
 
 namespace verteilen2::cli {
 
     struct Cli_data {
         bool help_call;
         int32_t help_module;
+        int32_t handle_target;
+        std::string command;
+        std::string sub_command;
+        std::vector<std::string> arguments;
     };
 
     Cli_data parse(int argc, char* argv[]);
