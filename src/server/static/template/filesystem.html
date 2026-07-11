@@ -17,6 +17,8 @@
     <div class="drawer-side h-full z-10">
         <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 min-h-full w-80 p-4 overflow-y-auto">
+            <button class="my-2 btn btn-primary">Add</button>
+            <button class="my-2 btn btn-error">Remove</button>
             {{#fs_rows}}
             <li><a>{{name}}</a></li>
             {{/fs_rows}}

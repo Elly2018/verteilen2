@@ -28,6 +28,8 @@
 namespace verteilen2::client {
 
     bool app_data_cli_init(App_data& app_data, int argc, char* argv[]) {
+        app_data.cli.level = spdlog::level::info;
+
         argh::parser cmdl;
         cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
 

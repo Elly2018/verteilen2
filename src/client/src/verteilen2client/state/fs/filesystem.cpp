@@ -134,5 +134,14 @@ namespace verteilen2::client {
         return false;
     }
     
+    std::vector<std::string> fs_get_all_filesystem(App_data& app_data) {
+        std::vector<std::string> a = std::vector<std::string>();
+        for(auto& worker : app_data.fsworker){
+            if(worker.vaild) {
+                a.push_back(fs::path(worker.path).filename());
+            }
+        }
+        return a;
+    }
 
 };

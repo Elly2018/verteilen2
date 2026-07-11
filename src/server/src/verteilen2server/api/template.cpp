@@ -27,6 +27,7 @@
 #include <verteilen2/uuid.h>
 #include <verteilen2server/config.h>
 #include <verteilen2server/db/local_record.h>
+#include <verteilen2server/state/fs/filesystem.h>
 
 using json = nlohmann::json;
 
@@ -64,6 +65,18 @@ namespace verteilen2::server {
         return ctx;
     }
 
+    static void template_filesystem(App_data& app_data, const crow::request& req, crow::mustache::context& ctx) {
+        json j = json::object();
+        json row = json::array();
+        for(auto& i : fs_get_all_filesystem(app_data)){
+            json buffer = json::object();
+            buffer["name"] = i;
+            row.push_back(buffer);
+        }
+        j["fs_rows"] = row;
+        ctx = json_to_mustache(j);
+    }
+
     static void register_template(App_data& app_data) {
         CROW_ROUTE(app_data.app, "/template/<path>")
         .methods(crow::HTTPMethod::GET)
@@ -79,6 +92,9 @@ namespace verteilen2::server {
             
             if(path.starts_with("setting")) {
                 //template_setting(app, req, ctx);
+            }
+            else if(path.starts_with("filesystem")) {
+                template_filesystem(app_data, req, ctx);
             }
             else if(path.starts_with("log")) {
                 if(path == "log-clear") {
