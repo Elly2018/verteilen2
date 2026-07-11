@@ -23,8 +23,51 @@
  */
 #include <verteilen2server/data/appdata.h>
 #include <spdlog/spdlog.h>
+#include <argh.h>
 
 namespace verteilen2::server {
+
+    bool app_data_cli_init(App_data& app_data, int argc, char* argv[]) {
+        argh::parser cmdl;
+        cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
+
+        if (cmdl.flags().contains("h") || cmdl.flags().contains("help")) {
+            return false;
+        }
+
+        for (auto& flag : cmdl.flags()) {
+            if(flag == "debug") {
+                app_data.cli.level = spdlog::level::debug;
+            }
+            if(flag == "trace") {
+                app_data.cli.level = spdlog::level::trace;
+            }
+        }
+
+        for (auto& param : cmdl.params()) {
+            if(param.first == "l" || param.first == "level") {
+                try{
+                    int32_t num = std::stoi(param.second);
+                    if(num == 0) app_data.cli.level = spdlog::level::trace;
+                    if(num == 1) app_data.cli.level = spdlog::level::info;
+                    if(num == 2) app_data.cli.level = spdlog::level::info;
+                    if(num == 3) app_data.cli.level = spdlog::level::warn;
+                    if(num == 4) app_data.cli.level = spdlog::level::err;
+                    if(num == 5) app_data.cli.level = spdlog::level::critical;
+                    else app_data.cli.level = spdlog::level::off;
+                }
+                catch (const std::invalid_argument& e) {
+                    std::cout << "Error: Not a valid number!" << std::endl;
+                } 
+                catch (const std::out_of_range& e) {
+                    std::cout << "Error: Number is too big for a 32-bit int!" << std::endl;
+                }
+            }
+        }
+
+        spdlog::set_level(app_data.cli.level);
+        return true;
+    }
 
     void app_data_release_all(App_data& app_data) {
         spdlog::info("Shuwdown app_data...");

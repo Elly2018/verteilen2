@@ -22,37 +22,15 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef CLIENT_DATA_APPDATA_H
-#define CLIENT_DATA_APPDATA_H
-#include <atomic>
-#include <string>
-#include <cstdint>
-#include <mdns_cpp/mdns.hpp>
-#include <mdns_cpp/logger.hpp>
-#include "../config.h"
-#include "cli.h"
-#include <verteilen2/data/worker.h>
-#include <verteilen2/data/fs.h>
-#include <verteilen2/env.h>
-#include <verteilen2/data/sock.h>
-#include <verteilen2/db/local_record.h>
+#ifndef CLIENT_DATA_CLI_H
+#define CLIENT_DATA_CLI_H
+#include <spdlog/spdlog.h>
 
 namespace verteilen2::client {
 
-    struct App_data {
-        Cli_data cli;
-        WebServer app;
-        KCPServer server;
-        hv::SocketChannelPtr server_target;
-        mdns_cpp::mDNS mdns;
-        database_getter db_getter;
-        Worker workers[worker_limit];
-        FSWorker fsworker[worker_limit];
-        std::atomic<bool> shutdown{false};
+    struct Cli_data {
+        spdlog::level::level_enum level;
     };
-
-    bool app_data_cli_init(App_data& app_data, int argc, char* argv[]);
-    void app_data_release_all(App_data& app_data);
 
 }
 

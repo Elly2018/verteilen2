@@ -30,6 +30,7 @@
 #include <mdns_cpp/mdns.hpp>
 #include <mdns_cpp/logger.hpp>
 #include "../config.h"
+#include "cli.h"
 #include <verteilen2/data/worker.h>
 #include <verteilen2/data/fs.h>
 #include <verteilen2/env.h>
@@ -39,6 +40,7 @@
 namespace verteilen2::server {
 
     struct App_data {
+        Cli_data cli;
         WebServer app;
         KCPServer server;
         hv::SocketChannelPtr master_target;
@@ -50,6 +52,7 @@ namespace verteilen2::server {
         std::atomic<bool> shutdown{false};
     };
 
+    bool app_data_cli_init(App_data& app_data, int argc, char* argv[]);
     void app_data_release_all(App_data& app_data);
 
 }

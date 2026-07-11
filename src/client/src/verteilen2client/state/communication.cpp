@@ -38,7 +38,10 @@ namespace verteilen2::client {
     void create_kcp_server(App_data& app_data) {
         fs_init_filesystem();
 
-        app_data.server.socket_fd = app_data.server.kcp_server.createsocket(network_get_port_available(kcp_port));
+        int32_t p = network_get_port_available(kcp_port);
+        spdlog::info("KCP port: {}", p);
+        app_data.server.socket_fd = app_data.server.kcp_server.createsocket(p);
+        
         if(app_data.server.socket_fd < 0) {
             spdlog::error("app_data.server.socket_fd create failed");
             return;
@@ -46,6 +49,7 @@ namespace verteilen2::client {
 
         app_data.server.kcp_server.onMessage = [&](const hv::SocketChannelPtr& channel, hv::Buffer* buf) {
             std::string message = std::string(buf->size(), buf->len);
+            spdlog::debug("[KCP Message] Raw Data: {}", message);
             if(message == "connect") {
                 if(app_data.server_target && app_data.server_target->isConnected()){
                     spdlog::warn("[KCP Message] Recevied repeat connect packet from server");

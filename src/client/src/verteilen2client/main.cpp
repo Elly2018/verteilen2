@@ -80,8 +80,9 @@ static void web_run(App_data& app_data){
     app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(web_port)).multithreaded().run();
 }
 
-int main(){
+int main(int argc, char* argv[]){
     App_data app_data = App_data();
+    if(!app_data_cli_init(app_data, argc, argv)) return 0;
 
     db_run(app_data);
     mDNS_run(app_data);
