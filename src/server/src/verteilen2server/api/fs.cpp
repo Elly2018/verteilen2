@@ -26,8 +26,41 @@
 
 namespace verteilen2::server {
 
+    static void register_fs_list_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/fs/list/<string>")
+        .methods(crow::HTTPMethod::GET)
+        ([&app_data](const crow::request& req, crow::response& res, const std::string uuid) {
+            fs::path p = path_get_workpath(App_type::Server);
+            p /= "fs";
+            p /= uuid;
+            if(!fs::exists(p)) {
+                res.code = 404;
+                res.body = "Cannot find the filesystem folder";
+                spdlog::warn("[API FS Download] Cannot find filesystem folder: {}", p.string());
+                return;
+            }
+
+            std::string ctx = "";
+
+            for(auto& f : fs::recursive_directory_iterator(p)) {
+                if(f.is_directory()){
+                    ctx += "D ";
+                }else{
+                    ctx += "F ";
+                }
+                ctx += fs::relative(f.path(), p).string();
+                ctx += "\n";
+            }
+            ctx.pop_back();
+
+            res.code = 200;
+            res.body = ctx;
+            res.end();
+        });
+    }
+
     static void register_fs_download_request(App_data& app_data) {
-        CROW_ROUTE(app_data.app, "/api/fs/<string>/<string>")
+        CROW_ROUTE(app_data.app, "/api/fs/download/<string>/<string>")
         .methods(crow::HTTPMethod::GET)
         ([&app_data](const crow::request& req, crow::response& res, const std::string uuid, const std::string filename) {
             fs::path p = path_get_workpath(App_type::Server);
@@ -50,7 +83,10 @@ namespace verteilen2::server {
     }
 
     void register_fs_route(App_data& app_data) {
+
+        register_fs_list_request(app_data);
         register_fs_download_request(app_data);
+
     }
     
 }
