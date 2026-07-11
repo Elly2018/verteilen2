@@ -21,13 +21,42 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <stdio.h>
-#include <verteilen2cli/category.h>
+#include <verteilen2cli/cli.h>
+#include <argh.h>
 
 namespace verteilen2::cli {
 
-    bool handle_proxy(argh::parser& cmdl) {
-        return false;
+    Cli_data parse(int argc, char* argv[]) {
+        Cli_data data = Cli_data();
+        data.help_module = -1;
+
+        argh::parser cmdl;
+        cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
+
+        for(auto& flag : cmdl.flags()){
+            if(flag == "help" || flag == "h") {
+                data.help_call = true;
+            }
+        }
+
+        for(auto& param : cmdl.params()){
+            if(param.first == "help") {
+                if(param.second == "client") {
+                    data.help_call = true;
+                    data.help_module = 0;
+                }
+                if(param.second == "server") {
+                    data.help_call = true;
+                    data.help_module = 1;
+                }
+                if(param.second == "master") {
+                    data.help_call = true;
+                    data.help_module = 2;
+                }
+            }
+        }
+
+        return data;
     }
 
 }

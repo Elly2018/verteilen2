@@ -21,18 +21,20 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <stdio.h>
-#include <verteilen2cli/category.h>
-#include <ftxui/component/app.hpp>
-#include <ftxui/component/captured_mouse.hpp>
-#include <ftxui/component/component.hpp>
-#include <ftxui/component/component_base.hpp>
-#include <ftxui/dom/elements.hpp>
+#pragma once
+#ifndef CLI_CLI_H
+#define CLI_CLI_H
+#include <cinttypes>
 
 namespace verteilen2::cli {
 
-    bool handle_tui(Cli_data& data) {
-        return false;
-    }
+    struct Cli_data {
+        bool help_call;
+        int32_t help_module;
+    };
+
+    Cli_data parse(int argc, char* argv[]);
 
 }
+
+#endif

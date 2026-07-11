@@ -23,15 +23,10 @@
  */
 #include <stdio.h>
 #include <verteilen2cli/category.h>
-#include <ftxui/component/app.hpp>
-#include <ftxui/component/captured_mouse.hpp>
-#include <ftxui/component/component.hpp>
-#include <ftxui/component/component_base.hpp>
-#include <ftxui/dom/elements.hpp>
 
 namespace verteilen2::cli {
 
-    bool handle_tui(Cli_data& data) {
+    bool handle_server(Cli_data& data) {
         return false;
     }
 

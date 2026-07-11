@@ -24,25 +24,24 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include <argh.h>
+#include <verteilen2cli/cli.h>
 #include <verteilen2cli/category.h>
 
 using namespace verteilen2::cli;
 
 int main(int argc, char* argv[])
 {
-    argh::parser cmdl;
-    cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
-    if(handle_help(cmdl)){
+    Cli_data data = parse(argc, argv);
+    if(handle_help(data)){
         return EXIT_SUCCESS;
-    } else if (handle_master(cmdl)) {
+    } else if (handle_client(data)) {
         return EXIT_SUCCESS;
-    } else if (handle_client(cmdl)) {
+    } else if (handle_server(data)) {
         return EXIT_SUCCESS;
-    } else if (handle_proxy(cmdl)) {
+    } else if (handle_master(data)) {
         return EXIT_SUCCESS;
     } 
 
-    handle_tui(cmdl);
+    handle_tui(data);
     return EXIT_SUCCESS;
 }

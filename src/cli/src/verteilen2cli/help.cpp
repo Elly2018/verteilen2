@@ -26,44 +26,22 @@
 
 namespace verteilen2::cli {
 
-    bool handle_help(argh::parser& cmdl){
-
-        std::string help_sub_text = "";
-        bool has_help_primary = cmdl.flags().count("h") || cmdl.flags().count("help");
-        bool has_help_params = cmdl.params().count("help") || cmdl.params().count("h");
-        
-        if (has_help_primary){
-            print_help();
-            return true;
-        }
-
-        if(has_help_params){
-            help_sub_text = cmdl.params().at("help");
-            if(help_sub_text.size() == 0) {
-                help_sub_text = cmdl.params().at("h");
-            }
-        }
-
-        std::transform(help_sub_text.begin(), help_sub_text.end(), help_sub_text.begin(), [](unsigned char c){ return std::tolower(c); });
-
-        if(help_sub_text.size() > 0){
-            if(help_sub_text == "master"){
-                print_help_master();
-            }
-            else if(help_sub_text == "client"){
+    bool handle_help(Cli_data& data){
+        if(data.help_call){
+            if(data.help_module == 0){
                 print_help_client();
             }
-            else if(help_sub_text == "proxy"){
-                print_help_proxy();
+            else if(data.help_module == 1){
+                print_help_server();
             }
-            else{
-                printf("Cannot find the module: %s\n", help_sub_text.c_str());
-                printf("Type --help to find the CLI usage\n");
+            else if(data.help_module == 2){
+                print_help_master();
+            }else{
+                print_help();
             }
-            return true;
         }
 
-        return false;
+        return data.help_call;
     }
 
     void print_help() {
@@ -78,7 +56,7 @@ namespace verteilen2::cli {
         printf("Client\n");
     }
 
-    void print_help_proxy() {
+    void print_help_server() {
         printf("Proxy\n");
     }
 

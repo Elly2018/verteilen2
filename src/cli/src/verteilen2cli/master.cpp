@@ -26,7 +26,7 @@
 
 namespace verteilen2::cli {
 
-    bool handle_master(argh::parser& cmdl) {
+    bool handle_master(Cli_data& data) {
         return false;
     }
 

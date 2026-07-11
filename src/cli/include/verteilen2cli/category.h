@@ -25,19 +25,20 @@
 #ifndef CLI_CATEGORY_H
 #define CLI_CATEGORY_H
 #include <argh.h>
+#include "cli.h"
 
 namespace verteilen2::cli {
 
-    bool handle_help(argh::parser& cmdl);
+    bool handle_help(Cli_data& data);
     void print_help();
     void print_help_master();
     void print_help_client();
-    void print_help_proxy();
+    void print_help_server();
 
-    bool handle_master(argh::parser& cmdl);
-    bool handle_client(argh::parser& cmdl);
-    bool handle_proxy(argh::parser& cmdl);
-    bool handle_tui(argh::parser& cmdl);
+    bool handle_master(Cli_data& data);
+    bool handle_client(Cli_data& data);
+    bool handle_server(Cli_data& data);
+    bool handle_tui(Cli_data& data);
 
 }
 
