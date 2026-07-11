@@ -21,33 +21,32 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_DB_LOCAL_RECORD_H
-#define COMMON_DB_LOCAL_RECORD_H
-#include <cinttypes>
-#include <string>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
-#include <verteilen2/enum/app_type.h>
-#include <verteilen2/db/job/private.h>
-#include <verteilen2/db/job_detail/private.h>
-#include <verteilen2/db/log/private.h>
-#include <verteilen2/db/node/private.h>
-#include <verteilen2/db/project/private.h>
-#include <verteilen2/db/project_vault/private.h>
-#include <verteilen2/db/task/private.h>
 #include <verteilen2/db/vault/private.h>
-#include <verteilen2/db/vault_int/private.h>
-#include <verteilen2/db/vault_text/private.h>
-
-using json = nlohmann::json;
 
 namespace verteilen2 {
 
-    typedef SQLite::Database (*database_getter)();
+    int32_t create_vault_int_table(SQLite::Database db) {
+        return db.exec(R"SQL(
+            CREATE TABLE IF NOT EXISTS vault_int (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                vault_id INTEGER NOT NULL,
+                order INTEGER,
+                label TEXT NOT NULL,
+                type INTEGER,
+                value TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-    SQLite::Database get_database(App_type type);
+                FOREIGN KEY (vault_id) REFERENCES vault(id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE
+            );
+        )SQL");
+    }
 
+    int32_t drop_vault_int_table(SQLite::Database db) {
+        return db.exec(R"SQL(
+            DELETE FROM vault_int;
+        )SQL");
+    }
+    
 }
-
-#endif

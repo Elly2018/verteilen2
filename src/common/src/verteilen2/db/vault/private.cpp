@@ -26,11 +26,20 @@
 namespace verteilen2 {
 
     int32_t create_vault_table(SQLite::Database db) {
-        return 0;
+        return db.exec(R"SQL(
+            CREATE TABLE IF NOT EXISTS vault (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        )SQL");
     }
 
     int32_t drop_vault_table(SQLite::Database db) {
-        return 0;
+        return db.exec(R"SQL(
+            DELETE FROM vault;
+        )SQL");
     }
     
 }

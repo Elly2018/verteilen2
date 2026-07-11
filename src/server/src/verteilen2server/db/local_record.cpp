@@ -46,6 +46,8 @@ namespace verteilen2::server {
         create_log_table(appdata.db_getter());
         create_job_table(appdata.db_getter());
         create_vault_table(appdata.db_getter());
+        create_vault_int_table(appdata.db_getter());
+        create_vault_text_table(appdata.db_getter());
         create_node_table(appdata.db_getter());
         create_task_table(appdata.db_getter());
         create_project_table(appdata.db_getter());

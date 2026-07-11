@@ -22,32 +22,19 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_DB_LOCAL_RECORD_H
-#define COMMON_DB_LOCAL_RECORD_H
+#ifndef COMMON_DB_VAULT_TEXT_PRIVATE_H
+#define COMMON_DB_VAULT_TEXT_PRIVATE_H
 #include <cinttypes>
-#include <string>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>
-#include <verteilen2/enum/app_type.h>
-#include <verteilen2/db/job/private.h>
-#include <verteilen2/db/job_detail/private.h>
-#include <verteilen2/db/log/private.h>
-#include <verteilen2/db/node/private.h>
-#include <verteilen2/db/project/private.h>
-#include <verteilen2/db/project_vault/private.h>
-#include <verteilen2/db/task/private.h>
-#include <verteilen2/db/vault/private.h>
-#include <verteilen2/db/vault_int/private.h>
-#include <verteilen2/db/vault_text/private.h>
 
 using json = nlohmann::json;
 
 namespace verteilen2 {
 
-    typedef SQLite::Database (*database_getter)();
-
-    SQLite::Database get_database(App_type type);
-
+    int32_t create_vault_text_table(SQLite::Database db);
+    int32_t drop_vault_text_table(SQLite::Database db);
+    
 }
 
 #endif
