@@ -60,7 +60,16 @@ namespace verteilen2::server {
                     spdlog::info("[KCP Message] Successfully connect to a client: {}", channel->localaddr());
                     app_data.client_targets.push_back(channel);
                 }
-            }else{
+            } else if(message == "disconnect") {
+                std::string w = channel->peeraddr();
+                for(int32_t i = 0; i < app_data.client_targets.size(); i++) {
+                    if(app_data.client_targets.at(i) == channel) {
+                        app_data.client_targets.erase(app_data.client_targets.begin() + i);
+                        break;
+                    }
+                }
+                spdlog::info("[KCP Message] Recevied disconnect from client: {}", w);
+            } else {
                 if(app_data.master_target == channel){
                     google::protobuf::Arena arena;
                     RawData* r = google::protobuf::Arena::CreateMessage<RawData>(&arena);

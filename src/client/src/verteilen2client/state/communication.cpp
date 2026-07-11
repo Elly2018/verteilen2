@@ -76,6 +76,9 @@ namespace verteilen2::client {
     }
 
     void shutdown_kcp_server(App_data& app_data) {
+        if(app_data.server_target && app_data.server_target->isConnected()){ 
+            app_data.server_target->write("disconnect");
+        }
         app_data.server.kcp_server.stop();
     }
 
