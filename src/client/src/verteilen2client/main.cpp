@@ -40,7 +40,7 @@ static void db_run(App_data& app_data){
 static void mDNS_run(App_data& app_data){
     spdlog::info("Initializing mDNS service...");
     std::vector<std::string> ipv4s = network_get_all_ipv4();
-    std::string v = "verteilen-2-client:";
+    std::string v = "";
     for(const auto& ip : ipv4s){
         v += ip;
         v += ",";
@@ -49,10 +49,11 @@ static void mDNS_run(App_data& app_data){
         v.pop_back();
     }
     spdlog::info("Define mDNS message: {}", v);
-    app_data.mdns.setServiceHostname(v);
+    app_data.mdns.setServiceTxtRecord(v);
+    app_data.mdns.setServiceName("verteilen-2-client");
     app_data.mdns.startService();
     mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
-        spdlog::info("mDNS: {}", msg);
+        spdlog::debug("mDNS: {}", msg);
     });
 }
 

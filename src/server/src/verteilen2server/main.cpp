@@ -42,10 +42,15 @@ static void db_run(App_data& app_data){
 static void mDNS_run(App_data& app_data){
     spdlog::info("Initializing mDNS service...");
     mdns_cpp::Logger::setLoggerSink([](const std::string& msg) {
-        if(msg.starts_with("verteilen-2-client")) {
+        spdlog::debug("[mDNS] {}", msg);
+        if(msg.find("verteilen-2-client") != std::string::npos) {
             uint64_t p = msg.find(":");
-            std::string ips = msg.substr(p);
-            spdlog::info("Recevied mDNS service: {}", ips);
+            if(p != std::string::npos) {
+                std::string ips = msg.substr(0, p);
+                if(ips.size() >= 7) {
+                    spdlog::info("Recevied mDNS service: {}", ips);
+                }
+            }
         }
     });
     app_data.mdns.executeDiscovery();
