@@ -28,20 +28,6 @@
 
 namespace verteilen2::server {
 
-    /**
-     * 
-     * @brief REST-API route for attmpt connect to server's websocket endpoint
-     * 
-     * @param app The crow application reference
-     * 
-     * @note GET "/api/connect_ws_server"
-     * 
-     * * require body key: "server-address"
-     * 
-     * This will attpemt create a connection, after success, register it to App_data,
-     * For state to use it.
-     * 
-     */
     void register_api_route(App_data& app_data);
     
 }

@@ -48,12 +48,16 @@ namespace verteilen2::client {
             std::string message = std::string(buf->size(), buf->len);
             if(message == "connect") {
                 if(app_data.server_target && app_data.server_target->isConnected()){
+                    spdlog::warn("[KCP Message] Recevied repeat connect packet from server");
                     app_data.server_target->write("already connected");
                 }else{
+                    spdlog::info("[KCP Message] Successfully connect to server !");
                     app_data.server_target = channel;
                     app_data.server_target->write("success");
                 }
-            }else{
+            } else if(message == "disconnect") {
+                spdlog::info("[KCP Message] Recevied disconnect from server");
+            } else {
                 if(app_data.server_target == channel){
                     google::protobuf::Arena arena;
                     RawData* r = google::protobuf::Arena::CreateMessage<RawData>(&arena);

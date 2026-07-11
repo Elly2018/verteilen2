@@ -23,6 +23,7 @@
  */
 #include <verteilen2server/api/api.h>
 #include <verteilen2server/state/fs/filesystem.h>
+#include <verteilen2server/state/communication.h>
 #include <verteilen2/uuid.h>
 
 namespace verteilen2::server {
@@ -71,6 +72,35 @@ namespace verteilen2::server {
                 return crow::response(200, uuid);
             }else{
                 return crow::response(500, "Delete filesystem failed");
+            }
+        });
+    }
+
+    static void register_fs_delete_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/connect_client")
+        .methods(crow::HTTPMethod::POST)
+        ([&app_data](const crow::request& req) {
+            crow::json::rvalue json_data = crow::json::load(req.body);
+
+            if (!json_data) {
+                return crow::response(400, "Invalid JSON payload");
+            }
+
+            if (!json_data.has("client-address")) {
+                return crow::response(400, "Missing required key: client-address");
+            }
+
+            if (!json_data.has("client-port")) {
+                return crow::response(400, "Missing required key: client-port");
+            }
+
+            const auto& client_address = json_data["client-address"];
+            const auto& client_port = json_data["client-port"];
+
+            if(connect_client_kcp_server(app_data, client_address.s(), client_port.s())) {
+                return crow::response(200, "Successfully send out message");
+            }else{
+                return crow::response(400, "Something wrong with your input value");
             }
         });
     }

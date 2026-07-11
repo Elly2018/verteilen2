@@ -32,6 +32,8 @@ namespace verteilen2::server {
     void create_kcp_server(App_data& app_data);
     void shutdown_kcp_server(App_data& app_data);
 
+    bool connect_client_kcp_server(App_data& app_data, std::string address, std::string port);
+
 }
 
 #endif

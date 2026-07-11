@@ -44,12 +44,17 @@ namespace verteilen2::server {
 
         app_data.server.kcp_server.onMessage = [&](const hv::SocketChannelPtr& channel, hv::Buffer* buf) {
             std::string message = std::string(buf->size(), buf->len);
-            if(message == "connect") {
-                if(app_data.master_target && app_data.master_target->isConnected()){
-                    app_data.master_target->write("already connected");
-                }else{
-                    app_data.master_target = channel;
-                    app_data.master_target->write("success");
+            if(message == "success") {
+                bool f = false;
+                for(auto& i : app_data.client_targets) {
+                    if(i == channel) {
+                        f = true;
+                        break;
+                    }
+                }
+                if(!f){
+                    spdlog::info("[KCP Message] Successfully connect to a client: {}", channel->localaddr());
+                    app_data.client_targets.push_back(channel);
                 }
             }else{
                 if(app_data.master_target == channel){
@@ -66,7 +71,42 @@ namespace verteilen2::server {
     }
 
     void shutdown_kcp_server(App_data& app_data) {
+        for(auto& channel : app_data.client_targets) {
+            if(channel && channel->isConnected()) {
+                channel->write("disconnect");
+                channel->close();
+            }
+        }
+        app_data.client_targets.clear();
         app_data.server.kcp_server.stop();
     }
 
+    bool connect_client_kcp_server(App_data& app_data, std::string address, std::string port) {
+        std::string msg = "connect";
+        int32_t _port = kcp_port;
+
+        try{
+            _port = std::stoi(port);
+        }
+        catch (const std::invalid_argument& e) {
+            spdlog::error("Error: Not a valid number!");
+            return false;
+        } 
+        catch (const std::out_of_range& e) {
+            spdlog::error("Error: Number is too big for a 32-bit int!");
+            return false;
+        }
+
+        sockaddr_in add = sockaddr_in();
+        add.sin_family = AF_INET;
+        add.sin_port = htons(_port);
+
+        if (inet_pton(AF_INET, address.c_str(), &add.sin_addr) <= 0) {
+            spdlog::error("Invalid IP address format");
+            return false;
+        }
+
+        app_data.server.kcp_server.sendto(msg, (sockaddr*)&add);
+        return true;
+    }
 }
