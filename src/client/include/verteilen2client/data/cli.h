@@ -24,12 +24,15 @@
 #pragma once
 #ifndef CLIENT_DATA_CLI_H
 #define CLIENT_DATA_CLI_H
+#include <cinttypes>
 #include <spdlog/spdlog.h>
 
 namespace verteilen2::client {
 
     struct Cli_data {
         spdlog::level::level_enum level;
+        int32_t udp_port;
+        int32_t web_port;
     };
 
 }

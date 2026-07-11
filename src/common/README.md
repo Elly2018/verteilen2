@@ -13,6 +13,7 @@ THis way it's easier to sync with states and it also follows the DRY principle.
 - [x] All data structures.
 - [x] All table definitions.
 - [x] Protobuf definitions.
+- [x] Worker and Filesystem definitions.
 - [x] Get network interface ipv4, ipv6 list.
 - [x] Get available port function.
 - [x] Get home directory path.

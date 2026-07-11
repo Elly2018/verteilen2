@@ -29,6 +29,8 @@ namespace verteilen2::client {
 
     bool app_data_cli_init(App_data& app_data, int argc, char* argv[]) {
         app_data.cli.level = spdlog::level::info;
+        app_data.cli.web_port = web_port;
+        app_data.cli.udp_port = client_kcp_port;
 
         argh::parser cmdl;
         cmdl.parse(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
@@ -59,10 +61,32 @@ namespace verteilen2::client {
                     else app_data.cli.level = spdlog::level::off;
                 }
                 catch (const std::invalid_argument& e) {
-                    std::cout << "Error: Not a valid number!" << std::endl;
+                    spdlog::error("[CLI] \"level\" Error: Not a valid number: {}", param.second);
                 } 
                 catch (const std::out_of_range& e) {
-                    std::cout << "Error: Number is too big for a 32-bit int!" << std::endl;
+                    spdlog::error("[CLI] \"level\" Error: Number is too big for a 32-bit int: {}", param.second);
+                }
+            }
+            else if(param.first == "wp" || param.first == "web_port") {
+                try {
+                    app_data.cli.web_port = std::stoi(param.second);
+                }
+                catch (const std::invalid_argument& e) {
+                    spdlog::error("[CLI] \"web_port\" Error: Not a valid number: {}", param.second);
+                } 
+                catch (const std::out_of_range& e) {
+                    spdlog::error("[CLI] \"web_port\" Error: Number is too big for a 32-bit int: {}", param.second);
+                }
+            }
+            else if(param.first == "kp" || param.first == "kcp_port") {
+                try {
+                    app_data.cli.udp_port = std::stoi(param.second);
+                }
+                catch (const std::invalid_argument& e) {
+                    spdlog::error("[CLI] \"kcp_port\" Error: Not a valid number: {}", param.second);
+                } 
+                catch (const std::out_of_range& e) {
+                    spdlog::error("[CLI] \"kcp_port\" Error: Number is too big for a 32-bit int: {}", param.second);
                 }
             }
         }

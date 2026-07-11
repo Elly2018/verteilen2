@@ -25,11 +25,14 @@
 #ifndef SERVER_DATA_CLI_H
 #define SERVER_DATA_CLI_H
 #include <spdlog/spdlog.h>
+#include <cinttypes>
 
 namespace verteilen2::server {
 
     struct Cli_data {
         spdlog::level::level_enum level;
+        int32_t udp_port;
+        int32_t web_port;
     };
 
 }
