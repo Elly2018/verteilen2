@@ -79,6 +79,7 @@ namespace verteilen2::client {
                 if(find != -1) return true;
                 int32_t ava = fs_worker_get_idle(app_data.fsworker);
                 if(ava == -1) return false;
+                spdlog::info("[FS Create] {}", fs->fs().uuid());
 
                 app_data.fsworker[ava].path = target_path;
                 app_data.fsworker[ava].watcher = new efsw::FileWatcher();
@@ -91,6 +92,8 @@ namespace verteilen2::client {
             case ActionFSType::ActionFSType_UPDATE:
             {
                 if(find != -1) return false;
+                spdlog::info("[FS Update] {}", fs->fs().uuid());
+
                 app_data.fsworker[find].watcher->removeWatch(app_data.fsworker[find].watch_ID);
                 delete app_data.fsworker[find].listener;
 
@@ -116,8 +119,9 @@ namespace verteilen2::client {
         switch(fs->type()) {
             case ActionFSType::ActionFSType_REMOVE:
             {
-                if(find == -1) return false;
+                if(find == -1) return true;
 
+                spdlog::info("[FS Delete] {}", fs->fs().uuid());
                 app_data.fsworker[find].path.clear();
                 app_data.fsworker[find].watcher->removeWatch(app_data.fsworker[find].watch_ID);
                 delete app_data.fsworker[find].listener;

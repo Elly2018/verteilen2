@@ -24,13 +24,13 @@
 #pragma once
 #ifndef SERVER_API_TEMPLATE_H
 #define SERVER_API_TEMPLATE_H
-#include "../config.h"
+#include "../data/appdata.h"
 
 namespace verteilen2::server {
 
     constexpr int32_t Init_log_amount = 30;
 
-    void register_template_route(WebServer& app);
+    void register_template_route(App_data& app_data);
 
 }
 

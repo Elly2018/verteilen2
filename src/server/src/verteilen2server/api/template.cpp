@@ -64,14 +64,14 @@ namespace verteilen2::server {
         return ctx;
     }
 
-    static void register_template(WebServer& app) {
-        CROW_ROUTE(app, "/template/<path>")
+    static void register_template(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/template/<path>")
         .methods(crow::HTTPMethod::GET)
-        ([&app](const crow::request& req, const std::string& path) {
+        ([&app_data](const crow::request& req, const std::string& path) {
             crow::mustache::context ctx;
             std::string filename = path;
-            Session::context& session_ctx = app.get_context<Session>(req);
-            crow::CookieParser::context& cookie_ctx = app.get_context<crow::CookieParser>(req);
+            Session::context& session_ctx = app_data.app.get_context<Session>(req);
+            crow::CookieParser::context& cookie_ctx = app_data.app.get_context<crow::CookieParser>(req);
 
             if(cookie_ctx.get_cookie("key").empty()){
                 cookie_ctx.set_cookie("key", generate_uuid()).path("/").httponly();
@@ -100,9 +100,9 @@ namespace verteilen2::server {
         });
     }
 
-    void register_template_route(WebServer& app) {
+    void register_template_route(App_data& app_data) {
 
-        register_template(app);
+        register_template(app_data);
 
     }
 

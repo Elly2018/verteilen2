@@ -30,11 +30,11 @@ namespace verteilen2 {
             CREATE TABLE IF NOT EXISTS vault_int (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 vault_id INTEGER NOT NULL,
-                order INTEGER,
+                weight INTEGER,
                 label TEXT NOT NULL,
                 type INTEGER,
                 value TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
                 FOREIGN KEY (vault_id) REFERENCES vault(id)
                     ON DELETE CASCADE

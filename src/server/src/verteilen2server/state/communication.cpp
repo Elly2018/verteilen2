@@ -34,7 +34,7 @@ namespace verteilen2::server {
     constexpr uint32_t KCP_CONV_ID = 0x11223344;
 
     void create_kcp_server(App_data& app_data) {
-        fs_init_filesystem();
+        fs_init_filesystem(app_data);
 
         app_data.server.socket_fd = app_data.server.kcp_server.createsocket(network_get_port_available(kcp_port));
         if(app_data.server.socket_fd < 0) {

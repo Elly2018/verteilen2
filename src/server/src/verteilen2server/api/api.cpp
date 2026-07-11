@@ -22,13 +22,15 @@
     SOFTWARE.
  */
 #include <verteilen2server/api/api.h>
+#include <verteilen2server/state/fs/filesystem.h>
+#include <verteilen2/uuid.h>
 
 namespace verteilen2::server {
 
-    static void register_connect_request(WebServer& app) {
-        CROW_ROUTE(app, "/api/connect_ws_client")
+    static void register_connect_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/connect_ws_client")
         .methods(crow::HTTPMethod::POST)
-        ([&app](const crow::request& req) {
+        ([&app_data](const crow::request& req) {
             crow::json::rvalue json_data = crow::json::load(req.body);
 
             if (!json_data) {
@@ -45,9 +47,38 @@ namespace verteilen2::server {
         });
     }
 
-    void register_connect_server_ws_route(WebServer& app) {
+    static void register_fs_create_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/create_filesystem")
+        .methods(crow::HTTPMethod::POST)
+        ([&app_data](const crow::request& req) {
+            std::string uuid = generate_uuid();
+            
+            if(fs_create_filesystem(app_data, uuid)) {
+                return crow::response(200, uuid);
+            }else{
+                return crow::response(500, "Create filesystem failed");
+            }
+        });
+    }
+
+    static void register_fs_delete_request(App_data& app_data) {
+        CROW_ROUTE(app_data.app, "/api/delete_filesystem")
+        .methods(crow::HTTPMethod::POST)
+        ([&app_data](const crow::request& req) {
+            std::string uuid = generate_uuid();
+            
+            if(fs_delete_filesystem(app_data, uuid)) {
+                return crow::response(200, uuid);
+            }else{
+                return crow::response(500, "Delete filesystem failed");
+            }
+        });
+    }
+
+    void register_api_route(App_data& app_data) {
         
-        register_connect_request(app);
+        register_connect_request(app_data);
+        register_fs_create_request(app_data);
 
     }
 

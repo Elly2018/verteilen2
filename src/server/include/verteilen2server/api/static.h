@@ -24,11 +24,11 @@
 #pragma once
 #ifndef SERVER_API_STATIC_H
 #define SERVER_API_STATIC_H
-#include "../config.h"
+#include "../data/appdata.h"
 
 namespace verteilen2::server {
 
-    void register_static_route(WebServer& app);
+    void register_static_route(App_data& app_data);
 
 }
 

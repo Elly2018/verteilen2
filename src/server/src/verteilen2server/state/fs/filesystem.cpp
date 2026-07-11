@@ -55,14 +55,81 @@ namespace verteilen2::server {
         }
     };
 
-    void fs_init_filesystem() {
-        fs::path p = path_get_workpath(App_type::Client);
+    void fs_init_filesystem(App_data& app_data) {
+        fs::path p = path_get_workpath(App_type::Server);
         p /= "fs";
         if(!fs::exists(p)) fs::create_directories(p);
         for(const auto& subdir : fs::directory_iterator(p)){
-            spdlog::warn("[FS INIT] Destroy file system folder caches. {}", subdir.path().string());
-            fs::remove_all(subdir);
+            std::string foldername = subdir.path().filename();
+            spdlog::info("[FS Init] Detect file system folder: {}", foldername);
+            fs_create_filesystem(app_data, foldername);
         }
+    }
+
+    bool fs_create_filesystem(App_data& app_data, std::string uuid) {
+        if(uuid.size() == 0) {
+            spdlog::warn("[FS Create Failed] UUID cannot be empty");
+            return false;
+        }
+        fs::path p = path_get_workpath(App_type::Server);
+        p /= "fs";
+        p /= uuid;
+        if(!fs::exists(p)) {
+            spdlog::warn("[FS Create] Create the folder: {}", uuid);
+            fs::create_directories(p);
+        }
+        std::string target_path = p.string();
+        int32_t find = fs_worker_get_index_by_path(app_data.fsworker, target_path);
+
+        if(find != -1) {
+            spdlog::warn("[FS Create] File system already exist: {}", uuid);
+            return false;
+        }
+        int32_t ava = fs_worker_get_idle(app_data.fsworker);
+        if(ava == -1) {
+            spdlog::error("[FS Create Failed] All file system worker has been taken");
+            return false;
+        }
+        spdlog::info("[FS Create] {}", uuid);
+
+        app_data.fsworker[ava].path = target_path;
+        app_data.fsworker[ava].watcher = new efsw::FileWatcher();
+        app_data.fsworker[ava].listener = new UpdateListener();
+        app_data.fsworker[ava].watch_ID = app_data.fsworker[ava].watcher->addWatch(target_path, app_data.fsworker[ava].listener, true);
+        app_data.fsworker[ava].watcher->watch();
+        app_data.fsworker[ava].vaild = true;
+
+        return true;
+    }
+
+    bool fs_delete_filesystem(App_data& app_data, std::string uuid) {
+        if(uuid.size() == 0) {
+            spdlog::warn("[FS Create Failed] UUID cannot be empty");
+            return false;
+        } 
+        fs::path p = path_get_workpath(App_type::Server);
+        p /= "fs";
+        p /= uuid;
+        if(!fs::exists(p)) {
+            spdlog::warn("[FS Delete] The file system mount folder does not exist: {}", uuid);
+            return false;
+        }
+        std::string target_path = p.string();
+        int32_t find = fs_worker_get_index_by_path(app_data.fsworker, target_path);
+
+        if(find == -1) {
+            spdlog::warn("[FS Delete] Cannot find the file system worker: {}", uuid);
+            return true;
+        }
+        spdlog::info("[FS Delete] {}", uuid);
+
+        app_data.fsworker[find].path.clear();
+        app_data.fsworker[find].watcher->removeWatch(app_data.fsworker[find].watch_ID);
+        delete app_data.fsworker[find].listener;
+        delete app_data.fsworker[find].watcher;
+        app_data.fsworker[find].vaild = false;
+
+        return true;
     }
 
 };

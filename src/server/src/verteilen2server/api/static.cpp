@@ -94,10 +94,10 @@ namespace verteilen2::server {
         });
     }
 
-    void register_static_route(WebServer& app) {
+    void register_static_route(App_data& app_data) {
 
-        register_index(app);
-        register_resource(app);
+        register_index(app_data.app);
+        register_resource(app_data.app);
         
     }
 

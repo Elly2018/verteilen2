@@ -24,7 +24,7 @@
 #pragma once
 #ifndef SERVER_API_API_H
 #define SERVER_API_API_H
-#include "../config.h"
+#include "../data/appdata.h"
 
 namespace verteilen2::server {
 
@@ -42,7 +42,7 @@ namespace verteilen2::server {
      * For state to use it.
      * 
      */
-    void register_connect_server_ws_route(WebServer& app);
+    void register_api_route(App_data& app_data);
     
 }
 
