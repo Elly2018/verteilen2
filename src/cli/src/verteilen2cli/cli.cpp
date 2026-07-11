@@ -45,13 +45,16 @@ namespace verteilen2::cli {
                     data.help_call = true;
                     data.help_module = 0;
                 }
-                if(param.second == "server") {
+                else if(param.second == "server") {
                     data.help_call = true;
                     data.help_module = 1;
                 }
-                if(param.second == "master") {
+                else if(param.second == "master") {
                     data.help_call = true;
                     data.help_module = 2;
+                }else {
+                    data.help_call = true;
+                    data.help_module = -2;
                 }
             }
         }

@@ -34,6 +34,7 @@ namespace verteilen2::cli {
     void print_help_master();
     void print_help_client();
     void print_help_server();
+    void print_help_options();
 
     bool handle_master(Cli_data& data);
     bool handle_client(Cli_data& data);

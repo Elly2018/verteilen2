@@ -36,8 +36,12 @@ namespace verteilen2::cli {
             }
             else if(data.help_module == 2){
                 print_help_master();
-            }else{
+            }
+            else if(data.help_module == -1){
                 print_help();
+            }
+            else {
+                print_help_options();
             }
         }
 
@@ -58,6 +62,10 @@ namespace verteilen2::cli {
 
     void print_help_server() {
         printf("Proxy\n");
+    }
+
+    void print_help_options() {
+
     }
 
 }
