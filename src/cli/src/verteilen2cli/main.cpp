@@ -29,8 +29,7 @@
 
 using namespace verteilen2::cli;
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Cli_data data = parse(argc, argv);
     if(handle_help(data)){
         return EXIT_SUCCESS;
@@ -40,8 +39,8 @@ int main(int argc, char* argv[])
         return EXIT_SUCCESS;
     } else if (handle_master(data)) {
         return EXIT_SUCCESS;
-    } 
-
-    handle_tui(data);
-    return EXIT_SUCCESS;
+    } else {
+        handle_tui(data);
+        return EXIT_SUCCESS;
+    }
 }

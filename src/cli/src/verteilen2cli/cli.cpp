@@ -66,7 +66,7 @@ namespace verteilen2::cli {
         }
 
         for(auto& param : cmdl.params()){
-            if(param.first == "help") {
+            if(param.first == "help" || param.first == "h") {
                 if(param.second == "client") {
                     data.help_call = true;
                     data.help_module = 0;

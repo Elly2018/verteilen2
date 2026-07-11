@@ -30,12 +30,53 @@
 
 namespace verteilen2::cli {
 
+    /**
+     * @brief The cli arguments
+     */
     struct Cli_data {
+        /**
+         * @brief Show help information for the cli tools
+         */
         bool help_call;
+        /**
+         * @brief Helper module
+         * 
+         * - -2: Incorrect, this means user enter the wrong module name
+         * 
+         * - -1: Default
+         * 
+         * - 0: Client module helper display
+         * 
+         * - 1: Server module helper display
+         * 
+         * - 2: Master module helper display
+         */
         int32_t help_module;
+        /**
+         * @brief Handle module action
+         * 
+         * - -2: Incorrect, this means user enter the wrong module name
+         * 
+         * - -1: No handle module select
+         * 
+         * - 0: Client module handle action
+         * 
+         * - 1: Server module handle action
+         * 
+         * - 2: Master module handle action
+         */
         int32_t handle_target;
+        /**
+         * @brief The first command label, Primary category for command group
+         */
         std::string command;
+        /**
+         * @brief The second command label, Secondary category for command group
+         */
         std::string sub_command;
+        /**
+         * @brief The rest of arguments, index > 2
+         */
         std::vector<std::string> arguments;
     };
 
