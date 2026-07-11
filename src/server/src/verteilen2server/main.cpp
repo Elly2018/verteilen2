@@ -29,6 +29,7 @@
 #include <verteilen2server/data/appdata.h>
 #include <verteilen2server/api/all.h>
 #include <verteilen2server/db/local_record.h>
+#include <verteilen2server/state/communication.h>
 
 using namespace verteilen2;
 using namespace verteilen2::server;
@@ -58,9 +59,14 @@ static void mDNS_run(App_data& app_data){
     });
 }
 
-static void websocket_run(App_data& app_data) {
+static void network_run(App_data& app_data) {
     spdlog::info("Initializing websocket service...");
-    //create_websocket_server(app_data);
+    create_kcp_server(app_data);
+}
+
+static void network_shutdown(App_data& app_data) {
+    spdlog::info("Shutdown kcp service...");
+    shutdown_kcp_server(app_data);
 }
 
 static void web_run(App_data& app_data){
@@ -78,8 +84,17 @@ static void web_run(App_data& app_data){
 
 int main(){
     App_data app_data = App_data();
+
     db_run(app_data);
     mDNS_run(app_data);
-    websocket_run(app_data);
+    network_run(app_data);
     web_run(app_data);
+
+    app_data.shutdown.store(true);
+
+    network_shutdown(app_data);
+    app_data_release_all(app_data);
+
+    spdlog::info("Successfully exit");
+    exit(0);
 }

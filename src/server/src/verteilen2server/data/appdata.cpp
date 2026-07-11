@@ -21,37 +21,15 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef SERVER_DATA_APPDATA_H
-#define SERVER_DATA_APPDATA_H
-#include <string>
-#include <cstdint>
-#include <vector>
-#include <mdns_cpp/mdns.hpp>
-#include <mdns_cpp/logger.hpp>
-#include "../config.h"
-#include <verteilen2/data/worker.h>
-#include <verteilen2/data/fs.h>
-#include <verteilen2/env.h>
-#include <verteilen2/data/sock.h>
-#include <verteilen2/db/local_record.h>
+#include <verteilen2server/data/appdata.h>
+#include <spdlog/spdlog.h>
 
 namespace verteilen2::server {
 
-    struct App_data {
-        WebServer app;
-        KCPServer server;
-        hv::SocketChannelPtr master_target;
-        std::vector<hv::SocketChannelPtr> client_targets;
-        mdns_cpp::mDNS mdns;
-        database_getter db_getter;
-        Worker workers[worker_limit];
-        FSWorker fsworker[worker_limit];
-        std::atomic<bool> shutdown{false};
-    };
-
-    void app_data_release_all(App_data& app_data);
+    void app_data_release_all(App_data& app_data) {
+        spdlog::info("Shuwdown app_data...");
+        fs_work_release_all(app_data.fsworker);
+        work_release_all(app_data.workers);
+    }
 
 }
-
-#endif

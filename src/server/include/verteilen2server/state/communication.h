@@ -29,9 +29,8 @@
 
 namespace verteilen2::server {
 
-    void create_websocket_server(App_data& app_data);
-    void create_websocket_connection_master(App_data& app_data, const std::string address);
-    void create_websocket_connection_client(App_data& app_data, const std::string address);
+    void create_kcp_server(App_data& app_data);
+    void shutdown_kcp_server(App_data& app_data);
 
 }
 

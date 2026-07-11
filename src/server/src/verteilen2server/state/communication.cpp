@@ -21,17 +21,15 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <verteilen2client/state/communication.h>
+#include <verteilen2server/state/communication.h>
 #include <spdlog/spdlog.h>
 #include <verteilen2/env.h>
 #include <verteilen2/network.h>
 #include <verteilen2/proto_gen/struct_header.pb.h>
-#include <verteilen2client/data/appdata.h>
-#include <verteilen2client/state/analyzer.h>
-#include <verteilen2client/state/execute.h>
-#include <verteilen2client/state/fs/filesystem.h>
+#include <verteilen2server/data/appdata.h>
+#include <verteilen2server/state/fs/filesystem.h>
 
-namespace verteilen2::client {
+namespace verteilen2::server {
 
     constexpr uint32_t KCP_CONV_ID = 0x11223344;
 
@@ -47,18 +45,18 @@ namespace verteilen2::client {
         app_data.server.kcp_server.onMessage = [&](const hv::SocketChannelPtr& channel, hv::Buffer* buf) {
             std::string message = std::string(buf->size(), buf->len);
             if(message == "connect") {
-                if(app_data.server_target && app_data.server_target->isConnected()){
-                    app_data.server_target->write("already connected");
+                if(app_data.master_target && app_data.master_target->isConnected()){
+                    app_data.master_target->write("already connected");
                 }else{
-                    app_data.server_target = channel;
-                    app_data.server_target->write("success");
+                    app_data.master_target = channel;
+                    app_data.master_target->write("success");
                 }
             }else{
-                if(app_data.server_target == channel){
+                if(app_data.master_target == channel){
                     google::protobuf::Arena arena;
                     RawData* r = google::protobuf::Arena::CreateMessage<RawData>(&arena);
                     if(r->ParseFromArray(buf->data(), buf->len)) {
-                        analysis(app_data, r);
+                        //analysis(app_data, r);
                     }
                 }
             }
