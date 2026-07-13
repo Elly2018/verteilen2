@@ -23,14 +23,41 @@
  */
 #include <verteilen2/db/job_detail/private.h>
 #include <verteilen2/path.h>
+#include <verteilen2/uuid.h>
 
 namespace verteilen2 {
+
+    static void get_job_detail_data(SQLite::Statement& query, json& result) {
+        json buff = json::object();
+
+        int32_t id = query.getColumn(0).getInt();
+        std::string uuid = query.getColumn(1).getText();
+        std::string job = query.getColumn(2).getText();
+        std::string title = query.getColumn(3).getText();
+        int32_t weight = query.getColumn(4).getInt();
+        int32_t type = query.getColumn(5).getInt();
+        int32_t subtype = query.getColumn(6).getInt();
+        std::string data = query.getColumn(7).getText();
+        std::string created_at = query.getColumn(8).getText();
+
+        buff["id"] = id;
+        buff["uuid"] = uuid;
+        buff["job"] = job;
+        buff["weight"] = weight;
+        buff["type"] = type;
+        buff["subtype"] = subtype;
+        buff["data"] = data;
+        buff["created_at"] = created_at;
+
+        result["data"].push_back(buff);
+    }
 
     int32_t create_job_detail_table(SQLite::Database db) {
         db.exec("PRAGMA foreign_keys = ON;");
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS job_detail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                uuid CHAR(36) NOT NULL,
                 job CHAR(36) NOT NULL,
                 weight INTEGER NOT NULL,
                 type INTEGER NOT NULL,
@@ -38,18 +65,31 @@ namespace verteilen2 {
                 data BLOB NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-                FOREIGN KEY (job) REFERENCES job(job_id)
+                FOREIGN KEY (job) REFERENCES job(uuid)
                     ON DELETE CASCADE
                     ON UPDATE CASCADE
             );
         )SQL");
     }
 
-    int32_t insert_job_detail_table(SQLite::Database db, const char job[36], const int32_t level, const std::string title, const std::string content) {
-        SQLite::Statement query(db, "INSERT INTO job_detail (job, title, content) VALUES(?, ?, ?);");
-        query.bind(1, job);
-        query.bind(2, title);
-        query.bind(3, content);
+    int32_t insert_job_detail_table(SQLite::Database db, std::string job, const int32_t weight, const int32_t type, const int32_t subtype, std::string data) {
+        SQLite::Statement query(db, "INSERT INTO job_detail (uuid, job, weight, type, subtype, data) VALUES(?, ?, ?, ?, ?, ?);");
+        query.bind(1, generate_uuid());
+        query.bind(2, job);
+        query.bind(3, weight);
+        query.bind(4, type);
+        query.bind(5, subtype);
+        query.bind(6, data);
+        return query.exec();
+    }
+
+    int32_t update_job_detail_table(SQLite::Database db, std::string uuid, const int32_t weight, const int32_t type, const int32_t subtype, std::string data) {
+        SQLite::Statement query(db, "UPDATE job SET weight = ?, type = ?, subtype = ?, data = ? WHERE uuid = ?;");
+        query.bind(1, weight);
+        query.bind(2, type);
+        query.bind(3, subtype);
+        query.bind(4, data);
+        query.bind(5, uuid);
         return query.exec();
     }
 
@@ -59,91 +99,32 @@ namespace verteilen2 {
         )SQL");
     }
 
-    int32_t get_latest_job_detail_table(SQLite::Database db, const char job[36], const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at LIMIT ? ;");
+    int32_t get_page_job_detail_table(SQLite::Database db, const std::string job, const int32_t amount, const int32_t page, json& result) {
+        SQLite::Statement query(db, "SELECT id, uuid, job, weight, type, subtype, data, created_at FROM job_detail ORDER BY weight WHERE job = ? LIMIT ? OFFSET ?;");
         query.bind(1, job);
         query.bind(2, amount);
+        query.bind(3, page * amount);
 
         result.clear();
         result["data"] = json::array();
 
         while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].push_back(buff);
+            get_job_detail_data(query, result);
         }
 
         return result["data"].size();
     }
 
-    int32_t get_latest_job_detail_table(SQLite::Database db, const char job[36], const std::string last_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at WHERE created_at > ? ;");
-        query.bind(1, job);
-        query.bind(1, last_timestamp);
-
-        result.clear();
-        result["data"] = json::array();
-
-        while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].push_back(buff);
-        }
-
-        return result["data"].size();
+    int32_t get_total_job_detail_table(SQLite::Database db) {
+        SQLite::Statement query(db, "SELECT COUNT(*) FROM job_detail;");
+        return query.getColumn(0).getInt();
     }
 
-    int32_t get_history_job_detail_table(SQLite::Database db, const char job[36], const int32_t amount, const std::string top_timestamp, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM job_detail WHERE job == ? ORDER BY created_at DESC WHERE created_at < ? ;");
+    int32_t get_total_job_detail_table(SQLite::Database db, const std::string job) {
+        SQLite::Statement query(db, "SELECT COUNT(*) FROM job_detail WHERE job = ?;");
         query.bind(1, job);
-        query.bind(1, top_timestamp);
 
-        result.clear();
-        result["data"] = json::array();
-
-        while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].insert(result["data"].begin(), buff);
-        }
-
-        return result["data"].size();
+        return query.getColumn(0).getInt();
     }
     
 }

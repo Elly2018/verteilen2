@@ -33,14 +33,12 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_job_detail_table(SQLite::Database db);
-    int32_t insert_job_detail_table(SQLite::Database db, std::string job, const int32_t weight, const int32_t type, const int32_t subtype, std::string content);
+    int32_t insert_job_detail_table(SQLite::Database db, std::string job, const int32_t weight, const int32_t type, const int32_t subtype, std::string data);
+    int32_t update_job_detail_table(SQLite::Database db, std::string uuid, const int32_t weight, const int32_t type, const int32_t subtype, std::string data);
     int32_t drop_job_detail_table(SQLite::Database db);
-    int32_t get_latest_job_detail_table(SQLite::Database db, std::string job, const int32_t amount, json& result);
-    int32_t get_latest_job_detail_table(SQLite::Database db, std::string job, const std::string last_timestamp, json& result);
-    int32_t get_history_job_detail_table(SQLite::Database db, std::string job, const int32_t amount, const std::string top_timestamp, json& result);
-    int32_t get_page_job_detail_table(SQLite::Database db, std::string job, const int32_t amount, const int32_t page, json& result);
+    int32_t get_page_job_detail_table(SQLite::Database db, const std::string job, const int32_t amount, const int32_t page, json& result);
     int32_t get_total_job_detail_table(SQLite::Database db);
-    int32_t get_total_job_detail_table(SQLite::Database db, std::string job);
+    int32_t get_total_job_detail_table(SQLite::Database db, const std::string job);
 
 }
 

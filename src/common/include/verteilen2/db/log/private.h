@@ -33,12 +33,8 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_log_table(SQLite::Database db);
-    int32_t insert_log_table(SQLite::Database db, std::string job, const std::string title, const std::string content);
+    int32_t insert_log_table(SQLite::Database db, const std::string title, const std::string content);
     int32_t drop_log_table(SQLite::Database db);
-    std::string get_latest_datetime_log_table(SQLite::Database db);
-    int32_t get_latest_log_table(SQLite::Database db, const int32_t amount, json& result);
-    int32_t get_latest_log_table(SQLite::Database db, const std::string last_timestamp, json& result);
-    int32_t get_history_log_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
     int32_t get_page_log_table(SQLite::Database db, const int32_t amount, const int32_t page, json& result);
     int32_t get_total_log_table(SQLite::Database db);
     

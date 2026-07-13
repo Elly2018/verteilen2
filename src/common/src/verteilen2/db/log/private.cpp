@@ -23,14 +23,33 @@
  */
 #include <verteilen2/db/log/private.h>
 #include <verteilen2/path.h>
+#include <verteilen2/uuid.h>
 
 namespace verteilen2 {
+
+    static void get_log_data(SQLite::Statement& query, json& result) {
+        json buff = json::object();
+
+        int32_t id = query.getColumn(0).getInt();
+        std::string uuid = query.getColumn(1).getText();
+        std::string title = query.getColumn(2).getText();
+        std::string content = query.getColumn(3).getText();
+        std::string created_at = query.getColumn(4).getText();
+
+        buff["id"] = id;
+        buff["uuid"] = uuid;
+        buff["title"] = title;
+        buff["content"] = content;
+        buff["created_at"] = created_at;
+
+        result["data"].push_back(buff);
+    }
 
     int32_t create_log_table(SQLite::Database db) {
         return db.exec(R"SQL(
             CREATE TABLE IF NOT EXISTS log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                job CHAR(36) NOT NULL,
+                uuid CHAR(36) NOT NULL,
                 title TEXT NOT NULL,
                 content TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -38,9 +57,9 @@ namespace verteilen2 {
         )SQL");
     }
 
-    int32_t insert_log_table(SQLite::Database db, std::string job, const std::string title, const std::string content) {
-        SQLite::Statement query(db, "INSERT INTO log (job, title, content) VALUES(?, ?, ?);");
-        query.bind(1, job);
+    int32_t insert_log_table(SQLite::Database db, const std::string title, const std::string content) {
+        SQLite::Statement query(db, "INSERT INTO log (uuid, title, content) VALUES(?, ?, ?);");
+        query.bind(1, generate_uuid());
         query.bind(2, title);
         query.bind(3, content);
         return query.exec();
@@ -53,98 +72,24 @@ namespace verteilen2 {
         )SQL");
     }
 
-    std::string get_latest_datetime_log_table(SQLite::Database db) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
-
-        if (query.executeStep()) {
-            SQLite::Column col = query.getColumn(0);
-            if (!col.isNull()) {
-                return col.getText();
-            }
-        }
-
-        return "1970-01-01 00:00:00";
-    }
-
-    int32_t get_latest_log_table(SQLite::Database db, const int32_t amount, json& result) {
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at LIMIT ? ;");
+    int32_t get_page_log_table(SQLite::Database db, const int32_t amount, const int32_t page, json& result) {
+        SQLite::Statement query(db, "SELECT id, uuid, title, content, created_at FROM job_detail ORDER BY created_at LIMIT ? OFFSET ?;");
         query.bind(1, amount);
+        query.bind(2, page * amount);
 
         result.clear();
         result["data"] = json::array();
 
         while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].push_back(buff);
+            get_log_data(query, result);
         }
 
         return result["data"].size();
     }
 
-    int32_t get_latest_log_table(SQLite::Database db, const std::string last_timestamp, json& result) {
-
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log ORDER BY created_at WHERE created_at > ?;");
-        query.bind(1, last_timestamp);
-
-        while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].push_back(buff);
-        }
-
-        return result["data"].size();
-    }
-
-    int32_t get_history_log_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result) {
-
-        SQLite::Statement query(db, "SELECT id, job, title, content, created_at FROM log LIMIT ? ORDER BY created_at DESC WHERE created_at < ?;");
-        query.bind(1, amount);
-        query.bind(2, top_timestamp);
-
-        while(query.executeStep()) {
-            json buff = json::object();
-
-            int32_t id = query.getColumn(0).getInt();
-            std::string job = query.getColumn(1).getText();
-            std::string title = query.getColumn(2).getText();
-            std::string content = query.getColumn(3).getText();
-            std::string created_at = query.getColumn(4).getText();
-
-            buff["id"] = id;
-            buff["job"] = job;
-            buff["title"] = title;
-            buff["content"] = content;
-            buff["created_at"] = created_at;
-
-            result["data"].insert(result["data"].begin(), buff);
-        }
-
-        return result["data"].size();
+    int32_t get_total_log_table(SQLite::Database db) {
+        SQLite::Statement query(db, "SELECT COUNT(*) FROM job_detail;");
+        return query.getColumn(0).getInt();
     }
 
 }
