@@ -54,7 +54,7 @@ namespace verteilen2 {
      * - Client = "client"
      * 
      */
-    fs::path path_get_workpath(const App_type type);
+    fs::path path_get_workpath(const App_type type = App_type::NONE);
 
 }
 

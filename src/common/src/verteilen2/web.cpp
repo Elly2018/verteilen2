@@ -21,18 +21,23 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#pragma once
-#ifndef COMMON_UUID_H
-#define COMMON_UUID_H
-#include <string>
+#include <verteilen2/web.h>
+#include <verteilen2/path.h>
 
 namespace verteilen2 {
 
-    /**
-     * @brief Quickly generate UUID string
-     */
-    std::string generate_uuid();
+    bool web_have_ssl() {
+        fs::path p = path_get_workpath();
+        fs::path crt = p / "server.crt";
+        fs::path key = p / "server.key";
+        return fs::exists(crt) && fs::exists(key);
+    }
 
+    std::pair<std::string, std::string> web_get_ssl_files() {
+        fs::path p = path_get_workpath();
+        fs::path crt = p / "server.crt";
+        fs::path key = p / "server.key";
+        return std::pair<std::string, std::string>(crt.string(), key.string());
+    }
+    
 }
-
-#endif

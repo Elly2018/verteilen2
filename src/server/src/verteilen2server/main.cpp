@@ -21,10 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
-#include <mdns_cpp/mdns.hpp>
-#include <mdns_cpp/logger.hpp>
 #include <spdlog/spdlog.h>
 #include <verteilen2/network.h>
+#include <verteilen2/web.h>
 #include <verteilen2server/logger.h>
 #include <verteilen2server/data/appdata.h>
 #include <verteilen2server/api/all.h>
@@ -60,7 +59,14 @@ static void web_run(App_data& app_data){
     register_static_route(app_data);
     register_template_route(app_data);
     register_ws_route(app_data);
-    app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(app_data.cli.web_port)).multithreaded().run();
+    app_data.cli.web_port = network_get_port_available(app_data.cli.web_port);
+    WebServer& buf = app_data.app.bindaddr("127.0.0.1").port(app_data.cli.web_port);
+    if(web_have_ssl()){
+        std::pair<std::string, std::string> ssl = web_get_ssl_files();
+        buf.ssl_file(ssl.first, ssl.second).multithreaded().run();
+    } else {
+        buf.multithreaded().run();
+    }
 }
 
 int main(int argc, char* argv[]){

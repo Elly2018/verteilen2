@@ -81,6 +81,9 @@ namespace verteilen2 {
         }
 
         switch(type) {
+            default:
+            case App_type::NONE:
+                break;
             case App_type::CLI:
                 p /= "cli";
                 break;
@@ -90,7 +93,6 @@ namespace verteilen2 {
             case App_type::Server:
                 p /= "server";
                 break;
-            default:
             case App_type::Client:
                 p /= "client";
                 break;

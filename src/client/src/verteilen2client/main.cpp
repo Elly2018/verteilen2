@@ -23,6 +23,7 @@
  */
 #include <spdlog/spdlog.h>
 #include <verteilen2/network.h>
+#include <verteilen2/web.h>
 #include <verteilen2client/logger.h>
 #include <verteilen2client/db/local_record.h>
 #include <verteilen2client/data/appdata.h>
@@ -77,7 +78,14 @@ static void web_run(App_data& app_data){
     register_template_route(app_data);
     register_connect_server_ws_route(app_data);
     register_ws_route(app_data);
-    app_data.app.bindaddr("127.0.0.1").port(network_get_port_available(app_data.cli.web_port)).multithreaded().run();
+    app_data.cli.web_port = network_get_port_available(app_data.cli.web_port);
+    WebServer& buf = app_data.app.bindaddr("127.0.0.1").port(app_data.cli.web_port);
+    if(web_have_ssl()){
+        std::pair<std::string, std::string> ssl = web_get_ssl_files();
+        buf.ssl_file(ssl.first, ssl.second).multithreaded().run();
+    } else {
+        buf.multithreaded().run();
+    }
 }
 
 int main(int argc, char* argv[]){

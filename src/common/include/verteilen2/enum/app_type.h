@@ -28,10 +28,11 @@
 namespace verteilen2 {
 
     enum class App_type {
-        CLI = 0,
-        Master = 1,
-        Server = 2,
-        Client = 3,
+        NONE = 0,
+        CLI = 1,
+        Master = 2,
+        Server = 3,
+        Client = 4,
     };
     
 }

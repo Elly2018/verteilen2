@@ -22,17 +22,15 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_UUID_H
-#define COMMON_UUID_H
+#ifndef COMMON_WEB_H
+#define COMMON_WEB_H
 #include <string>
 
 namespace verteilen2 {
 
-    /**
-     * @brief Quickly generate UUID string
-     */
-    std::string generate_uuid();
-
+    bool web_have_ssl();
+    std::pair<std::string, std::string> web_get_ssl_files();
+    
 }
 
 #endif
