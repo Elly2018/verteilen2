@@ -33,12 +33,15 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_job_table(SQLite::Database db);
-    int32_t insert_job_detail_table(SQLite::Database db, const char job[36], const std::string title, const std::string description);
+    int32_t insert_job_table(SQLite::Database db, std::string task, const int32_t weight, const std::string title, const std::string description);
     int32_t drop_job_table(SQLite::Database db);
-    bool check_exists_job_table(SQLite::Database db, const char job[36]);
+    bool check_exists_job_table(SQLite::Database db, std::string job);
     int32_t get_latest_job_table(SQLite::Database db, const int32_t amount, json& result);
     int32_t get_latest_job_table(SQLite::Database db, const std::string last_timestamp, json& result);
     int32_t get_history_job_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
+    int32_t get_page_job_table(SQLite::Database db, const int32_t amount, const int32_t page, json& result);
+    int32_t get_total_job_table(SQLite::Database db);
+    int32_t get_total_job_table(SQLite::Database db, std::string task);
 
 }
 

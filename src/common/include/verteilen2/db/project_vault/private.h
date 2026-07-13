@@ -33,6 +33,7 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_project_vault_table(SQLite::Database db);
+    int32_t insert_project_vault_table(SQLite::Database db, const std::string project, const std::string vault);
     int32_t drop_project_vault_table(SQLite::Database db);
     
 }

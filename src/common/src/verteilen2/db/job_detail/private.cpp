@@ -32,8 +32,10 @@ namespace verteilen2 {
             CREATE TABLE IF NOT EXISTS job_detail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 job CHAR(36) NOT NULL,
-                title TEXT NOT NULL,
-                content TEXT,
+                weight INTEGER NOT NULL,
+                type INTEGER NOT NULL,
+                subtype INTEGER NOT NULL,
+                data BLOB NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
                 FOREIGN KEY (job) REFERENCES job(job_id)

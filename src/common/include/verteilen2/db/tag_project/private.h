@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_DB_LOG_PRIVATE_H
-#define COMMON_DB_LOG_PRIVATE_H
+#ifndef COMMON_DB_TAG_PRIVATE_H
+#define COMMON_DB_TAG_PRIVATE_H
 #include <cinttypes>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>
@@ -32,15 +32,9 @@ using json = nlohmann::json;
 
 namespace verteilen2 {
 
-    int32_t create_log_table(SQLite::Database db);
-    int32_t insert_log_table(SQLite::Database db, std::string job, const std::string title, const std::string content);
-    int32_t drop_log_table(SQLite::Database db);
-    std::string get_latest_datetime_log_table(SQLite::Database db);
-    int32_t get_latest_log_table(SQLite::Database db, const int32_t amount, json& result);
-    int32_t get_latest_log_table(SQLite::Database db, const std::string last_timestamp, json& result);
-    int32_t get_history_log_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
-    int32_t get_page_log_table(SQLite::Database db, const int32_t amount, const int32_t page, json& result);
-    int32_t get_total_log_table(SQLite::Database db);
+    int32_t create_tag_project_table(SQLite::Database db);
+    int32_t insert_tag_project_table(SQLite::Database db, const std::string tag, const std::string project);
+    int32_t drop_tag_project_table(SQLite::Database db);
     
 }
 

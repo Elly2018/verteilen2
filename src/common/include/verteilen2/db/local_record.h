@@ -37,8 +37,7 @@
 #include <verteilen2/db/project_vault/private.h>
 #include <verteilen2/db/task/private.h>
 #include <verteilen2/db/vault/private.h>
-#include <verteilen2/db/vault_int/private.h>
-#include <verteilen2/db/vault_text/private.h>
+#include <verteilen2/db/vault_detail/private.h>
 
 using json = nlohmann::json;
 

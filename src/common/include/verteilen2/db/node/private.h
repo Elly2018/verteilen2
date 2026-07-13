@@ -33,7 +33,13 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_node_table(SQLite::Database db);
+    int32_t insert_node_table(SQLite::Database db, const std::string title, const std::string description, const std::string ip, const int32_t port);
     int32_t drop_node_table(SQLite::Database db);
+    int32_t get_latest_node_table(SQLite::Database db, const int32_t amount, json& result);
+    int32_t get_latest_node_table(SQLite::Database db, const std::string last_timestamp, json& result);
+    int32_t get_history_node_table(SQLite::Database db, const int32_t amount, const std::string top_timestamp, json& result);
+    int32_t get_page_node_table(SQLite::Database db, const int32_t amount, const int32_t page, json& result);
+    int32_t get_total_node_table(SQLite::Database db);
     
 }
 

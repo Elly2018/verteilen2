@@ -33,6 +33,7 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_task_table(SQLite::Database db);
+    int32_t insert_task_table(SQLite::Database db, const std::string title, const std::string description, const int32_t weight, const int32_t type);
     int32_t drop_task_table(SQLite::Database db);
     
 }

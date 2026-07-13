@@ -33,7 +33,7 @@ using json = nlohmann::json;
 namespace verteilen2 {
 
     int32_t create_cron_table(SQLite::Database db);
-    int32_t insert_cron_detail_table(SQLite::Database db, const char project[36], const std::string title, const std::string description, std::string timer);
+    int32_t insert_cron_table(SQLite::Database db, std::string project, const std::string title, const std::string description, std::string timer);
     int32_t drop_cron_table(SQLite::Database db);
     int32_t get_latest_cron_table(SQLite::Database db, const int32_t amount, json& result);
     int32_t get_latest_cron_table(SQLite::Database db, const std::string last_timestamp, json& result);

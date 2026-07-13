@@ -22,8 +22,8 @@
     SOFTWARE.
  */
 #pragma once
-#ifndef COMMON_DB_VAULT_INT_PRIVATE_H
-#define COMMON_DB_VAULT_INT_PRIVATE_H
+#ifndef COMMON_DB_VAULT_DETAIL_PRIVATE_H
+#define COMMON_DB_VAULT_DETAIL_PRIVATE_H
 #include <cinttypes>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <nlohmann/json.hpp>
@@ -32,8 +32,9 @@ using json = nlohmann::json;
 
 namespace verteilen2 {
 
-    int32_t create_vault_int_table(SQLite::Database db);
-    int32_t drop_vault_int_table(SQLite::Database db);
+    int32_t create_vault_detail_table(SQLite::Database db);
+    int32_t insert_vault_detail_table(SQLite::Database db, const std::string vault, const int32_t weight, const int32_t type, const std::string data);
+    int32_t drop_vault_detail_table(SQLite::Database db);
     
 }
 
