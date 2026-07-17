@@ -1,13 +1,11 @@
 file(GLOB_RECURSE CLIENT_SOURCE CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/src/client/src/*.c"
-    "${CMAKE_SOURCE_DIR}/src/client/src/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/client/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/native/client/src/*.cc"
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/src/client/include"
-    "${CMAKE_SOURCE_DIR}/src/common/include"
-    "${CMAKE_SOURCE_DIR}/src/common/include/verteilen2/proto_gen"
+    "${CMAKE_SOURCE_DIR}/src/native/client/include"
+    "${CMAKE_SOURCE_DIR}/src/native/common/include"
+    "${CMAKE_SOURCE_DIR}/src/native/common/include/verteilen2/proto_gen"
     "${CMAKE_SOURCE_DIR}/lib/argh"
     "${CMAKE_SOURCE_DIR}/lib/json/include"
     "${CMAKE_SOURCE_DIR}/lib/efsw/include"

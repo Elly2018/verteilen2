@@ -26,19 +26,18 @@
 #include <verteilen2/web.h>
 #include <verteilen2client/logger.h>
 #include <verteilen2client/db/local_record.h>
-#include <verteilen2client/data/appdata.h>
 #include <verteilen2client/api/all.h>
 #include <verteilen2client/state/communication.h>
 
 using namespace verteilen2;
 using namespace verteilen2::client;
 
-static void db_run(App_data& app_data){
+void db_run(App_data& app_data){
     spdlog::info("Initializing database...");
     init_database(app_data);
 }
 
-static void mDNS_run(App_data& app_data){
+void mDNS_run(App_data& app_data){
     spdlog::info("Initializing mDNS service...");
     std::vector<std::string> ipv4s = network_get_all_ipv4();
     std::string v = "";
@@ -58,17 +57,17 @@ static void mDNS_run(App_data& app_data){
     });
 }
 
-static void network_run(App_data& app_data) {
+void network_run(App_data& app_data) {
     spdlog::info("Initializing kcp service...");
     create_kcp_server(app_data);
 }
 
-static void network_shutdown(App_data& app_data) {
+void network_shutdown(App_data& app_data) {
     spdlog::info("Shutdown kcp service...");
     shutdown_kcp_server(app_data);
 }
 
-static void web_run(App_data& app_data){
+void web_run(App_data& app_data){
     static CrowSpdlogBridge custom_bridge;
     crow::logger::setHandler(&custom_bridge);
     
@@ -86,22 +85,4 @@ static void web_run(App_data& app_data){
     } else {
         buf.multithreaded().run();
     }
-}
-
-int main(int argc, char* argv[]){
-    App_data app_data = App_data();
-    if(!app_data_cli_init(app_data, argc, argv)) return 0;
-
-    db_run(app_data);
-    mDNS_run(app_data);
-    network_run(app_data);
-    web_run(app_data);
-
-    app_data.shutdown.store(true);
-
-    network_shutdown(app_data);
-    app_data_release_all(app_data);
-
-    spdlog::info("Successfully exit");
-    exit(0);
 }
