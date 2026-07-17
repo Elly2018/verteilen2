@@ -1,0 +1,4 @@
+module(
+    name = "my_hello_world_project",
+    version = "1.0",
+)

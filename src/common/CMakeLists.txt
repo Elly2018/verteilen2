@@ -1,8 +1,6 @@
 file(GLOB_RECURSE COMMON_SOURCE CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/common/src/*.c"
     "${CMAKE_SOURCE_DIR}/src/common/src/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/common/src/*.cpp"
-    "${CMAKE_SOURCE_DIR}/src/common/src/proto_gen/*.cc"
 )
 
 include_directories(

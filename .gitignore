@@ -55,6 +55,9 @@ Makefile
 install_manifest.txt
 compile_commands.json
 
+# Bazel generated files
+MODULE.bazel.lock
+
 # Temporary files
 *.tmp
 *.log

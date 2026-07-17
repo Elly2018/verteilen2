@@ -1,0 +1,12 @@
+
+cc_library(
+    name = "common",
+    srcs = glob(["*.c", "*.cc"]),
+    hdrs = glob(["*.h", "*.hh"]),
+    visubility = [
+        "//cli:__pkg__",
+        "//client:__pkg__",
+        "//master:__pkg__",
+        "//server:__pkg__"
+    ]
+)
