@@ -35,3 +35,10 @@ sudo apt install protobuf-compiler
 sudo apt-get install protobuf-c-compiler libprotobuf-c-dev
 ```
 
+## Quick Start
+
+After you clone the project, you can use this bash script as a entry point
+
+```bash
+bash helper.sh
+```
