@@ -1,1 +1,1 @@
-add_subdirectory("${CMAKE_SOURCE_DIR}/tests/common")
+add_subdirectory("${CMAKE_SOURCE_DIR}/tests/native/common")
