@@ -24,6 +24,9 @@
 #include <spdlog/spdlog.h>
 #include <verteilen2client/service.h>
 
+using namespace verteilen2;
+using namespace verteilen2::client;
+
 int main(int argc, char* argv[]){
     App_data app_data = App_data();
     if(!app_data_cli_init(app_data, argc, argv)) return 0;

@@ -26,10 +26,14 @@
 #define CLIENT_SERVICE_H
 #include "data/appdata.h"
 
-void db_run(App_data& app_data);
-void mDNS_run(App_data& app_data);
-void network_run(App_data& app_data);
-void network_shutdown(App_data& app_data);
-void web_run(App_data& app_data);
+namespace verteilen2::client {
+
+    void db_run(App_data& app_data);
+    void mDNS_run(App_data& app_data);
+    void network_run(App_data& app_data);
+    void network_shutdown(App_data& app_data);
+    void web_run(App_data& app_data);
+
+}
 
 #endif

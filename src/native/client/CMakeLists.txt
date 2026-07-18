@@ -35,3 +35,10 @@ add_executable(client
     ${CLIENT_SOURCE}
     "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )
+
+list(REMOVE_ITEM CLIENT_SOURCE "${CMAKE_SOURCE_DIR}/src/native/client/src/main.cc")
+
+add_library(client_share SHARED
+    ${CLIENT_SOURCE}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
+)

@@ -22,6 +22,12 @@ add_library(common STATIC
     "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )
 
+add_library(common_share SHARED
+    ${COMMON_SOURCE}
+    ${PROTO_SOURCES}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
+)
+
 target_link_libraries(common PUBLIC
     hv
     stduuid

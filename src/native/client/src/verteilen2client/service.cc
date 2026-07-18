@@ -21,6 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
  */
+#include <verteilen2client/service.h>
 #include <spdlog/spdlog.h>
 #include <verteilen2/network.h>
 #include <verteilen2/web.h>
