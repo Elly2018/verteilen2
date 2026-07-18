@@ -43,6 +43,6 @@ namespace verteilen2::client {
         create_log_table(appdata.db_getter());
         create_job_table(appdata.db_getter());
         create_job_detail_table(appdata.db_getter());
-        insert_log_table(appdata.db_getter(), "none", "Initialization", "Client has been activate.");
+        insert_log_table(appdata.db_getter(), "Initialization", "Client has been activate.");
     }
 }

@@ -1,7 +1,6 @@
 file(GLOB_RECURSE SERVER_SOURCE CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/server/src/*.c"
     "${CMAKE_SOURCE_DIR}/src/server/src/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/server/src/*.cpp"
 )
 
 include_directories(
@@ -32,6 +31,13 @@ link_libraries(
 )
 
 add_executable(server
+    ${SERVER_SOURCE}
+    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
+)
+
+list(REMOVE_ITEM SERVER_SOURCE "${CMAKE_SOURCE_DIR}/src/native/server/src/verteilen2server/main.cc")
+
+add_library(server_share SHARED
     ${SERVER_SOURCE}
     "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )

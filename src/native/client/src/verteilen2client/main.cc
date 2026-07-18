@@ -31,14 +31,14 @@ int main(int argc, char* argv[]){
     App_data app_data = App_data();
     if(!app_data_cli_init(app_data, argc, argv)) return 0;
 
-    db_run(app_data);
-    mDNS_run(app_data);
-    network_run(app_data);
-    web_run(app_data);
+    service_db_run(app_data);
+    service_mDNS_run(app_data);
+    service_network_run(app_data);
+    service_web_run(app_data);
 
     app_data.shutdown.store(true);
 
-    network_shutdown(app_data);
+    service_network_shutdown(app_data);
     app_data_release_all(app_data);
 
     spdlog::info("Successfully exit");
