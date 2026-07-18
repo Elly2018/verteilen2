@@ -1,17 +1,33 @@
 #!/usr/bin/env bash
 
-bash setup_all_amd64.sh
+MODULE_CHOICE="$1"
+shift 1
+EXTRA_ARGS="$@"
 
-cd src/common
+bash setup.sh ${MODULE_CHOICE} ${EXTRA_ARGS}
+
+echo "Start generate protobuf definitions"
+
+cd ../../src/native/common
 
 bash proto_gen.sh
 
-cd ../../
+cd ../../../
 
-cd build
+cd build/native
 
-cmake --build . -j 8
+echo "Start building the cmake project"
 
-cd ..
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    TOTAL_CORES=$(sysctl -n hw.ncpu)
+else
+    TOTAL_CORES=$(nproc)
+fi
 
-bash copy_all_resource.sh
+BUILD_JOBS=$(( TOTAL_CORES > 1 ? TOTAL_CORES - 1 : 1 ))
+
+cmake --build . -j ${BUILD_JOBS} ${EXTRA_ARGS}
+
+cd ../../scripts/native
+
+bash copy.sh ${MODULE_CHOICE} ${EXTRA_ARGS}

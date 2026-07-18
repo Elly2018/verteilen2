@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-bash build_all_amd64.sh
+MODULE_CHOICE="$1"
+shift 1
+EXTRA_ARGS="$@"
 
-echo "Execute all unit tests"
+echo "Start testing the cmake project"
+
+bash build.sh ${MODULE_CHOICE} ${EXTRA_ARGS}
+
+cd ../../
 
 ctest --output-on-failure

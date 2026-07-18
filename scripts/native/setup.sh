@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 MODULE_CHOICE="$1"
+shift 1
+EXTRA_ARGS="$@"
 
 echo "Start setup the cmake project"
 
@@ -34,4 +36,4 @@ if [[ "${MODULE_CHOICE}" == "server" ]]; then
     args="-D ENABLE_SERVER=ON"
 fi
 
-cmake ../.. ${args}
+cmake ../.. ${args} ${EXTRA_ARGS}
