@@ -6,6 +6,8 @@ EXTRA_ARGS="$@"
 
 bash build.sh ${MODULE_CHOICE} ${EXTRA_ARGS}
 
+cd ../..
+
 version=$(< VERSION.txt)
 
 echo "Start packaging the cmake projects: ${version}"
@@ -33,8 +35,6 @@ if [[ "$ALL_ON" == "true" ]] || [[ "${MODULE_CHOICE}" == "server" ]]; then
 else
     SERVER_ON="false"
 fi
-
-cd ../..
 
 if [[ "${CLIENT_ON}" == "true" ]]; then
     mkdir -p package/verteilen-2-client
