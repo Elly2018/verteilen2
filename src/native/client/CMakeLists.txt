@@ -14,7 +14,7 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/lib/sqlite/include"
     "${CMAKE_SOURCE_DIR}/lib/spdlog/include"
     "${CMAKE_SOURCE_DIR}/lib/libhv/include"
-    "${CMAKE_SOURCE_DIR}/lib/kcp"
+    "${CMAKE_SOURCE_DIR}/lib/grpc/include"
 )
 
 link_libraries(
@@ -33,7 +33,6 @@ link_libraries(
 
 add_executable(client
     ${CLIENT_SOURCE}
-    "${CMAKE_SOURCE_DIR}/lib/kcp/ikcp.c"
 )
 
 list(REMOVE_ITEM CLIENT_SOURCE "${CMAKE_SOURCE_DIR}/src/native/client/src/verteilen2client/main.cc")

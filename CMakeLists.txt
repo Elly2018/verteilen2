@@ -33,6 +33,7 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/lib/spdlog")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/libhv")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/uuid")
 add_subdirectory("${CMAKE_SOURCE_DIR}/lib/efsw")
+add_subdirectory("${CMAKE_SOURCE_DIR}/lib/grpc")
 
 if(ENABLE_CLI)
     add_subdirectory("${CMAKE_SOURCE_DIR}/src/native/cli")
