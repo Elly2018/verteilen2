@@ -6,19 +6,19 @@ It support hosting services and execute jobs.
 
 The entire system have 4 applications for it.
 
-#### Client
+#### [Client](./client/README.md)
 
 Where calculation happens, the nodes.
 
-#### Server
+#### [Server](./server/README.md)
 
 Where the resources and command coming from. kinda like ansible server.
 
-#### Master
+#### [Master](./master/README.md)
 
 The multiple-server management, with roles and authentication, resource sharing, and cloud solutions.
 
-#### CLI
+#### [CLI](./cli/README.md)
 
 Quick way to deploy and setup.
 
