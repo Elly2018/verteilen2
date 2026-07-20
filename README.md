@@ -1,6 +1,8 @@
 # Verteilen 2
 
-A cluster management system
+A Real-time cluster management system.
+
+It support hosting services and execute jobs.
 
 The entire system have 4 applications for it.
 
@@ -22,7 +24,7 @@ Quick way to deploy and setup.
 
 ## Features
 
-You could check the features detail in src/["Project Name"]
+You could check the features details in [src/native/["Project Name"]](./src/native/README.md)
 
 ## Require Packages
 
