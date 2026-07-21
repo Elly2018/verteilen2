@@ -1,0 +1,55 @@
+/**
+    MIT License
+
+    Copyright (c) 2026 ZhuElly
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+ */
+#pragma once
+#ifndef COMMON_ENV_H
+#define COMMON_ENV_H
+#include <filesystem>
+#include "enum/app_type.h"
+
+namespace fs = std::filesystem;
+
+namespace verteilen2 {
+
+    constexpr int32_t worker_limit = 60;
+    constexpr int32_t client_web_port = 8080;
+    constexpr int32_t server_web_port = 8081;
+    constexpr int32_t master_web_port = 8082;
+    constexpr int32_t client_kcp_port = 9000;
+    constexpr int32_t server_kcp_port = 9001;
+    constexpr int32_t master_kcp_port = 9002;
+
+    enum class AppEnvironment {
+        NATIVE,
+        DOCKER,
+        KUBERNETES
+    };
+
+    std::string env_get_env(std::string);
+    bool is_running_in_k8s();
+    bool is_running_in_docker();
+    AppEnvironment detect_environment();
+
+}
+
+#endif

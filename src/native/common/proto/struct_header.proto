@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package verteilen2;
+
+import "enum_msg_type.proto";
+
+message RawData {
+    MsgType type = 1;
+    bytes data = 2;
+}

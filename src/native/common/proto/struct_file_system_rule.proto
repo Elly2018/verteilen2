@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package verteilen2;
+
+import "enum_sync_type.proto";
+
+// MsgType: DEBUG_LOG
+message FileSystemRule {
+    string uuid = 1;
+    string target_uuid = 2;
+    string filename = 3;
+    SyncType type = 4;
+}

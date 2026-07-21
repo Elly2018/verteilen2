@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package verteilen2.client;
+
+import "struct_file_system.proto";
+import "enum_action_fs_type.proto";
+
+message FileSystem {
+    ActionFSType type = 1;
+    verteilen2.FileSystem fs = 2;
+}

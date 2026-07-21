@@ -3,19 +3,23 @@
         {
             "name": "Linux",
             "includePath": [
+                "/usr/include",
+                "/usr/local/include",
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/common/include",
-                "${workspaceFolder}/src/client/include",
-                "${workspaceFolder}/src/server/include",
-                "${workspaceFolder}/src/master/include",
-                "${workspaceFolder}/src/common/include/verteilen2/proto_gen",
+                "${workspaceFolder}/src/native/common/include",
+                "${workspaceFolder}/src/native/client/include",
+                "${workspaceFolder}/src/native/server/include",
+                "${workspaceFolder}/src/native/master/include",
+                "${workspaceFolder}/src/native/common/include/verteilen2/proto_gen",
                 "${workspaceFolder}/lib/crow/include",
                 "${workspaceFolder}/lib/mdns/include",
                 "${workspaceFolder}/lib/sqlite/include",
                 "${workspaceFolder}/lib/spdlog/include",
                 "${workspaceFolder}/lib/libhv/include",
-                "${workspaceFolder}/lib/kcp/include",
-                "${workspaceFolder}/lib/uuid/include"
+                "${workspaceFolder}/lib/kcp",
+                "${workspaceFolder}/lib/ftxui/include",
+                "${workspaceFolder}/lib/uuid/include",
+                "${workspaceFolder}/lib/efsw/include"
             ],
             "defines": [
                 "BOOST_ERROR_CODE_HEADER_ONLY",

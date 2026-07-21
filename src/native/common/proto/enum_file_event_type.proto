@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum FileEventType {
+    FileEventType_NONE = 0;
+    FileEventType_PUSH = 1;
+    FileEventType_DELETE = 2;
+}

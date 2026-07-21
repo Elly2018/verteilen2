@@ -1,0 +1,9 @@
+module(
+    name = "verteilen2",
+    version = "0.0.0",
+)
+
+version_ext = use_extension("//:extensions.bzl", "version_ext")
+use_repo(version_ext, "project_version")
+
+bazel_dep(name = "rules_cc", version = "0.2.17")

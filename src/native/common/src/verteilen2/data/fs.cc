@@ -1,0 +1,54 @@
+/**
+    MIT License
+
+    Copyright (c) 2026 ZhuElly
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+ */
+#include <verteilen2/data/fs.h>
+
+namespace verteilen2 {
+
+    void fs_work_release_all(FSWorker* fsworker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(fsworker[i].vaild) {
+                fsworker[i].path.clear();
+                fsworker[i].watcher->removeWatch(fsworker[i].watch_ID);
+                delete fsworker[i].listener;
+                delete fsworker[i].watcher;
+                fsworker[i].vaild = false;
+            }
+        }
+    }
+
+    int32_t fs_worker_get_idle(FSWorker* fsworker) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(!fsworker[i].vaild) return i;
+        }
+        return -1;
+    }
+
+    int32_t fs_worker_get_index_by_path(FSWorker* fsworker, const std::string path) {
+        for(int32_t i = 0; i < worker_limit; i++){
+            if(fsworker[i].path == path) return i;
+        }
+        return -1;
+    }
+
+}

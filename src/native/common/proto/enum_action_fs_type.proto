@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum ActionFSType {
+    ActionFSType_CREATE = 0;
+    ActionFSType_UPDATE = 1;
+    ActionFSType_REMOVE = 2;
+}

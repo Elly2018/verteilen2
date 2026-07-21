@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package verteilen2;
+
+enum MsgType {
+    MsgType_UNKNOWN = 0;
+    MsgType_DEBUG_LOG = 1;
+    MsgType_EXECUTE_JOB = 2;
+    MsgType_DEPLOY_SERVICE = 3;
+    MsgType_SET_UUID = 4;
+}
