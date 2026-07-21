@@ -10,6 +10,19 @@ cc_library(
         ["include/*.h", "include/*.hpp", "include/*.hh"], 
         allow_empty = True
     ),
-    includes = ["include"],
+    includes = [
+        "include",
+        "include/verteilen2/proto_gen",
+        "verteilen2/proto_gen",
+    ],
+    deps = [
+        "//lib/libhv:hv",
+        "//lib/uuid:stduuid",
+        "//lib/sqlite:sqlite3",
+        "//lib/sqlite:SQLiteCpp",
+        "//lib/efsw:efsw",
+        "//lib/json:json",
+        "//lib/grpc:grpc",
+    ],
     visibility = ["//visibility:public"],
 )

@@ -12,6 +12,20 @@ cc_binary(
     deps = [
         "//src/native/common:common_lib",
     ],
-    includes = ["include"],
+    includes = [
+        "include",
+        "//src/native/client/include",
+        "//src/native/common/include",
+        "//src/native/common/include/verteilen2/proto_gen",
+        "//lib/argh",
+        "//lib/json/include",
+        "//lib/efsw/include",
+        "//lib/crow/include",
+        "//lib/mdns/include",
+        "//lib/sqlite/include",
+        "//lib/spdlog/include",
+        "//lib/libhv/include",
+        "//lib/grpc/include",
+    ],
     visibility = ["//visibility:public"],
 )

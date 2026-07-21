@@ -1,0 +1,22 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "efsw",
+    hdrs = [
+        "include/efsw/efsw.h",
+        "include/efsw/efsw.hpp",
+    ],
+    srcs = [
+        "src/efsw/Atomic.hpp",
+        "src/efsw/base.hpp",
+        "src/efsw/Debug.cpp",
+        "src/efsw/Debug.hpp",
+        "src/efsw/DirectorySnapshot.cpp",
+        "src/efsw/DirectorySnapshot.hpp",
+        "src/efsw/DirectorySnapshotDiff.cpp",
+        "src/efsw/DirectorySnapshotDiff.hpp",
+    ],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    alwayslink = True,
+)
