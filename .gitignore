@@ -16,6 +16,9 @@
 
 # bazel
 /bazel-*
+/.ijwb/
+/.aswb/
+/.clwb/
 
 # Debugger Files
 *.pdb
