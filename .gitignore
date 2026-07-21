@@ -15,6 +15,7 @@
 *.ilk
 
 # bazel
+bazel-*
 /bazel-*
 /.ijwb/
 /.aswb/

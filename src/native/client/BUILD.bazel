@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "client_app",
+    srcs = glob(
+        [
+            "src/*.cc", "src/*.cpp", "src/*.c",
+            "include/*.h", "include/*.hpp", "include/*.hh",
+        ], 
+        allow_empty = True
+    ),
+    deps = [
+        "//src/native/common:common_lib",
+    ],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)

@@ -1,11 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 cc_library(
-    name = "common",
-    srcs = glob(["*.c", "*.cc"]),
-    hdrs = glob(["*.h", "*.hh"]),
-    visubility = [
-        "//cli:__pkg__",
-        "//client:__pkg__",
-        "//master:__pkg__",
-        "//server:__pkg__"
-    ]
+    name = "common_lib",
+    srcs = glob(
+        ["src/*.cc", "src/*.cpp", "src/*.c"], 
+        allow_empty = True
+    ),
+    hdrs = glob(
+        ["include/*.h", "include/*.hpp", "include/*.hh"], 
+        allow_empty = True
+    ),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
 )
