@@ -26,8 +26,8 @@
 #define COMMON_DB_LOCAL_RECORD_H
 #include <cinttypes>
 #include <string>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#include <sqlite.hpp>
+#include <json/json.h>
 #include <verteilen2/enum/app_type.h>
 #include <verteilen2/db/job/private.h>
 #include <verteilen2/db/job_detail/private.h>

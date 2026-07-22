@@ -22,20 +22,25 @@
     SOFTWARE.
  */
 #include <verteilen2/uuid.h>
-#include <uuid.h>
+#include <absl/numeric/int128.h>
+#include <absl/random/random.h>
+#include <absl/strings/str_format.h>
 
 namespace verteilen2 {
     std::string generate_uuid(){
-        std::random_device rd;
-        std::array<unsigned int, 8> seed_data;
-        std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
-        std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
-        std::mt19937 generator(seq);
-        
-        uuids::uuid_random_generator gen(&generator);
-        uuids::uuid id = gen();
-        std::string uuid_str = uuids::to_string(id);
+        absl::BitGen bitgen;
+        uint64_t high = absl::LogUniform<uint64_t>(bitgen, 0, UINT64_MAX);
+        uint64_t low = absl::LogUniform<uint64_t>(bitgen, 0, UINT64_MAX);
 
-        return uuid_str;
+        high = (high & 0xFFFFFFFFFFFF0FFF_u64) | 0x0000000000004000_u64;        
+        low = (low & 0x3FFFFFFFFFFFFFFF_u64) | 0x8000000000000000_u64;
+
+        uint32_t time_low = high >> 32;
+        uint16_t time_mid = (high >> 16) & 0xFFFF;
+        uint16_t time_hi_and_version = high & 0xFFFF;
+        uint16_t clock_seq = low >> 48;
+        uint64_t node = low & 0xFFFFFFFFFFFF_u64;
+
+        return absl::StrFormat("%08x-%04x-%04x-%04x-%012x", time_low, time_mid, time_hi_and_version, clock_seq, node);
     }
 }

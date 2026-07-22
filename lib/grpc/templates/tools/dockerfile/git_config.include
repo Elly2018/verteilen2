@@ -1,4 +1,0 @@
-RUN git config --global protocol.file.allow always && \
-  git config --global --add safe.directory /var/local/jenkins/grpc && \
-  git config --global --add safe.directory /var/local/jenkins/grpc/.git && \
-  git config --global --add safe.directory '/var/local/jenkins/grpc/.git/modules/third_party/*'

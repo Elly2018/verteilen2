@@ -25,8 +25,8 @@
 #ifndef COMMON_DB_TAG_PRIVATE_H
 #define COMMON_DB_TAG_PRIVATE_H
 #include <cinttypes>
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <nlohmann/json.hpp>
+#include <sqlite.hpp>
+#include <json/json.h>
 
 using json = nlohmann::json;
 
